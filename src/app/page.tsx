@@ -10,8 +10,24 @@ import { Reveal } from '@/components/ui/Reveal'
 import { ArabicCounter } from '@/components/ui/ArabicCounter'
 import { Button } from '@/components/ui/Button'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { faqSchema, BASE_URL } from '@/lib/schema'
 import { work } from '@/lib/work'
 import Link from 'next/link'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'هيمنة | وكالة تسويق رقمي في الرياض — إعلانات الأداء، SEO، هوية بصرية',
+  description: 'هيمنة للخدمات التسويقية — وكالة تسويق رقمي في الرياض، السعودية. متخصصون في إعلانات الأداء على ميتا وجوجل، تحسين محركات البحث، بناء الهوية البصرية، وإدارة المنصات. نَصنع الهيمنة، لا نُطاردها.',
+  alternates: { canonical: BASE_URL },
+}
+
+const homeFaqs = [
+  { q: 'ما هي هيمنة للخدمات التسويقية؟', a: 'هيمنة وكالة تسويق رقمي سعودية مقرها الرياض، متخصصة في إعلانات الأداء على ميتا وجوجل، بناء الهوية البصرية، تحسين محركات البحث (SEO)، إنتاج المحتوى، وإدارة منصات التواصل الاجتماعي.' },
+  { q: 'أين تقع هيمنة؟', a: 'يقع مقر هيمنة في حي المربع، الرياض، المملكة العربية السعودية. رقم السجل التجاري: 1010612147.' },
+  { q: 'ما خدمات هيمنة التسويقية؟', a: 'تشمل خدمات هيمنة: إعلانات الأداء الرقمية (ميتا، جوجل، تيك توك)، بناء الهوية البصرية، إنتاج المحتوى، تحسين محركات البحث SEO، إدارة منصات التواصل الاجتماعي، والاستراتيجية التسويقية.' },
+  { q: 'هل تقدم هيمنة استشارة مجانية؟', a: 'نعم. هيمنة تقدم استشارة تسويقية مجانية مدتها ٣٠ دقيقة. يمكن الحجز عبر صفحة التواصل أو الاتصال على +966 57 059 1088.' },
+]
 
 const disciplines = [
   'إعلانات الأداء', 'الهوية البصرية', 'إنتاج المحتوى',
@@ -43,6 +59,7 @@ const featuredWork = work.slice(0, 3)
 export default function Home() {
   return (
     <div style={{ background: 'var(--navy)', color: 'var(--ivory)', overflow: 'hidden' }}>
+      <JsonLd data={faqSchema(homeFaqs)} />
 
       {/* ── HERO ── */}
       <section

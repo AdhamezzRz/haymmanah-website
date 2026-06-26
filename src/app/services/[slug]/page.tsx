@@ -5,6 +5,8 @@ import { KhatamStar } from '@/components/signature/KhatamStar'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { serviceSchema, breadcrumbSchema, BASE_URL } from '@/lib/schema'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
@@ -16,7 +18,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const s = getService(slug)
   if (!s) return {}
-  return { title: `${s.name} — هيمنة`, description: s.promise }
+  const url = `${BASE_URL}/services/${s.slug}`
+  return {
+    title: `${s.name} في السعودية — هيمنة للتسويق الرقمي`,
+    description: `${s.promise} — هيمنة للخدمات التسويقية، الرياض، المملكة العربية السعودية.`,
+    alternates: { canonical: url },
+    openGraph: {
+      type: 'website', url,
+      title: `${s.name} — هيمنة`,
+      description: s.promise,
+      images: [{ url: `${BASE_URL}/logo.png`, alt: s.name }],
+    },
+  }
 }
 
 export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -26,8 +39,18 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
   const related = work.filter(c => s.relatedCaseSlugs.includes(c.slug))
 
+  const schemas = [
+    serviceSchema(s),
+    breadcrumbSchema([
+      { name: 'الرئيسية', url: BASE_URL },
+      { name: 'الخدمات', url: `${BASE_URL}/services` },
+      { name: s.name, url: `${BASE_URL}/services/${s.slug}` },
+    ]),
+  ]
+
   return (
     <div style={{ background: 'var(--navy)', color: 'var(--ivory)', minHeight: '100vh' }}>
+      {schemas.map((sc, i) => <JsonLd key={i} data={sc} />)}
 
       {/* Hero */}
       <section style={{ padding: '10rem 2rem 6rem', background: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>

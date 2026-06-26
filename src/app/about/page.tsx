@@ -2,9 +2,15 @@ import { KhatamStar } from '@/components/signature/KhatamStar'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { breadcrumbSchema, BASE_URL } from '@/lib/schema'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = { title: 'من نحن — هيمنة' }
+export const metadata: Metadata = {
+  title: 'من نحن — هيمنة للخدمات التسويقية، الرياض',
+  description: 'هيمنة وكالة تسويق رقمي سعودية تأسست في الرياض. متخصصون في إعلانات الأداء، الهوية البصرية، SEO، وإدارة المنصات. السجل التجاري: 1010612147.',
+  alternates: { canonical: `${BASE_URL}/about` },
+}
 
 const values = [
   { n: '١', title: 'الصدق أولاً', body: 'نقول ما نُعتقد، لا ما يُرضي. إذا كانت استراتيجيتك خاطئة، سنقولها قبل أن نأخذ ريالاً.' },
@@ -16,6 +22,7 @@ const values = [
 export default function AboutPage() {
   return (
     <div style={{ background: 'var(--navy)', color: 'var(--ivory)', minHeight: '100vh' }}>
+      <JsonLd data={breadcrumbSchema([{ name: 'الرئيسية', url: BASE_URL }, { name: 'من نحن', url: `${BASE_URL}/about` }])} />
 
       {/* Hero */}
       <section style={{ padding: '10rem 2rem 6rem', background: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>

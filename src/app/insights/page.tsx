@@ -1,16 +1,24 @@
 import { insights } from '@/lib/insights'
 import { KhatamStar } from '@/components/signature/KhatamStar'
 import { Reveal } from '@/components/ui/Reveal'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { breadcrumbSchema, BASE_URL } from '@/lib/schema'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = { title: 'المقالات — هيمنة' }
+export const metadata: Metadata = {
+  title: 'مقالات التسويق الرقمي السعودي — هيمنة',
+  description: 'رؤى وتحليلات عميقة حول التسويق الرقمي في السوق السعودي: SEO، إعلانات الأداء، بناء العلامة، إدارة المنصات، والذكاء الاصطناعي.',
+  alternates: { canonical: `${BASE_URL}/insights` },
+  openGraph: { type: 'website', url: `${BASE_URL}/insights`, title: 'مقالات التسويق الرقمي — هيمنة', description: 'رؤى عميقة حول التسويق الرقمي في السوق السعودي.' },
+}
 
 export default function InsightsPage() {
   const [featured, ...rest] = insights
 
   return (
     <div style={{ background: 'var(--navy)', color: 'var(--ivory)', minHeight: '100vh' }}>
+      <JsonLd data={breadcrumbSchema([{ name: 'الرئيسية', url: BASE_URL }, { name: 'المقالات', url: `${BASE_URL}/insights` }])} />
 
       {/* Hero */}
       <section style={{ padding: '10rem 2rem 5rem', background: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>

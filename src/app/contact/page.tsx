@@ -1,9 +1,23 @@
 import { KhatamStar } from '@/components/signature/KhatamStar'
 import { Reveal } from '@/components/ui/Reveal'
 import { ContactForm } from './ContactForm'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { faqSchema, breadcrumbSchema, BASE_URL } from '@/lib/schema'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = { title: 'تواصل معنا — هيمنة' }
+export const metadata: Metadata = {
+  title: 'تواصل معنا — احجز استشارتك المجانية',
+  description: 'احجز استشارة مجانية ٣٠ دقيقة مع فريق هيمنة للتسويق الرقمي في الرياض. إعلانات الأداء، SEO، هوية بصرية، إدارة منصات. +966 57 059 1088',
+  alternates: { canonical: `${BASE_URL}/contact` },
+  openGraph: { type: 'website', url: `${BASE_URL}/contact`, title: 'تواصل مع هيمنة — الرياض', description: 'استشارة تسويقية مجانية ٣٠ دقيقة. نشخّص وضعك الرقمي ونضع خطة عمل.' },
+}
+
+const contactFaqs = [
+  { q: 'هل الاستشارة الأولى مجانية؟', a: 'نعم، الاستشارة الأولى مجانية تماماً ولا تستغرق أكثر من ٣٠ دقيقة. نشخّص وضعك الرقمي الحالي ونقترح خطوات فورية قابلة للتنفيذ — بدون التزام.' },
+  { q: 'ما مناطق الخدمة لهيمنة؟', a: 'نخدم الشركات في جميع أنحاء المملكة العربية السعودية مع تركيز خاص على الرياض وجدة والدمام. نعمل أيضاً مع عملاء في دول الخليج عن بُعد.' },
+  { q: 'كم يستغرق بدء العمل بعد التواصل؟', a: 'بعد الاستشارة الأولى والاتفاق على النطاق، يبدأ الفريق عادةً خلال ٥-٧ أيام عمل. المشاريع العاجلة يمكن تسريعها حسب توافر الفريق.' },
+  { q: 'هل تعملون مع الشركات الصغيرة والناشئة؟', a: 'نعم. لدينا باقات مُصممة للشركات الناشئة والصغيرة التي تريد بناء حضورها الرقمي من الصفر. الحجم لا يُحدد الاحترافية.' },
+]
 
 const contactDetails = [
   { label: 'هاتف', value: '+966 57 059 1088', href: 'tel:+966570591088', ltr: true },
@@ -17,6 +31,8 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
 
   return (
     <div style={{ background: 'var(--navy)', color: 'var(--ivory)', minHeight: '100vh' }}>
+      <JsonLd data={faqSchema(contactFaqs)} />
+      <JsonLd data={breadcrumbSchema([{ name: 'الرئيسية', url: BASE_URL }, { name: 'تواصل معنا', url: `${BASE_URL}/contact` }])} />
 
       {/* Header */}
       <section style={{ padding: '10rem 2rem 5rem', background: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>
@@ -117,6 +133,34 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
               <ContactForm preService={service} />
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* FAQ section — visible + schema */}
+      <section style={{ padding: '5rem 2rem', background: 'var(--navy-2)' }}>
+        <div style={{ maxWidth: 860, margin: '0 auto' }}>
+          <Reveal>
+            <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>
+              أسئلة شائعة
+            </p>
+            <h2 style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-h3)', color: 'var(--ivory)', marginBottom: '2.5rem' }}>
+              ما تريد معرفته قبل التواصل
+            </h2>
+          </Reveal>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '2rem' }}>
+            {contactFaqs.map((faq, i) => (
+              <Reveal key={i} delay={i * 80}>
+                <div style={{ borderInlineStart: '2px solid var(--gold)', paddingInlineStart: '1.5rem' }}>
+                  <h3 style={{ fontFamily: 'var(--font-role-heading)', fontSize: '1rem', color: 'var(--ivory)', marginBottom: '0.75rem', lineHeight: 1.5 }}>
+                    {faq.q}
+                  </h3>
+                  <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)', lineHeight: 1.8 }}>
+                    {faq.a}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
     </div>

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Aref_Ruqaa, Reem_Kufi, Tajawal } from 'next/font/google'
 import { Preloader, Cursor, LenisProvider, ScrollProgress, Nav, Footer, PageTransition, FloatingWhatsApp } from '@/components/chrome'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { globalSchema } from '@/lib/schema'
 import './globals.css'
 
 const arefRuqaa = Aref_Ruqaa({
@@ -25,20 +27,60 @@ const tajawal = Tajawal({
 })
 
 export const metadata: Metadata = {
-  title: { default: 'هيمنة | للخدمات التسويقية', template: '%s — هيمنة' },
-  description: 'نَصنع الهيمنة، لا نُطاردها — وكالة تسويق رقمي سعودية متخصصة في بناء العلامات التجارية والسيادة الرقمية.',
-  keywords: ['تسويق رقمي', 'وكالة إعلانية', 'الرياض', 'هيمنة', 'سيو', 'إدارة منصات'],
-  robots: 'index, follow',
+  metadataBase: new URL('https://haymanah.sa'),
+  title: {
+    default: 'هيمنة | وكالة تسويق رقمي في الرياض — إعلانات الأداء، هوية بصرية، SEO',
+    template: '%s — هيمنة للتسويق الرقمي',
+  },
+  description:
+    'هيمنة للخدمات التسويقية — وكالة تسويق رقمي سعودية في الرياض متخصصة في إعلانات الأداء، بناء الهوية البصرية، تحسين محركات البحث، وإدارة منصات التواصل الاجتماعي. نَصنع الهيمنة، لا نُطاردها.',
+  keywords: [
+    'تسويق رقمي السعودية', 'وكالة تسويق رقمي الرياض', 'إعلانات الأداء السعودية',
+    'هوية بصرية السعودية', 'SEO عربي', 'تحسين محركات البحث السعودية',
+    'إدارة منصات التواصل الاجتماعي', 'إعلانات ميتا السعودية', 'إعلانات جوجل السعودية',
+    'تسويق تيك توك', 'هيمنة تسويق', 'digital marketing Saudi Arabia', 'marketing agency Riyadh',
+  ],
+  authors: [{ name: 'هيمنة للخدمات التسويقية', url: 'https://haymanah.sa' }],
+  creator: 'هيمنة للخدمات التسويقية',
+  publisher: 'هيمنة للخدمات التسويقية',
+  robots: {
+    index: true, follow: true,
+    googleBot: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large', 'max-video-preview': -1 },
+  },
+  alternates: {
+    canonical: 'https://haymanah.sa',
+    languages: { 'ar-SA': 'https://haymanah.sa' },
+  },
   openGraph: {
-    siteName: 'هيمنة',
+    siteName: 'هيمنة للخدمات التسويقية',
     locale: 'ar_SA',
     type: 'website',
+    url: 'https://haymanah.sa',
+    title: 'هيمنة | وكالة تسويق رقمي — الرياض، السعودية',
+    description: 'نَصنع الهيمنة، لا نُطاردها. وكالة تسويق رقمي سعودية متخصصة في إعلانات الأداء، الهوية البصرية، وتحسين محركات البحث.',
+    images: [{ url: '/logo.png', width: 280, height: 153, alt: 'هيمنة للخدمات التسويقية' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'هيمنة | وكالة تسويق رقمي — الرياض',
+    description: 'نَصنع الهيمنة، لا نُطاردها. وكالة تسويق رقمي سعودية.',
+    images: ['/logo.png'],
+    creator: '@haymanah_sa',
+    site: '@haymanah_sa',
+  },
+  other: {
+    'geo.region': 'SA-01', 'geo.placename': 'Riyadh, Saudi Arabia',
+    'geo.position': '24.6877;46.7219', 'ICBM': '24.6877, 46.7219',
+    'content-language': 'ar-SA', 'rating': 'general', 'revisit-after': '7 days',
   },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ar" dir="rtl" className={`${arefRuqaa.variable} ${reemKufi.variable} ${tajawal.variable}`}>
+      <head>
+        <JsonLd data={globalSchema} />
+      </head>
       <body className={tajawal.className}>
         <a href="#main-content" className="skip-link">تخطى إلى المحتوى الرئيسي</a>
         <Preloader />
