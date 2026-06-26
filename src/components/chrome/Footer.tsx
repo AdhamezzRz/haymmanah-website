@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 const company = [
   { href: '/about',    label: 'من نحن' },
@@ -49,9 +50,13 @@ export function Footer() {
         >
           {/* Brand */}
           <div>
-            <p style={{ fontFamily: 'var(--font-role-display)', fontSize: '1.75rem', color: 'var(--gold)', marginBottom: '0.75rem' }}>
-              هيمنة
-            </p>
+            <Image
+              src="/logo.png"
+              alt="هيمنة للخدمات التسويقية"
+              width={140}
+              height={76}
+              style={{ objectFit: 'contain', width: 'auto', height: 64, filter: 'brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(5deg) brightness(0.85)', marginBottom: '0.75rem' }}
+            />
             <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)', lineHeight: 1.7, maxWidth: 220 }}>
               للخدمات التسويقية — نَصنع الهيمنة، لا نُطاردها.
             </p>

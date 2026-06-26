@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion } from 'motion/react'
 
@@ -13,25 +14,6 @@ const links = [
   { href: '/insights', label: 'المقالات' },
 ]
 
-function KhatamEmblem({ size = 32 }: { size?: number }) {
-  return (
-    <svg viewBox="0 0 100 100" width={size} height={size} aria-hidden="true">
-      <polygon
-        points="50,5 61,35 93,35 68,54 79,84 50,65 21,84 32,54 7,35 39,35"
-        fill="none"
-        stroke="var(--gold)"
-        strokeWidth="3"
-      />
-      <polygon
-        points="50,20 57,38 76,38 62,49 68,68 50,57 32,68 38,49 24,38 43,38"
-        fill="none"
-        stroke="var(--gold-bright)"
-        strokeWidth="1.5"
-        opacity={0.5}
-      />
-    </svg>
-  )
-}
 
 export function Nav() {
   const pathname = usePathname()
@@ -73,14 +55,15 @@ export function Nav() {
         }}
       >
         {/* Logo */}
-        <Link
-          href="/"
-          style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}
-        >
-          <KhatamEmblem size={36} />
-          <span style={{ fontFamily: 'var(--font-role-display)', fontSize: '1.25rem', color: 'var(--gold)' }}>
-            هيمنة
-          </span>
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+          <Image
+            src="/logo.png"
+            alt="هيمنة للخدمات التسويقية"
+            width={110}
+            height={60}
+            style={{ objectFit: 'contain', filter: 'brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(5deg)', height: 44, width: 'auto' }}
+            priority
+          />
         </Link>
 
         {/* Desktop nav */}
