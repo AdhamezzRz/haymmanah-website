@@ -2,6 +2,10 @@ import { Constellation } from '@/components/signature/Constellation'
 import { KhatamStar } from '@/components/signature/KhatamStar'
 import { CapabilityBars } from '@/components/signature/CapabilityBars'
 import { Marquee } from '@/components/signature/Marquee'
+import { SplitText } from '@/components/signature/SplitText'
+import { GlowCard } from '@/components/signature/GlowCard'
+import { ParallaxSection } from '@/components/signature/ParallaxSection'
+import { ClipReveal } from '@/components/signature/ClipReveal'
 import { Reveal } from '@/components/ui/Reveal'
 import { ArabicCounter } from '@/components/ui/ArabicCounter'
 import { Button } from '@/components/ui/Button'
@@ -57,33 +61,35 @@ export default function Home() {
         {/* Canvas constellation behind */}
         <Constellation style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} />
 
-        {/* Ambient khatam */}
-        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.08, pointerEvents: 'none' }}>
-          <KhatamStar size={600} mode="spin" stroke="var(--gold)" />
+        {/* Ambient khatam — parallax float */}
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.07, pointerEvents: 'none' }}>
+          <ParallaxSection speed={0.2} style={{ display: 'flex' }}>
+            <div className="float-ambient">
+              <KhatamStar size={640} mode="spin" stroke="var(--gold)" />
+            </div>
+          </ParallaxSection>
         </div>
 
         {/* Content */}
         <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', maxWidth: 900 }}>
-          <Reveal>
+          <ClipReveal>
             <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
               السيادة الرقمية — الرياض
             </p>
-          </Reveal>
+          </ClipReveal>
 
-          <Reveal delay={150}>
-            <h1
-              className="text-gold-grad"
-              style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-display)', lineHeight: 0.95, letterSpacing: '-0.02em' }}
-            >
-              هيمنة
-            </h1>
-          </Reveal>
+          <h1
+            className="text-gold-grad heading-glow"
+            style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-display)', lineHeight: 0.95, letterSpacing: '-0.02em' }}
+          >
+            <SplitText text="هيمنة" delay={200} stagger={0.08} />
+          </h1>
 
-          <Reveal delay={300}>
+          <ClipReveal delay={600}>
             <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'clamp(1.1rem, 2vw, 1.5rem)', color: 'var(--muted)', maxWidth: 600 }}>
               نَصنع الهيمنة، لا نُطاردها
             </p>
-          </Reveal>
+          </ClipReveal>
 
           <Reveal delay={450}>
             <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-body)', color: 'rgba(243,236,218,0.6)', maxWidth: 520, lineHeight: 1.7 }}>
@@ -147,48 +153,24 @@ export default function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem', marginTop: '3rem' }}>
             {featuredWork.map((c, i) => (
               <Reveal key={c.slug} delay={i * 120}>
-                <Link
-                  href={`/work/${c.slug}`}
-                  style={{
-                    display: 'block',
-                    background: 'var(--navy-2)',
-                    border: '1px solid rgba(201,161,74,0.12)',
-                    borderRadius: 8,
-                    padding: '2rem',
-                    textDecoration: 'none',
-                    position: 'relative',
-                    overflow: 'hidden',
-                    transition: 'border-color 0.3s, transform 0.3s var(--ease-sovereign)',
-                  }}
-                >
-                  {/* Khatam watermark */}
-                  <div style={{ position: 'absolute', insetInlineEnd: '-1rem', bottom: '-1rem', opacity: 0.04, pointerEvents: 'none' }}>
-                    <KhatamStar size={160} mode="static" />
-                  </div>
-
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
-                    <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.1em', padding: '0.25rem 0.75rem', border: '1px solid rgba(201,161,74,0.3)', borderRadius: 3, textTransform: 'uppercase' }}>
-                      {c.sector}
-                    </span>
-                    <span style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'var(--muted)' }}>{c.year}</span>
-                  </div>
-
-                  <h3 style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-h3)', color: 'var(--ivory)', marginBottom: '0.5rem' }}>
-                    {c.client}
-                  </h3>
-                  <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)', marginBottom: '1.5rem' }}>
-                    {c.tagline}
-                  </p>
-
-                  {/* Top result */}
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
-                    <span className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-h2)' }}>
-                      {c.results[0].value}
-                    </span>
-                    <span style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)' }}>
-                      {c.results[0].label}
-                    </span>
-                  </div>
+                <Link href={`/work/${c.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
+                  <GlowCard style={{ background: 'var(--navy-2)', padding: '2rem' }}>
+                    <div style={{ position: 'absolute', insetInlineEnd: '-1rem', bottom: '-1rem', opacity: 0.04, pointerEvents: 'none' }}>
+                      <KhatamStar size={160} mode="static" />
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
+                      <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.1em', padding: '0.25rem 0.75rem', border: '1px solid rgba(201,161,74,0.3)', borderRadius: 3, textTransform: 'uppercase' }}>
+                        {c.sector}
+                      </span>
+                      <span style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'var(--muted)' }}>{c.year}</span>
+                    </div>
+                    <h3 style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-h3)', color: 'var(--ivory)', marginBottom: '0.5rem' }}>{c.client}</h3>
+                    <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)', marginBottom: '1.5rem' }}>{c.tagline}</p>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
+                      <span className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-h2)' }}>{c.results[0].value}</span>
+                      <span style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)' }}>{c.results[0].label}</span>
+                    </div>
+                  </GlowCard>
                 </Link>
               </Reveal>
             ))}

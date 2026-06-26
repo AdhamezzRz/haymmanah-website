@@ -17,16 +17,22 @@ const services = [
 ]
 
 const contact = [
-  { href: 'tel:+966570591088',        label: '+966 57 059 1088' },
+  { href: 'tel:+966570591088',         label: '+966 57 059 1088' },
   { href: 'mailto:RH-2025@outlook.sa', label: 'RH-2025@outlook.sa' },
+  { href: 'https://wa.me/966570591088?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1', label: 'واتساب', external: true },
   { href: '/contact',                  label: 'حجز استشارة' },
 ]
 
 const socials = [
-  { href: '#', label: 'X' },
-  { href: '#', label: 'IG' },
-  { href: '#', label: 'LI' },
-  { href: '#', label: 'TK' },
+  {
+    href: 'https://wa.me/966570591088?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1',
+    label: 'WA',
+    external: true,
+    title: 'واتساب',
+  },
+  { href: '#', label: 'X',  external: false, title: 'تويتر' },
+  { href: '#', label: 'IG', external: false, title: 'انستغرام' },
+  { href: '#', label: 'TK', external: false, title: 'تيك توك' },
 ]
 
 export function Footer() {
@@ -63,19 +69,22 @@ export function Footer() {
             <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'rgba(138,147,191,0.5)', marginTop: '1rem' }}>
               حي المربع، الرياض
             </p>
-            <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
+            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem', flexWrap: 'wrap' }}>
               {socials.map(s => (
                 <Link
                   key={s.label}
                   href={s.href}
+                  title={s.title}
+                  target={s.external ? '_blank' : undefined}
+                  rel={s.external ? 'noopener noreferrer' : undefined}
                   style={{
                     fontFamily: 'var(--font-role-heading)',
                     fontSize: '0.75rem',
-                    color: 'var(--muted)',
+                    color: s.label === 'WA' ? '#25d366' : 'var(--muted)',
                     textDecoration: 'none',
-                    border: '1px solid rgba(138,147,191,0.2)',
+                    border: `1px solid ${s.label === 'WA' ? 'rgba(37,211,102,0.3)' : 'rgba(138,147,191,0.2)'}`,
                     borderRadius: 3,
-                    padding: '0.25rem 0.5rem',
+                    padding: '0.25rem 0.625rem',
                     transition: 'color 0.2s, border-color 0.2s',
                   }}
                 >
@@ -125,7 +134,19 @@ export function Footer() {
             <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
               {contact.map(l => (
                 <li key={l.href}>
-                  <Link href={l.href} style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)', textDecoration: 'none', direction: 'ltr', display: 'inline-block' }}>
+                  <Link
+                    href={l.href}
+                    target={l.external ? '_blank' : undefined}
+                    rel={l.external ? 'noopener noreferrer' : undefined}
+                    style={{
+                      fontFamily: 'var(--font-role-body)',
+                      fontSize: 'var(--text-small)',
+                      color: l.label === 'واتساب' ? '#25d366' : 'var(--muted)',
+                      textDecoration: 'none',
+                      direction: 'ltr',
+                      display: 'inline-block',
+                    }}
+                  >
                     {l.label}
                   </Link>
                 </li>

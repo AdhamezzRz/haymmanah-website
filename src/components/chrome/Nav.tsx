@@ -77,12 +77,14 @@ export function Nav() {
               <li key={href}>
                 <Link
                   href={href}
+                  className="nav-link"
                   style={{
                     fontFamily: 'var(--font-role-heading)',
                     fontSize: '0.9375rem',
                     color: pathname === href ? 'var(--gold)' : 'var(--ivory)',
                     textDecoration: 'none',
                     transition: 'color 0.2s',
+                    paddingBottom: 2,
                   }}
                 >
                   {label}

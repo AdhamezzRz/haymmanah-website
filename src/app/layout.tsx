@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Aref_Ruqaa, Reem_Kufi, Tajawal } from 'next/font/google'
-import { Preloader, Cursor, LenisProvider, ScrollProgress, Nav, Footer, PageTransition } from '@/components/chrome'
+import { Preloader, Cursor, LenisProvider, ScrollProgress, Nav, Footer, PageTransition, FloatingWhatsApp } from '@/components/chrome'
 import './globals.css'
 
 const arefRuqaa = Aref_Ruqaa({
@@ -50,6 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <main id="main-content">{children}</main>
           </PageTransition>
           <Footer />
+          <FloatingWhatsApp />
         </LenisProvider>
       </body>
     </html>
