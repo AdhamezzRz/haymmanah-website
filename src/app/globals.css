@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+/* ── Font roles wired to next/font CSS variables ── */
+:root {
+  --font-role-display: var(--font-display), serif;
+  --font-role-heading: var(--font-heading), sans-serif;
+  --font-role-body: var(--font-body), sans-serif;
+}
+
+:root {
+  /* Brand color tokens */
+  --ink: #05081a;
+  --navy: #0a1030;
+  --navy-2: #0f1741;
+  --royal: #1d2f7a;
+  --gold: #c9a14a;
+  --gold-bright: #ecd08a;
+  --gold-deep: #8a6d2c;
+  --ivory: #f3ecda;
+  --muted: #8a93bf;
+
+  /* Gradients */
+  --gold-grad: linear-gradient(135deg, var(--gold-deep), var(--gold), var(--gold-bright));
+
+  /* Motion */
+  --ease-sovereign: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-reveal: 1.1s;
+  --dur-micro: 0.3s;
+}
+
+/* Base RTL body */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--navy);
+  color: var(--ivory);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  inset-inline-start: 1rem;
+  background: var(--gold);
+  color: var(--ink);
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 4px 4px;
+  font-weight: 600;
+  z-index: 9999;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* ── Fluid type scale ── */
+:root {
+  --text-display: clamp(3rem, 8vw, 8rem);
+  --text-h1:      clamp(2.5rem, 5vw, 5rem);
+  --text-h2:      clamp(2rem, 4vw, 3.5rem);
+  --text-h3:      clamp(1.5rem, 2.5vw, 2rem);
+  --text-body:    clamp(1rem, 1.1vw, 1.15rem);
+  --text-small:   0.875rem;
+  --text-eyebrow: 0.75rem;
+}
+
+/* ── Base typography ── */
+.font-display  { font-family: var(--font-role-display); }
+.font-heading  { font-family: var(--font-role-heading); }
+.font-body     { font-family: var(--font-role-body); }
+
+/* ── Smooth scrollbar ── */
+* { box-sizing: border-box; }
+
+/* ── Gold gradient text utility ── */
+.text-gold-grad {
+  background: var(--gold-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Gold gradient border ── */
+.border-gold {
+  border: 1px solid var(--gold);
+}
+
+/* ── Eyebrow track ── */
+.tracking-eyebrow { letter-spacing: 0.2em; }
+.tracking-display { letter-spacing: -0.02em; }
+
+/* ── Mobile layout helpers ── */
+@media (max-width: 767px) {
+  /* Fix two-column grids on mobile */
+  .grid-2col { grid-template-columns: 1fr !important; }
+  /* Reduce section padding on small screens */
+  section { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+}
+
+/* ── Hover states ── */
+a:hover, button:hover { opacity: 0.85; }
+
+/* ── Select styling ── */
+select option { background: var(--navy); color: var(--ivory); }
