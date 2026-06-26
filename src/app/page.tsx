@@ -2,7 +2,6 @@ import { Constellation } from '@/components/signature/Constellation'
 import { KhatamStar } from '@/components/signature/KhatamStar'
 import { CapabilityBars } from '@/components/signature/CapabilityBars'
 import { Marquee } from '@/components/signature/Marquee'
-import { SplitText } from '@/components/signature/SplitText'
 import { GlowCard } from '@/components/signature/GlowCard'
 import { ParallaxSection } from '@/components/signature/ParallaxSection'
 import { ClipReveal } from '@/components/signature/ClipReveal'
@@ -95,12 +94,14 @@ export default function Home() {
             </p>
           </ClipReveal>
 
-          <h1
-            className="text-gold-grad heading-glow"
-            style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-display)', lineHeight: 0.95, letterSpacing: '-0.02em' }}
-          >
-            <SplitText text="هيمنة" delay={200} stagger={0.08} />
-          </h1>
+          <ClipReveal delay={300}>
+            <h1
+              className="text-gold-grad heading-glow"
+              style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-display)', lineHeight: 0.95, letterSpacing: '-0.02em' }}
+            >
+              هيمنة
+            </h1>
+          </ClipReveal>
 
           <ClipReveal delay={600}>
             <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'clamp(1.1rem, 2vw, 1.5rem)', color: 'var(--muted)', maxWidth: 600 }}>
