@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation'
 import { work, getCase } from '@/lib/work'
 import { KhatamStar } from '@/components/signature/KhatamStar'
+import { SectorIcon, DisciplineIcon } from '@/components/work/icons'
+import { disciplineColors } from '@/lib/work'
 import { ClipReveal } from '@/components/signature/ClipReveal'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
@@ -19,15 +21,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `${c.client} — أعمال هيمنة`,
     description: `${c.tagline} — دراسة حالة من هيمنة للخدمات التسويقية`,
   }
-}
-
-const sectorIconPaths: Record<string, string> = {
-  'مطاعم': 'M32 24v18c0 5.523 4.477 10 10 10h4M38 24v12M44 24v12M58 38m-10 0a10 10 0 1 0 20 0 10 10 0 0 0-20 0M48 62v10M34 72h28',
-  'أمن':   'M48 20L26 30v16c0 13.255 9.401 25.647 22 29 12.599-3.353 22-15.745 22-29V30L48 20zM38 48l7 7 13-14',
-  'تجزئة': 'M28 30h40l-5 26H33L28 30zM28 30l-4-8H18M38 30c0-5.523 4.477-10 10-10s10 4.477 10 10',
-  'سيارات':'M20 54h56v8H20zM24 54l8-16h32l8 16M32 64m-5 0a5 5 0 1 0 10 0 5 5 0 0 0-10 0M64 64m-5 0a5 5 0 1 0 10 0 5 5 0 0 0-10 0',
-  'تعليم': 'M48 26L20 40l28 14 28-14-28-14zM76 40v14M30 48v12c0 5 8 10 18 10s18-5 18-10V48',
-  'عقارات':'M24 72V32h28v40M52 72V44h20v28M20 72h56',
 }
 
 export default async function CasePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -67,13 +60,9 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
         </div>
 
         {/* Large sector icon watermark */}
-        {sectorIconPaths[c.sector] && (
-          <div style={{ position: 'absolute', insetInlineStart: '2rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.06, pointerEvents: 'none' }}>
-            <svg viewBox="0 0 96 96" width={280} height={280} fill="none">
-              <path d={sectorIconPaths[c.sector]} stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-        )}
+        <div style={{ position: 'absolute', insetInlineStart: '2rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.06, pointerEvents: 'none' }}>
+          <SectorIcon sector={c.sector} size={280} ring={false} />
+        </div>
 
         <div style={{ maxWidth: 960, margin: '0 auto', position: 'relative', zIndex: 2, width: '100%' }}>
           <ClipReveal>
@@ -209,6 +198,43 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
                 </li>
               ))}
             </ul>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── Disciplines used ── */}
+      <section style={{ padding: '4rem 2rem 5rem', background: 'var(--navy-2)', borderTop: '1px solid rgba(201,161,74,0.08)' }}>
+        <div style={{ maxWidth: 960, margin: '0 auto' }}>
+          <Reveal>
+            <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--muted)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '1.25rem' }}>
+              التخصصات المستخدمة في هذا المشروع
+            </p>
+            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+              {c.disciplines.map(d => (
+                <Link
+                  key={d}
+                  href={`/work?discipline=${encodeURIComponent(d)}`}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    fontFamily: 'var(--font-role-heading)',
+                    fontSize: '0.8125rem',
+                    color: 'var(--ivory)',
+                    background: `${disciplineColors[d]}12`,
+                    border: `1px solid ${disciplineColors[d]}40`,
+                    borderRadius: 30,
+                    padding: '0.5rem 1rem',
+                    textDecoration: 'none',
+                    transition: 'transform 0.15s',
+                  }}
+                >
+                  <DisciplineIcon discipline={d} size={16} color={disciplineColors[d]} />
+                  {d}
+                  <span style={{ opacity: 0.4, fontSize: '0.7rem' }}>عرض المزيد ←</span>
+                </Link>
+              ))}
+            </div>
           </Reveal>
         </div>
       </section>
