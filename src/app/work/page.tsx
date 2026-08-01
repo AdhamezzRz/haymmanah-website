@@ -36,13 +36,13 @@ function CardVisual({ c, height = 240 }: { c: CaseStudy; height?: number }) {
       </div>
 
       <div style={{ position: 'absolute', top: '1rem', insetInlineStart: '1rem' }}>
-        <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.75rem', color: 'var(--muted)', background: 'rgba(5,8,26,0.6)', border: '1px solid rgba(255,255,255,0.08)', padding: '0.2rem 0.6rem', borderRadius: 20 }}>
+        <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.75rem', color: 'var(--muted)', background: 'rgba(253,251,246,0.8)', border: '1px solid rgba(32,26,18,0.08)', padding: '0.2rem 0.6rem', borderRadius: 20 }}>
           {c.year}
         </span>
       </div>
 
       <div style={{ position: 'absolute', top: '1rem', insetInlineEnd: '1rem' }}>
-        <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.7rem', letterSpacing: '0.12em', color: 'var(--gold)', background: 'rgba(5,8,26,0.7)', border: '1px solid rgba(201,161,74,0.3)', padding: '0.2rem 0.6rem', borderRadius: 20, textTransform: 'uppercase' }}>
+        <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.7rem', letterSpacing: '0.12em', color: 'var(--gold-deep)', background: 'rgba(253,251,246,0.85)', border: '1px solid rgba(201,161,74,0.35)', padding: '0.2rem 0.6rem', borderRadius: 20, textTransform: 'uppercase' }}>
           {c.sector}
         </span>
       </div>
@@ -155,7 +155,7 @@ export default function WorkPage() {
       </section>
 
       {/* ── Stats band ── */}
-      <section style={{ background: 'rgba(10,16,48,0.95)', borderBottom: '1px solid rgba(201,161,74,0.12)', padding: '2rem' }}>
+      <section style={{ background: 'var(--navy-2)', borderBottom: '1px solid rgba(201,161,74,0.15)', padding: '2rem' }}>
         <div style={{ maxWidth: 800, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
           {aggregates.map((a, i) => (
             <Reveal key={a.label} delay={i * 100}>
@@ -177,7 +177,7 @@ export default function WorkPage() {
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.25rem', alignItems: 'center' }}>
 
           {/* Segmented mode switcher */}
-          <div style={{ display: 'inline-flex', padding: 4, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,161,74,0.18)', borderRadius: 40, gap: 2 }}>
+          <div style={{ display: 'inline-flex', padding: 4, background: 'var(--navy)', border: '1px solid rgba(201,161,74,0.25)', borderRadius: 40, gap: 2 }}>
             {([
               { id: 'sector' as Mode, label: 'تصفّح حسب القطاع' },
               { id: 'discipline' as Mode, label: 'تصفّح حسب التخصص' },
@@ -204,7 +204,7 @@ export default function WorkPage() {
                     style={{ position: 'absolute', inset: 0, background: 'var(--gold-grad)', borderRadius: 40, zIndex: 0 }}
                   />
                 )}
-                <span style={{ position: 'relative', zIndex: 1, color: mode === id ? 'var(--ink)' : 'var(--ivory)', fontWeight: mode === id ? 600 : 400, transition: 'color 0.2s' }}>
+                <span style={{ position: 'relative', zIndex: 1, color: mode === id ? 'var(--ivory)' : 'var(--muted)', fontWeight: mode === id ? 600 : 400, transition: 'color 0.2s' }}>
                   {label}
                 </span>
               </button>
@@ -225,7 +225,7 @@ export default function WorkPage() {
                         display: 'flex', alignItems: 'center', gap: '0.4rem',
                         fontFamily: 'var(--font-role-heading)', fontSize: '0.8rem', letterSpacing: '0.05em',
                         padding: '0.4rem 1rem', borderRadius: 40, border: '1px solid',
-                        borderColor: isActive ? 'var(--gold)' : 'rgba(255,255,255,0.08)',
+                        borderColor: isActive ? 'var(--gold)' : 'rgba(32,26,18,0.12)',
                         background: isActive ? 'rgba(201,161,74,0.12)' : 'transparent',
                         color: isActive ? 'var(--gold)' : 'var(--muted)',
                         cursor: 'pointer', transition: 'all 0.2s',
@@ -281,7 +281,7 @@ export default function WorkPage() {
                       <div style={{ position: 'relative' }}>
                         <CardVisual c={featured} height={340} />
                         <div style={{ position: 'absolute', bottom: '1.25rem', insetInlineStart: '1.25rem', zIndex: 3 }}>
-                          <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.7rem', letterSpacing: '0.15em', color: 'var(--ink)', background: 'var(--gold)', padding: '0.25rem 0.75rem', borderRadius: 20, textTransform: 'uppercase' }}>
+                          <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.7rem', letterSpacing: '0.15em', color: 'var(--ivory)', background: 'var(--gold)', padding: '0.25rem 0.75rem', borderRadius: 20, textTransform: 'uppercase' }}>
                             ★ دراسة الحالة المميزة
                           </span>
                         </div>
@@ -300,7 +300,7 @@ export default function WorkPage() {
                             <DisciplineChips items={featured.disciplines} onPick={jumpToDiscipline} />
                           </div>
 
-                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.06)', marginBottom: '1.5rem' }}>
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(32,26,18,0.08)', marginBottom: '1.5rem' }}>
                             {featured.results.map(r => (
                               <div key={r.label}>
                                 <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.25rem,2vw,1.625rem)', lineHeight: 1 }}>{r.value}</p>
@@ -309,7 +309,7 @@ export default function WorkPage() {
                             ))}
                           </div>
 
-                          <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'rgba(243,236,218,0.55)', lineHeight: 1.7, fontStyle: 'italic', marginBottom: '0.5rem' }}>
+                          <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'rgba(32,26,18,0.6)', lineHeight: 1.7, fontStyle: 'italic', marginBottom: '0.5rem' }}>
                             "{featured.testimonial.quote.slice(0, 90)}…"
                           </p>
                           <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.1em' }}>
@@ -350,7 +350,7 @@ export default function WorkPage() {
                               <DisciplineChips items={c.disciplines} onPick={jumpToDiscipline} />
                             </div>
 
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.875rem', paddingTop: '1.25rem', borderTop: '1px solid rgba(255,255,255,0.06)', marginBottom: '1.25rem', marginTop: 'auto' }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.875rem', paddingTop: '1.25rem', borderTop: '1px solid rgba(32,26,18,0.08)', marginBottom: '1.25rem', marginTop: 'auto' }}>
                               {c.results.slice(0, 2).map(r => (
                                 <div key={r.label}>
                                   <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.1rem,2vw,1.375rem)', lineHeight: 1 }}>{r.value}</p>

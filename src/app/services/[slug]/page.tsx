@@ -90,7 +90,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '3rem' }}>
             {s.methodology.map((m, i) => (
               <Reveal key={m.phase} delay={i * 100}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '2rem', alignItems: 'flex-start', paddingBottom: '2rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '2rem', alignItems: 'flex-start', paddingBottom: '2rem', borderBottom: '1px solid rgba(32,26,18,0.08)' }}>
                   <span className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: '3rem', lineHeight: 1, minWidth: 60, textAlign: 'center' }}>{m.phase}</span>
                   <div>
                     <h3 style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-h3)', color: 'var(--ivory)', marginBottom: '0.5rem' }}>{m.title}</h3>

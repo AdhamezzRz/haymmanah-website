@@ -110,7 +110,7 @@ export default function Home() {
           </ClipReveal>
 
           <Reveal delay={450}>
-            <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-body)', color: 'rgba(243,236,218,0.6)', maxWidth: 520, lineHeight: 1.7 }}>
+            <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-body)', color: 'rgba(32,26,18,0.62)', maxWidth: 520, lineHeight: 1.7 }}>
               وكالة تسويقية سعودية تبني منظومات نمو حقيقية للعلامات الطموحة.
               لا إعلانات فارغة، لا نتائج مزيفة.
             </p>

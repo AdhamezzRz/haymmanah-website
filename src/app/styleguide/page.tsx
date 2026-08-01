@@ -4,9 +4,9 @@ export const metadata = { title: 'Styleguide — هيمنة' }
 
 function Token({ name, value, type }: { name: string; value: string; type?: string }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.5rem 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.5rem 0', borderBottom: '1px solid rgba(32,26,18,0.08)' }}>
       {type === 'color' && (
-        <div style={{ width: 40, height: 40, borderRadius: 4, background: value, flexShrink: 0, border: '1px solid rgba(255,255,255,0.1)' }} />
+        <div style={{ width: 40, height: 40, borderRadius: 4, background: value, flexShrink: 0, border: '1px solid rgba(32,26,18,0.15)' }} />
       )}
       <div>
         <code style={{ color: 'var(--gold)', fontSize: '0.875rem' }}>{name}</code>
@@ -18,15 +18,15 @@ function Token({ name, value, type }: { name: string; value: string; type?: stri
 
 export default function StyleguidePage() {
   const colors = [
-    { name: '--ink',        value: '#05081a' },
-    { name: '--navy',       value: '#0a1030' },
-    { name: '--navy-2',     value: '#0f1741' },
-    { name: '--royal',      value: '#1d2f7a' },
+    { name: '--ink',        value: '#ECE0C2' },
+    { name: '--navy',       value: '#FDFBF6' },
+    { name: '--navy-2',     value: '#F7F1E2' },
+    { name: '--royal',      value: '#2E2416' },
     { name: '--gold',       value: '#c9a14a' },
     { name: '--gold-bright',value: '#ecd08a' },
     { name: '--gold-deep',  value: '#8a6d2c' },
-    { name: '--ivory',      value: '#f3ecda' },
-    { name: '--muted',      value: '#8a93bf' },
+    { name: '--ivory',      value: '#201A12' },
+    { name: '--muted',      value: '#6B5E49' },
   ]
 
   const typeScale = [
@@ -69,9 +69,9 @@ export default function StyleguidePage() {
         <section style={{ marginBottom: '4rem' }}>
           <h2 style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-h3)', color: 'var(--gold)', marginBottom: '1.5rem' }}>أدوار الخط</h2>
           <p style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-h2)', marginBottom: '1rem' }}>Aref Ruqaa — العرض والعناوين الكبرى</p>
-          <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-h3)', marginBottom: '1rem' }}>Reem Kufi — العناوين والتسميات</p>
+          <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-h3)', marginBottom: '1rem' }}>Almarai — العناوين والتسميات</p>
           <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-body)', lineHeight: 1.7, color: 'var(--muted)' }}>
-            Tajawal — نص الجسم والمحتوى — نَصنع الهيمنة، لا نُطاردها. نبني علامات تجارية تفرض حضورها وتسود في سوقها.
+            Almarai — نص الجسم والمحتوى — نَصنع الهيمنة، لا نُطاردها. نبني علامات تجارية تفرض حضورها وتسود في سوقها.
           </p>
         </section>
 

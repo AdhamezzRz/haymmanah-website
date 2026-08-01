@@ -79,7 +79,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
               </span>
             </ClipReveal>
             <ClipReveal delay={150}>
-              <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', letterSpacing: '0.12em', color: 'var(--muted)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.2rem 0.75rem', borderRadius: 20 }}>
+              <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', letterSpacing: '0.12em', color: 'var(--muted)', border: '1px solid rgba(32,26,18,0.12)', padding: '0.2rem 0.75rem', borderRadius: 20 }}>
                 {c.year}
               </span>
             </ClipReveal>
@@ -107,7 +107,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
               style={{
                 padding: '2rem 1.5rem',
                 textAlign: 'center',
-                borderInlineEnd: i < c.results.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none',
+                borderInlineEnd: i < c.results.length - 1 ? '1px solid rgba(32,26,18,0.08)' : 'none',
               }}
             >
               <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.5rem,3vw,2.25rem)', lineHeight: 1 }}>

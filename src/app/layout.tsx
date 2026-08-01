@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Aref_Ruqaa, Reem_Kufi, Tajawal } from 'next/font/google'
+import { Aref_Ruqaa, Almarai } from 'next/font/google'
 import { Preloader, Cursor, LenisProvider, ScrollProgress, Nav, Footer, PageTransition, FloatingWhatsApp } from '@/components/chrome'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { globalSchema } from '@/lib/schema'
@@ -12,17 +12,10 @@ const arefRuqaa = Aref_Ruqaa({
   display: 'swap',
 })
 
-const reemKufi = Reem_Kufi({
+const almarai = Almarai({
   subsets: ['arabic'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-heading',
-  display: 'swap',
-})
-
-const tajawal = Tajawal({
-  subsets: ['arabic'],
-  weight: ['200', '300', '400', '500', '700'],
-  variable: '--font-body',
+  weight: ['300', '400', '700', '800'],
+  variable: '--font-almarai',
   display: 'swap',
 })
 
@@ -77,11 +70,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" className={`${arefRuqaa.variable} ${reemKufi.variable} ${tajawal.variable}`}>
+    <html lang="ar" dir="rtl" className={`${arefRuqaa.variable} ${almarai.variable}`}>
       <head>
         <JsonLd data={globalSchema} />
       </head>
-      <body className={tajawal.className}>
+      <body className={almarai.className}>
         <a href="#main-content" className="skip-link">تخطى إلى المحتوى الرئيسي</a>
         <Preloader />
         <Cursor />

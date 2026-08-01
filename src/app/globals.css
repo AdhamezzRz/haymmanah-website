@@ -3,21 +3,21 @@
 /* ── Font roles wired to next/font CSS variables ── */
 :root {
   --font-role-display: var(--font-display), serif;
-  --font-role-heading: var(--font-heading), sans-serif;
-  --font-role-body: var(--font-body), sans-serif;
+  --font-role-heading: var(--font-almarai), sans-serif;
+  --font-role-body: var(--font-almarai), sans-serif;
 }
 
 :root {
-  /* Brand color tokens */
-  --ink: #05081a;
-  --navy: #0a1030;
-  --navy-2: #0f1741;
-  --royal: #1d2f7a;
+  /* Brand color tokens — light / white mood */
+  --ink: #ECE0C2;      /* warm champagne-sand — statement bands (hero, footer, CTA) */
+  --navy: #FDFBF6;     /* near-white — base page background */
+  --navy-2: #F7F1E2;   /* soft cream — card / alternate section background */
+  --royal: #2E2416;    /* deep warm brown — secondary dark accent */
   --gold: #c9a14a;
   --gold-bright: #ecd08a;
   --gold-deep: #8a6d2c;
-  --ivory: #f3ecda;
-  --muted: #8a93bf;
+  --ivory: #201A12;    /* primary text — dark warm ink (was light-on-dark, now dark-on-light) */
+  --muted: #6B5E49;    /* secondary text — warm taupe */
 
   /* Gradients */
   --gold-grad: linear-gradient(135deg, var(--gold-deep), var(--gold), var(--gold-bright));
@@ -53,7 +53,7 @@ body {
   top: -100%;
   inset-inline-start: 1rem;
   background: var(--gold);
-  color: var(--ink);
+  color: var(--ivory);
   padding: 0.5rem 1rem;
   border-radius: 0 0 4px 4px;
   font-weight: 600;

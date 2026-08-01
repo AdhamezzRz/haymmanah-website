@@ -9,8 +9,8 @@ const initialState: ContactFormState = { status: 'idle' }
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
-  background: 'rgba(255,255,255,0.04)',
-  border: '1px solid rgba(201,161,74,0.2)',
+  background: 'var(--navy)',
+  border: '1px solid rgba(201,161,74,0.25)',
   borderRadius: 6,
   padding: '0.875rem 1rem',
   fontFamily: 'var(--font-role-body)',
@@ -106,7 +106,7 @@ export function ContactForm({ preService }: { preService?: string }) {
         disabled={pending}
         style={{
           background: 'var(--gold-grad)',
-          color: 'var(--ink)',
+          color: 'var(--ivory)',
           border: 'none',
           borderRadius: 4,
           padding: '1rem 2rem',

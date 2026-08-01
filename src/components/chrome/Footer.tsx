@@ -66,7 +66,7 @@ export function Footer() {
             <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)', lineHeight: 1.7, maxWidth: 220 }}>
               للخدمات التسويقية — نَصنع الهيمنة، لا نُطاردها.
             </p>
-            <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'rgba(138,147,191,0.5)', marginTop: '1rem' }}>
+            <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'rgba(107,94,73,0.7)', marginTop: '1rem' }}>
               حي المربع، الرياض
             </p>
             <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem', flexWrap: 'wrap' }}>
@@ -82,7 +82,7 @@ export function Footer() {
                     fontSize: '0.75rem',
                     color: s.label === 'WA' ? '#25d366' : 'var(--muted)',
                     textDecoration: 'none',
-                    border: `1px solid ${s.label === 'WA' ? 'rgba(37,211,102,0.3)' : 'rgba(138,147,191,0.2)'}`,
+                    border: `1px solid ${s.label === 'WA' ? 'rgba(37,211,102,0.3)' : 'rgba(107,94,73,0.25)'}`,
                     borderRadius: 3,
                     padding: '0.25rem 0.625rem',
                     transition: 'color 0.2s, border-color 0.2s',
@@ -156,11 +156,11 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-          <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'rgba(138,147,191,0.4)' }}>
+        <div style={{ borderTop: '1px solid rgba(32,26,18,0.08)', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+          <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'rgba(107,94,73,0.6)' }}>
             © {new Date().getFullYear()} هيمنة للخدمات التسويقية — جميع الحقوق محفوظة
           </p>
-          <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'rgba(138,147,191,0.4)', direction: 'ltr' }}>
+          <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'rgba(107,94,73,0.6)', direction: 'ltr' }}>
             CR 1010612147
           </p>
         </div>
