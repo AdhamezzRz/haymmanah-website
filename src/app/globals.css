@@ -234,3 +234,14 @@ select option { background: var(--navy); color: var(--ivory); }
 
 /* Perspective wrapper for 3D cards */
 .perspective { perspective: 1200px; }
+
+/* Form choice pills (checkbox / radio groups) — !important needed because
+   these elements also carry an inline `style` border, which otherwise
+   always wins over an external rule regardless of :has() specificity. */
+.choice-pill:hover {
+  border-color: rgba(201,161,74,0.45) !important;
+}
+.choice-pill:has(input:checked) {
+  border-color: var(--gold) !important;
+  background: rgba(201,161,74,0.08) !important;
+}

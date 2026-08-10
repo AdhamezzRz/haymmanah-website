@@ -1,6 +1,7 @@
 import { LogoMark } from '@/components/signature/LogoMark'
 import { Reveal } from '@/components/ui/Reveal'
 import { ContactForm } from './ContactForm'
+import { QuickCallbackForm } from './QuickCallbackForm'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { faqSchema, breadcrumbSchema, BASE_URL } from '@/lib/schema'
 import type { Metadata } from 'next'
@@ -116,6 +117,19 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
                 </svg>
                 تواصل عبر واتساب
               </a>
+            </Reveal>
+
+            {/* Quick callback form */}
+            <Reveal delay={480}>
+              <div style={{ marginTop: '2.5rem', padding: '1.5rem', background: 'var(--navy-2)', border: '1px solid rgba(201,161,74,0.15)', borderRadius: 10 }}>
+                <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.9375rem', color: 'var(--ivory)', marginBottom: '0.375rem' }}>
+                  لا وقت لديك للنموذج الكامل؟
+                </p>
+                <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)', marginBottom: '1.25rem' }}>
+                  اترك اسمك ورقمك، وسنتصل بك نحن.
+                </p>
+                <QuickCallbackForm />
+              </div>
             </Reveal>
 
             {/* Khatam */}

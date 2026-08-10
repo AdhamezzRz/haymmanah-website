@@ -1,35 +1,41 @@
 'use client'
 
-import { useActionState, useEffect } from 'react'
+import { useActionState } from 'react'
 import { submitContact, type ContactFormState } from './actions'
 import { LogoMark } from '@/components/signature/LogoMark'
 import { services } from '@/lib/services'
+import { inputStyle, labelStyle, CheckboxPill, RadioPill, FieldGroup } from './FormFields'
 
 const initialState: ContactFormState = { status: 'idle' }
 
-const inputStyle: React.CSSProperties = {
-  width: '100%',
-  background: 'var(--navy)',
-  border: '1px solid rgba(201,161,74,0.25)',
-  borderRadius: 6,
-  padding: '0.875rem 1rem',
-  fontFamily: 'var(--font-role-body)',
-  fontSize: 'var(--text-body)',
-  color: 'var(--ivory)',
-  outline: 'none',
-  transition: 'border-color 0.2s',
-  direction: 'rtl',
-}
+const budgetOptions = [
+  { value: 'under-5k', label: 'أقل من ٥,٠٠٠ ريال' },
+  { value: '5k-15k', label: '٥,٠٠٠ – ١٥,٠٠٠ ريال' },
+  { value: '15k-30k', label: '١٥,٠٠٠ – ٣٠,٠٠٠ ريال' },
+  { value: 'over-30k', label: 'أكثر من ٣٠,٠٠٠ ريال' },
+  { value: 'not-set', label: 'غير محدد بعد' },
+]
 
-const labelStyle: React.CSSProperties = {
-  display: 'block',
-  fontFamily: 'var(--font-role-heading)',
-  fontSize: 'var(--text-eyebrow)',
-  color: 'var(--gold)',
-  letterSpacing: '0.1em',
-  marginBottom: '0.5rem',
-  textTransform: 'uppercase',
-}
+const timelineOptions = [
+  { value: 'now', label: 'فوراً' },
+  { value: 'month', label: 'خلال شهر' },
+  { value: 'quarter', label: 'خلال ٣ أشهر' },
+  { value: 'exploring', label: 'أستكشف فقط' },
+]
+
+const sourceOptions = [
+  { value: 'instagram', label: 'انستقرام' },
+  { value: 'tiktok', label: 'تيك توك' },
+  { value: 'google', label: 'جوجل / بحث' },
+  { value: 'referral', label: 'توصية صديق' },
+  { value: 'other', label: 'أخرى' },
+]
+
+const contactMethodOptions = [
+  { value: 'phone', label: 'مكالمة هاتفية' },
+  { value: 'whatsapp', label: 'واتساب' },
+  { value: 'email', label: 'بريد إلكتروني' },
+]
 
 export function ContactForm({ preService }: { preService?: string }) {
   const [state, action, pending] = useActionState(submitContact, initialState)
@@ -51,7 +57,7 @@ export function ContactForm({ preService }: { preService?: string }) {
   }
 
   return (
-    <form action={action} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+    <form action={action} style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
         <div>
           <label style={labelStyle}>الاسم *</label>
@@ -63,24 +69,65 @@ export function ContactForm({ preService }: { preService?: string }) {
         </div>
       </div>
 
-      <div>
-        <label style={labelStyle}>البريد الإلكتروني *</label>
-        <input name="email" type="email" required placeholder="email@company.com" style={{ ...inputStyle, direction: 'ltr' }} />
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
+        <div>
+          <label style={labelStyle}>البريد الإلكتروني *</label>
+          <input name="email" type="email" required placeholder="email@company.com" style={{ ...inputStyle, direction: 'ltr' }} />
+        </div>
+        <div>
+          <label style={labelStyle}>رقم الهاتف *</label>
+          <input name="phone" type="tel" required placeholder="+966 5X XXX XXXX" style={{ ...inputStyle, direction: 'ltr' }} />
+        </div>
       </div>
 
+      {/* Preferred contact method */}
       <div>
-        <label style={labelStyle}>رقم الهاتف</label>
-        <input name="phone" type="tel" placeholder="+966 5X XXX XXXX" style={{ ...inputStyle, direction: 'ltr' }} />
-      </div>
-
-      <div>
-        <label style={labelStyle}>الخدمة المطلوبة</label>
-        <select name="service" defaultValue={preService || ''} style={{ ...inputStyle, cursor: 'pointer' }}>
-          <option value="">اختر الخدمة</option>
-          {services.map(s => (
-            <option key={s.slug} value={s.slug}>{s.name}</option>
+        <label style={labelStyle}>طريقة التواصل المفضلة</label>
+        <FieldGroup columns={3}>
+          {contactMethodOptions.map((o, i) => (
+            <RadioPill key={o.value} name="contactMethod" value={o.value} label={o.label} defaultChecked={i === 1} />
           ))}
-          <option value="other">أخرى / غير محدد</option>
+        </FieldGroup>
+      </div>
+
+      {/* Services wanted — multi-select */}
+      <div>
+        <label style={labelStyle}>الخدمات المطلوبة (يمكن اختيار أكثر من واحدة)</label>
+        <FieldGroup columns={2}>
+          {services.map(s => (
+            <CheckboxPill key={s.slug} name="services" value={s.name} label={s.name} defaultChecked={s.slug === preService} />
+          ))}
+        </FieldGroup>
+      </div>
+
+      {/* Budget */}
+      <div>
+        <label style={labelStyle}>الميزانية الشهرية التقريبية</label>
+        <FieldGroup columns={3}>
+          {budgetOptions.map((o, i) => (
+            <RadioPill key={o.value} name="budget" value={o.value} label={o.label} defaultChecked={i === 4} />
+          ))}
+        </FieldGroup>
+      </div>
+
+      {/* Timeline */}
+      <div>
+        <label style={labelStyle}>متى تريد البدء؟</label>
+        <FieldGroup columns={4}>
+          {timelineOptions.map(o => (
+            <RadioPill key={o.value} name="timeline" value={o.value} label={o.label} />
+          ))}
+        </FieldGroup>
+      </div>
+
+      {/* How did you hear about us */}
+      <div>
+        <label style={labelStyle}>كيف سمعت عنّا؟</label>
+        <select name="source" defaultValue="" style={{ ...inputStyle, cursor: 'pointer' }}>
+          <option value="">اختر</option>
+          {sourceOptions.map(o => (
+            <option key={o.value} value={o.value}>{o.label}</option>
+          ))}
         </select>
       </div>
 
