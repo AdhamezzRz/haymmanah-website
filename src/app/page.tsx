@@ -1,5 +1,5 @@
 import { Constellation } from '@/components/signature/Constellation'
-import { KhatamStar } from '@/components/signature/KhatamStar'
+import { LogoMark } from '@/components/signature/LogoMark'
 import { CapabilityBars } from '@/components/signature/CapabilityBars'
 import { Marquee } from '@/components/signature/Marquee'
 import { GlowCard } from '@/components/signature/GlowCard'
@@ -81,7 +81,7 @@ export default function Home() {
         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.07, pointerEvents: 'none' }}>
           <ParallaxSection speed={0.2} style={{ display: 'flex' }}>
             <div className="float-ambient">
-              <KhatamStar size={640} mode="spin" stroke="var(--gold)" />
+              <LogoMark size={640} mode="spin" stroke="var(--gold)" />
             </div>
           </ParallaxSection>
         </div>
@@ -110,7 +110,7 @@ export default function Home() {
           </ClipReveal>
 
           <Reveal delay={450}>
-            <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-body)', color: 'rgba(32,26,18,0.62)', maxWidth: 520, lineHeight: 1.7 }}>
+            <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-body)', color: 'rgba(var(--ivory-rgb),0.62)', maxWidth: 520, lineHeight: 1.7 }}>
               وكالة تسويقية سعودية تبني منظومات نمو حقيقية للعلامات الطموحة.
               لا إعلانات فارغة، لا نتائج مزيفة.
             </p>
@@ -174,7 +174,7 @@ export default function Home() {
                 <Link href={`/work/${c.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
                   <GlowCard style={{ background: 'var(--navy-2)', padding: '2rem' }}>
                     <div style={{ position: 'absolute', insetInlineEnd: '-1rem', bottom: '-1rem', opacity: 0.04, pointerEvents: 'none' }}>
-                      <KhatamStar size={160} mode="static" />
+                      <LogoMark size={160} mode="static" />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
                       <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.1em', padding: '0.25rem 0.75rem', border: '1px solid rgba(201,161,74,0.3)', borderRadius: 3, textTransform: 'uppercase' }}>
@@ -280,10 +280,10 @@ export default function Home() {
       <section style={{ padding: '8rem 2rem', background: 'var(--ink)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
         {/* Twin stars */}
         <div style={{ position: 'absolute', top: '50%', insetInlineStart: '5%', transform: 'translateY(-50%)', opacity: 0.06, pointerEvents: 'none' }}>
-          <KhatamStar size={300} mode="spin" />
+          <LogoMark size={300} mode="spin" />
         </div>
         <div style={{ position: 'absolute', top: '50%', insetInlineEnd: '5%', transform: 'translateY(-50%)', opacity: 0.06, pointerEvents: 'none' }}>
-          <KhatamStar size={300} mode="spin" stroke="var(--gold-bright)" />
+          <LogoMark size={300} mode="spin" stroke="var(--gold-bright)" />
         </div>
 
         <div style={{ position: 'relative', zIndex: 2 }}>

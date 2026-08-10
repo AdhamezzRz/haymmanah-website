@@ -3,8 +3,18 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 
-const KHATAM_PATH =
-  'M50,5 L61,35 L93,35 L68,54 L79,84 L50,65 L21,84 L32,54 L7,35 L39,35 Z M50,15 L57,37 L80,37 L62,50 L70,73 L50,60 L30,73 L38,50 L20,37 L43,37 Z'
+const logoMaskStyle: React.CSSProperties = {
+  position: 'absolute',
+  inset: 0,
+  WebkitMaskImage: 'url(/logo-icon.png)',
+  maskImage: 'url(/logo-icon.png)',
+  WebkitMaskSize: 'contain',
+  maskSize: 'contain',
+  WebkitMaskRepeat: 'no-repeat',
+  maskRepeat: 'no-repeat',
+  WebkitMaskPosition: 'center',
+  maskPosition: 'center',
+}
 
 export function Preloader() {
   const [pct, setPct] = useState(0)
@@ -66,38 +76,18 @@ export function Preloader() {
             gap: '2rem',
           }}
         >
-          {/* Khatam star drawing */}
-          <svg
-            viewBox="0 0 100 100"
-            width={120}
-            height={120}
-            style={{ overflow: 'visible' }}
-            aria-hidden="true"
-          >
-            <path
-              d={KHATAM_PATH}
-              fill="none"
-              stroke="rgba(201,161,74,0.15)"
-              strokeWidth="1"
-            />
-            <motion.path
-              d={KHATAM_PATH}
-              fill="none"
-              stroke="url(#goldGrad)"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: pct / 100 }}
+          {/* Logo mark, filling in with load progress */}
+          <div style={{ position: 'relative', width: 100, height: 164 }} aria-hidden="true">
+            <div style={{ ...logoMaskStyle, background: 'rgba(201,161,74,0.15)' }} />
+            <motion.div
+              style={{
+                ...logoMaskStyle,
+                background: 'linear-gradient(160deg, #8a6d2c, #c9a14a 45%, #ecd08a)',
+                clipPath: `inset(${100 - pct}% 0 0 0)`,
+              }}
               transition={{ duration: 0.1, ease: 'linear' }}
             />
-            <defs>
-              <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#8a6d2c" />
-                <stop offset="50%" stopColor="#c9a14a" />
-                <stop offset="100%" stopColor="#ecd08a" />
-              </linearGradient>
-            </defs>
-          </svg>
+          </div>
 
           {/* Brand name */}
           <motion.p

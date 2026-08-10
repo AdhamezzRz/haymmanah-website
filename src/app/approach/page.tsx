@@ -1,4 +1,4 @@
-import { KhatamStar } from '@/components/signature/KhatamStar'
+import { LogoMark } from '@/components/signature/LogoMark'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
 import type { Metadata } from 'next'
@@ -63,7 +63,7 @@ export default function ApproachPage() {
       {/* Hero */}
       <section style={{ padding: '10rem 2rem 6rem', background: 'var(--ink)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.04, pointerEvents: 'none' }}>
-          <KhatamStar size={700} mode="spin" />
+          <LogoMark size={700} mode="spin" />
         </div>
         <div style={{ position: 'relative', zIndex: 2 }}>
           <Reveal>
@@ -138,7 +138,7 @@ export default function ApproachPage() {
 
             {/* Khatam progress indicator */}
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '4rem', opacity: 0.15 }}>
-              <KhatamStar size={60} mode="static" style={{ transform: `rotate(${i * 45}deg)` }} />
+              <LogoMark size={60} mode="static" style={{ transform: `rotate(${i * 45}deg)` }} />
             </div>
           </section>
         ))}
@@ -147,7 +147,7 @@ export default function ApproachPage() {
       {/* CTA */}
       <section style={{ padding: '8rem 2rem', background: 'var(--ink)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.04, pointerEvents: 'none' }}>
-          <KhatamStar size={500} mode="draw" />
+          <LogoMark size={500} mode="draw" />
         </div>
         <div style={{ position: 'relative', zIndex: 2 }}>
           <Reveal>

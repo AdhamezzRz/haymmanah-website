@@ -70,8 +70,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" className={`${arefRuqaa.variable} ${almarai.variable}`}>
+    <html lang="ar" dir="rtl" className={`${arefRuqaa.variable} ${almarai.variable}`} suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('haymanah-theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t)}catch(e){}})();`,
+          }}
+        />
         <JsonLd data={globalSchema} />
       </head>
       <body className={almarai.className}>

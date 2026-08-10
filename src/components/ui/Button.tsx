@@ -49,7 +49,7 @@ export function Button({
   const variantStyles: Record<ButtonVariant, React.CSSProperties> = {
     primary: {
       background: 'var(--gold-grad)',
-      color: 'var(--ivory)',
+      color: 'var(--on-gold)',
       border: 'none',
     },
     outline: {

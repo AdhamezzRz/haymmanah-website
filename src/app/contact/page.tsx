@@ -1,4 +1,4 @@
-import { KhatamStar } from '@/components/signature/KhatamStar'
+import { LogoMark } from '@/components/signature/LogoMark'
 import { Reveal } from '@/components/ui/Reveal'
 import { ContactForm } from './ContactForm'
 import { JsonLd } from '@/components/seo/JsonLd'
@@ -37,7 +37,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
       {/* Header */}
       <section style={{ padding: '10rem 2rem 5rem', background: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', insetInlineEnd: '-5rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.05, pointerEvents: 'none' }}>
-          <KhatamStar size={600} mode="spin" />
+          <LogoMark size={600} mode="spin" />
         </div>
         <div style={{ maxWidth: 860, margin: '0 auto', position: 'relative', zIndex: 2 }}>
           <Reveal>
@@ -120,7 +120,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
 
             {/* Khatam */}
             <div style={{ marginTop: '3rem', opacity: 0.15 }}>
-              <KhatamStar size={100} mode="static" />
+              <LogoMark size={100} mode="static" />
             </div>
           </div>
 

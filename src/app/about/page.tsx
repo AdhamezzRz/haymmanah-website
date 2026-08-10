@@ -1,4 +1,4 @@
-import { KhatamStar } from '@/components/signature/KhatamStar'
+import { LogoMark } from '@/components/signature/LogoMark'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
 import { SectionHeading } from '@/components/ui/SectionHeading'
@@ -27,7 +27,7 @@ export default function AboutPage() {
       {/* Hero */}
       <section style={{ padding: '10rem 2rem 6rem', background: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', insetInlineStart: '-8rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.04, pointerEvents: 'none' }}>
-          <KhatamStar size={700} mode="spin" />
+          <LogoMark size={700} mode="spin" />
         </div>
         <div style={{ maxWidth: 860, margin: '0 auto', position: 'relative', zIndex: 2 }}>
           <Reveal>
@@ -80,7 +80,7 @@ export default function AboutPage() {
       <section style={{ padding: '6rem 2rem', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
         <Reveal>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
-            <KhatamStar size={120} mode="draw" stroke="var(--gold)" />
+            <LogoMark size={120} mode="draw" stroke="var(--gold)" />
           </div>
           <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.3em', textTransform: 'uppercase' }}>
             EST. ٢٠١٦ · الرياض، المملكة العربية السعودية

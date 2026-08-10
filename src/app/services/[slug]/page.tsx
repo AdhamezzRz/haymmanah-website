@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import { services, getService } from '@/lib/services'
 import { work } from '@/lib/work'
-import { KhatamStar } from '@/components/signature/KhatamStar'
+import { LogoMark } from '@/components/signature/LogoMark'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
 import { SectionHeading } from '@/components/ui/SectionHeading'
@@ -55,7 +55,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       {/* Hero */}
       <section style={{ padding: '10rem 2rem 6rem', background: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', insetInlineEnd: '-4rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.05, pointerEvents: 'none' }}>
-          <KhatamStar size={500} mode="spin" />
+          <LogoMark size={500} mode="spin" />
         </div>
         <div style={{ maxWidth: 860, margin: '0 auto', position: 'relative', zIndex: 2 }}>
           <Reveal>
@@ -90,7 +90,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '3rem' }}>
             {s.methodology.map((m, i) => (
               <Reveal key={m.phase} delay={i * 100}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '2rem', alignItems: 'flex-start', paddingBottom: '2rem', borderBottom: '1px solid rgba(32,26,18,0.08)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '2rem', alignItems: 'flex-start', paddingBottom: '2rem', borderBottom: '1px solid rgba(var(--ivory-rgb),0.08)' }}>
                   <span className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: '3rem', lineHeight: 1, minWidth: 60, textAlign: 'center' }}>{m.phase}</span>
                   <div>
                     <h3 style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-h3)', color: 'var(--ivory)', marginBottom: '0.5rem' }}>{m.title}</h3>

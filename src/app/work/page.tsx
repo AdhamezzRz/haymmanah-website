@@ -4,7 +4,7 @@ import { useState, useEffect, useId } from 'react'
 import { work, sectors, disciplines, disciplineColors } from '@/lib/work'
 import type { CaseStudy, Sector, Discipline } from '@/lib/work'
 import { SectorIcon, DisciplineIcon } from '@/components/work/icons'
-import { KhatamStar } from '@/components/signature/KhatamStar'
+import { LogoMark } from '@/components/signature/LogoMark'
 import { GlowCard } from '@/components/signature/GlowCard'
 import { ClipReveal } from '@/components/signature/ClipReveal'
 import { Reveal } from '@/components/ui/Reveal'
@@ -28,7 +28,7 @@ function CardVisual({ c, height = 240 }: { c: CaseStudy; height?: number }) {
       </svg>
 
       <div style={{ position: 'absolute', bottom: -40, insetInlineEnd: -40, opacity: 0.07, pointerEvents: 'none' }}>
-        <KhatamStar size={220} mode="static" stroke={c.sectorColor} />
+        <LogoMark size={220} mode="static" stroke={c.sectorColor} />
       </div>
 
       <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -36,13 +36,13 @@ function CardVisual({ c, height = 240 }: { c: CaseStudy; height?: number }) {
       </div>
 
       <div style={{ position: 'absolute', top: '1rem', insetInlineStart: '1rem' }}>
-        <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.75rem', color: 'var(--muted)', background: 'rgba(253,251,246,0.8)', border: '1px solid rgba(32,26,18,0.08)', padding: '0.2rem 0.6rem', borderRadius: 20 }}>
+        <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.75rem', color: 'var(--muted)', background: 'rgba(var(--glass-rgb),0.8)', border: '1px solid rgba(var(--ivory-rgb),0.08)', padding: '0.2rem 0.6rem', borderRadius: 20 }}>
           {c.year}
         </span>
       </div>
 
       <div style={{ position: 'absolute', top: '1rem', insetInlineEnd: '1rem' }}>
-        <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.7rem', letterSpacing: '0.12em', color: 'var(--gold-deep)', background: 'rgba(253,251,246,0.85)', border: '1px solid rgba(201,161,74,0.35)', padding: '0.2rem 0.6rem', borderRadius: 20, textTransform: 'uppercase' }}>
+        <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.7rem', letterSpacing: '0.12em', color: 'var(--gold-deep)', background: 'rgba(var(--glass-rgb),0.85)', border: '1px solid rgba(201,161,74,0.35)', padding: '0.2rem 0.6rem', borderRadius: 20, textTransform: 'uppercase' }}>
           {c.sector}
         </span>
       </div>
@@ -133,7 +133,7 @@ export default function WorkPage() {
       {/* ── Hero ── */}
       <section style={{ padding: '10rem 2rem 5rem', background: 'var(--ink)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.04, pointerEvents: 'none' }}>
-          <KhatamStar size={640} mode="spin" />
+          <LogoMark size={640} mode="spin" />
         </div>
         <div style={{ position: 'relative', zIndex: 2, maxWidth: 680, margin: '0 auto' }}>
           <ClipReveal>
@@ -204,7 +204,7 @@ export default function WorkPage() {
                     style={{ position: 'absolute', inset: 0, background: 'var(--gold-grad)', borderRadius: 40, zIndex: 0 }}
                   />
                 )}
-                <span style={{ position: 'relative', zIndex: 1, color: mode === id ? 'var(--ivory)' : 'var(--muted)', fontWeight: mode === id ? 600 : 400, transition: 'color 0.2s' }}>
+                <span style={{ position: 'relative', zIndex: 1, color: mode === id ? 'var(--on-gold)' : 'var(--muted)', fontWeight: mode === id ? 600 : 400, transition: 'color 0.2s' }}>
                   {label}
                 </span>
               </button>
@@ -225,7 +225,7 @@ export default function WorkPage() {
                         display: 'flex', alignItems: 'center', gap: '0.4rem',
                         fontFamily: 'var(--font-role-heading)', fontSize: '0.8rem', letterSpacing: '0.05em',
                         padding: '0.4rem 1rem', borderRadius: 40, border: '1px solid',
-                        borderColor: isActive ? 'var(--gold)' : 'rgba(32,26,18,0.12)',
+                        borderColor: isActive ? 'var(--gold)' : 'rgba(var(--ivory-rgb),0.12)',
                         background: isActive ? 'rgba(201,161,74,0.12)' : 'transparent',
                         color: isActive ? 'var(--gold)' : 'var(--muted)',
                         cursor: 'pointer', transition: 'all 0.2s',
@@ -281,7 +281,7 @@ export default function WorkPage() {
                       <div style={{ position: 'relative' }}>
                         <CardVisual c={featured} height={340} />
                         <div style={{ position: 'absolute', bottom: '1.25rem', insetInlineStart: '1.25rem', zIndex: 3 }}>
-                          <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.7rem', letterSpacing: '0.15em', color: 'var(--ivory)', background: 'var(--gold)', padding: '0.25rem 0.75rem', borderRadius: 20, textTransform: 'uppercase' }}>
+                          <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.7rem', letterSpacing: '0.15em', color: 'var(--on-gold)', background: 'var(--gold)', padding: '0.25rem 0.75rem', borderRadius: 20, textTransform: 'uppercase' }}>
                             ★ دراسة الحالة المميزة
                           </span>
                         </div>
@@ -300,7 +300,7 @@ export default function WorkPage() {
                             <DisciplineChips items={featured.disciplines} onPick={jumpToDiscipline} />
                           </div>
 
-                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(32,26,18,0.08)', marginBottom: '1.5rem' }}>
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(var(--ivory-rgb),0.08)', marginBottom: '1.5rem' }}>
                             {featured.results.map(r => (
                               <div key={r.label}>
                                 <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.25rem,2vw,1.625rem)', lineHeight: 1 }}>{r.value}</p>
@@ -309,7 +309,7 @@ export default function WorkPage() {
                             ))}
                           </div>
 
-                          <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'rgba(32,26,18,0.6)', lineHeight: 1.7, fontStyle: 'italic', marginBottom: '0.5rem' }}>
+                          <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'rgba(var(--ivory-rgb),0.6)', lineHeight: 1.7, fontStyle: 'italic', marginBottom: '0.5rem' }}>
                             "{featured.testimonial.quote.slice(0, 90)}…"
                           </p>
                           <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.1em' }}>
@@ -350,7 +350,7 @@ export default function WorkPage() {
                               <DisciplineChips items={c.disciplines} onPick={jumpToDiscipline} />
                             </div>
 
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.875rem', paddingTop: '1.25rem', borderTop: '1px solid rgba(32,26,18,0.08)', marginBottom: '1.25rem', marginTop: 'auto' }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.875rem', paddingTop: '1.25rem', borderTop: '1px solid rgba(var(--ivory-rgb),0.08)', marginBottom: '1.25rem', marginTop: 'auto' }}>
                               {c.results.slice(0, 2).map(r => (
                                 <div key={r.label}>
                                   <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.1rem,2vw,1.375rem)', lineHeight: 1 }}>{r.value}</p>
@@ -373,7 +373,7 @@ export default function WorkPage() {
 
               {filtered.length === 0 && (
                 <div style={{ textAlign: 'center', padding: '6rem 2rem', color: 'var(--muted)' }}>
-                  <KhatamStar size={64} mode="static" />
+                  <LogoMark size={64} mode="static" />
                   <p style={{ fontFamily: 'var(--font-role-heading)', marginTop: '1.5rem' }}>لا توجد أعمال مطابقة حالياً</p>
                 </div>
               )}
@@ -385,7 +385,7 @@ export default function WorkPage() {
       {/* ── CTA ── */}
       <section style={{ padding: '5rem 2rem', textAlign: 'center', background: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.04, pointerEvents: 'none' }}>
-          <KhatamStar size={500} mode="spin" />
+          <LogoMark size={500} mode="spin" />
         </div>
         <Reveal>
           <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>

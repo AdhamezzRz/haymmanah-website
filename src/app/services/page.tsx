@@ -1,7 +1,7 @@
 'use client'
 
 import { services } from '@/lib/services'
-import { KhatamStar } from '@/components/signature/KhatamStar'
+import { LogoMark } from '@/components/signature/LogoMark'
 import { GlowCard } from '@/components/signature/GlowCard'
 import { ClipReveal } from '@/components/signature/ClipReveal'
 import { Reveal } from '@/components/ui/Reveal'
@@ -37,7 +37,7 @@ const platforms = [
   {
     name: 'TikTok',
     color: '#000000',
-    bg: 'rgba(32,26,18,0.06)',
+    bg: 'rgba(var(--ivory-rgb),0.06)',
     icon: (
       <svg viewBox="0 0 24 24" width={20} height={20} fill="#111111">
         <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.16a8.16 8.16 0 0 0 4.77 1.52V7.22a4.85 4.85 0 0 1-1-.53z"/>
@@ -84,7 +84,7 @@ const platforms = [
   {
     name: 'X / Twitter',
     color: '#000000',
-    bg: 'rgba(32,26,18,0.06)',
+    bg: 'rgba(var(--ivory-rgb),0.06)',
     icon: (
       <svg viewBox="0 0 24 24" width={20} height={20} fill="#111111">
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -133,7 +133,7 @@ export default function ServicesPage() {
       {/* ── Hero ── */}
       <section style={{ padding: '10rem 2rem 6rem', textAlign: 'center', background: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.04, pointerEvents: 'none' }}>
-          <KhatamStar size={640} mode="spin" />
+          <LogoMark size={640} mode="spin" />
         </div>
         <div style={{ position: 'relative', zIndex: 2, maxWidth: 740, margin: '0 auto' }}>
           <ClipReveal>
@@ -306,7 +306,7 @@ export default function ServicesPage() {
       {/* ── Ad platforms deep-dive ── */}
       <section style={{ padding: '5rem 2rem', background: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', insetInlineEnd: '-4rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.03, pointerEvents: 'none' }}>
-          <KhatamStar size={500} mode="spin" />
+          <LogoMark size={500} mode="spin" />
         </div>
         <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 2 }}>
           <Reveal>
@@ -340,7 +340,7 @@ export default function ServicesPage() {
                 platform: 'TikTok Ads',
                 icon: platforms[2].icon,
                 color: '#111111',
-                bg: 'rgba(32,26,18,0.05)',
+                bg: 'rgba(var(--ivory-rgb),0.05)',
                 desc: 'In-Feed، TopView، Spark Ads، TikTok Shop. محتوى إعلاني يبدو عضوياً ويُحقق تحويلاً حقيقياً.',
                 stats: 'CPM أقل ٣٥٪ من ميتا',
               },

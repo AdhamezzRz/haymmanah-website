@@ -1,5 +1,5 @@
 import { insights } from '@/lib/insights'
-import { KhatamStar } from '@/components/signature/KhatamStar'
+import { LogoMark } from '@/components/signature/LogoMark'
 import { Reveal } from '@/components/ui/Reveal'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { breadcrumbSchema, BASE_URL } from '@/lib/schema'
@@ -23,7 +23,7 @@ export default function InsightsPage() {
       {/* Hero */}
       <section style={{ padding: '10rem 2rem 5rem', background: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', insetInlineEnd: '-6rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.04, pointerEvents: 'none' }}>
-          <KhatamStar size={600} mode="spin" />
+          <LogoMark size={600} mode="spin" />
         </div>
         <div style={{ maxWidth: 860, margin: '0 auto', position: 'relative', zIndex: 2 }}>
           <Reveal>
@@ -52,7 +52,7 @@ export default function InsightsPage() {
               style={{ display: 'block', background: 'var(--navy-2)', border: '1px solid rgba(201,161,74,0.15)', borderRadius: 8, padding: '3rem', textDecoration: 'none', marginBottom: '3rem', position: 'relative', overflow: 'hidden' }}
             >
               <div style={{ position: 'absolute', insetInlineEnd: '-2rem', bottom: '-2rem', opacity: 0.04, pointerEvents: 'none' }}>
-                <KhatamStar size={220} mode="static" />
+                <LogoMark size={220} mode="static" />
               </div>
               <div style={{ position: 'relative', zIndex: 2 }}>
                 <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', alignItems: 'center' }}>

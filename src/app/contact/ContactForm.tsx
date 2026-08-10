@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect } from 'react'
 import { submitContact, type ContactFormState } from './actions'
-import { KhatamStar } from '@/components/signature/KhatamStar'
+import { LogoMark } from '@/components/signature/LogoMark'
 import { services } from '@/lib/services'
 
 const initialState: ContactFormState = { status: 'idle' }
@@ -38,7 +38,7 @@ export function ContactForm({ preService }: { preService?: string }) {
     return (
       <div style={{ textAlign: 'center', padding: '4rem 2rem' }}>
         <div style={{ marginBottom: '2rem' }}>
-          <KhatamStar size={120} mode="draw" />
+          <LogoMark size={120} mode="draw" />
         </div>
         <h3 style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-h2)', color: 'var(--gold)', marginBottom: '1rem' }}>
           وصلتنا رسالتك
@@ -106,7 +106,7 @@ export function ContactForm({ preService }: { preService?: string }) {
         disabled={pending}
         style={{
           background: 'var(--gold-grad)',
-          color: 'var(--ivory)',
+          color: 'var(--on-gold)',
           border: 'none',
           borderRadius: 4,
           padding: '1rem 2rem',

@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { insights, getInsight, getRelatedInsights } from '@/lib/insights'
-import { KhatamStar } from '@/components/signature/KhatamStar'
+import { LogoMark } from '@/components/signature/LogoMark'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
 import { JsonLd } from '@/components/seo/JsonLd'
@@ -82,16 +82,16 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
       {/* Hero */}
       <section style={{ padding: '10rem 2rem 5rem', background: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', insetInlineEnd: '-5rem', bottom: '-3rem', opacity: 0.04, pointerEvents: 'none' }}>
-          <KhatamStar size={500} mode="spin" />
+          <LogoMark size={500} mode="spin" />
         </div>
         <div style={{ maxWidth: 760, margin: '0 auto', position: 'relative', zIndex: 2 }}>
           <Reveal>
             <nav aria-label="مسار التنقل" style={{ marginBottom: '2rem' }}>
               <ol style={{ display: 'flex', gap: '0.5rem', listStyle: 'none', padding: 0, margin: 0, flexWrap: 'wrap', alignItems: 'center' }}>
                 <li><Link href="/" style={{ color: 'var(--muted)', textDecoration: 'none', fontFamily: 'var(--font-role-heading)', fontSize: '0.8125rem' }}>الرئيسية</Link></li>
-                <li style={{ color: 'rgba(107,94,73,0.5)', fontSize: '0.75rem' }}>/</li>
+                <li style={{ color: 'rgba(var(--muted-rgb),0.5)', fontSize: '0.75rem' }}>/</li>
                 <li><Link href="/insights" style={{ color: 'var(--gold)', textDecoration: 'none', fontFamily: 'var(--font-role-heading)', fontSize: '0.8125rem' }}>المقالات</Link></li>
-                <li style={{ color: 'rgba(107,94,73,0.5)', fontSize: '0.75rem' }}>/</li>
+                <li style={{ color: 'rgba(var(--muted-rgb),0.5)', fontSize: '0.75rem' }}>/</li>
                 <li style={{ color: 'var(--muted)', fontFamily: 'var(--font-role-heading)', fontSize: '0.8125rem', maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ins.topic}</li>
               </ol>
             </nav>
@@ -171,14 +171,14 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
 
       {/* Divider */}
       <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem', opacity: 0.3 }}>
-        <KhatamStar size={48} mode="static" />
+        <LogoMark size={48} mode="static" />
       </div>
 
       {/* Keywords tag cloud */}
       <section style={{ padding: '2rem', maxWidth: 720, margin: '0 auto' }}>
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
           {ins.keywords.map(k => (
-            <span key={k} style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'var(--muted)', border: '1px solid rgba(107,94,73,0.2)', borderRadius: 3, padding: '0.2rem 0.6rem' }}>
+            <span key={k} style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'var(--muted)', border: '1px solid rgba(var(--muted-rgb),0.2)', borderRadius: 3, padding: '0.2rem 0.6rem' }}>
               {k}
             </span>
           ))}

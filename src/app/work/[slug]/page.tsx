@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { work, getCase } from '@/lib/work'
-import { KhatamStar } from '@/components/signature/KhatamStar'
+import { LogoMark } from '@/components/signature/LogoMark'
 import { SectorIcon, DisciplineIcon } from '@/components/work/icons'
 import { disciplineColors } from '@/lib/work'
 import { ClipReveal } from '@/components/signature/ClipReveal'
@@ -56,7 +56,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
         {/* Giant khatam */}
         <div style={{ position: 'absolute', insetInlineEnd: '-8rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.05, pointerEvents: 'none' }}>
-          <KhatamStar size={720} mode="spin" />
+          <LogoMark size={720} mode="spin" />
         </div>
 
         {/* Large sector icon watermark */}
@@ -79,7 +79,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
               </span>
             </ClipReveal>
             <ClipReveal delay={150}>
-              <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', letterSpacing: '0.12em', color: 'var(--muted)', border: '1px solid rgba(32,26,18,0.12)', padding: '0.2rem 0.75rem', borderRadius: 20 }}>
+              <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', letterSpacing: '0.12em', color: 'var(--muted)', border: '1px solid rgba(var(--ivory-rgb),0.12)', padding: '0.2rem 0.75rem', borderRadius: 20 }}>
                 {c.year}
               </span>
             </ClipReveal>
@@ -107,7 +107,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
               style={{
                 padding: '2rem 1.5rem',
                 textAlign: 'center',
-                borderInlineEnd: i < c.results.length - 1 ? '1px solid rgba(32,26,18,0.08)' : 'none',
+                borderInlineEnd: i < c.results.length - 1 ? '1px solid rgba(var(--ivory-rgb),0.08)' : 'none',
               }}
             >
               <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.5rem,3vw,2.25rem)', lineHeight: 1 }}>
@@ -242,7 +242,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
       {/* ── Testimonial ── */}
       <section style={{ padding: '6rem 2rem', background: `linear-gradient(135deg, var(--ink), ${c.sectorColor}20)`, position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.03, pointerEvents: 'none' }}>
-          <KhatamStar size={600} mode="static" />
+          <LogoMark size={600} mode="static" />
         </div>
         <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 2 }}>
           <Reveal>

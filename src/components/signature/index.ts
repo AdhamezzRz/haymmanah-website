@@ -1,4 +1,4 @@
-export { KhatamStar } from './KhatamStar'
+export { LogoMark } from './LogoMark'
 export { Constellation } from './Constellation'
 export { CapabilityBars } from './CapabilityBars'
 export { MagneticButton } from './MagneticButton'

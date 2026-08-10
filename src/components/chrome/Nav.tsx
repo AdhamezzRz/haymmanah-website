@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion } from 'motion/react'
+import { ThemeToggle } from './ThemeToggle'
 
 const links = [
   { href: '/services', label: 'الخدمات' },
@@ -48,7 +49,7 @@ export function Nav() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          background: scrolled ? 'rgba(253,251,246,0.85)' : 'transparent',
+          background: scrolled ? 'rgba(var(--glass-rgb),0.85)' : 'transparent',
           backdropFilter: scrolled ? 'blur(16px)' : 'none',
           borderBottom: scrolled ? '1px solid rgba(201,161,74,0.1)' : 'none',
           transition: 'background 0.4s, backdrop-filter 0.4s, border-color 0.4s',
@@ -93,12 +94,14 @@ export function Nav() {
             ))}
           </ul>
 
+          <ThemeToggle className="hidden-mobile" />
+
           <Link
             href="/contact"
             style={{
               fontFamily: 'var(--font-role-heading)',
               fontSize: '0.9375rem',
-              color: 'var(--ivory)',
+              color: 'var(--on-gold)',
               background: 'var(--gold-grad)',
               padding: '0.5rem 1.25rem',
               borderRadius: 4,
@@ -155,7 +158,7 @@ export function Nav() {
               position: 'fixed',
               inset: 0,
               zIndex: 999,
-              background: 'rgba(253,251,246,0.98)',
+              background: 'rgba(var(--glass-rgb),0.98)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -194,7 +197,7 @@ export function Nav() {
                 style={{
                   fontFamily: 'var(--font-role-heading)',
                   fontSize: '1rem',
-                  color: 'var(--ivory)',
+                  color: 'var(--on-gold)',
                   background: 'var(--gold-grad)',
                   padding: '0.875rem 2rem',
                   borderRadius: 4,
@@ -206,6 +209,13 @@ export function Nav() {
               >
                 احجز استشارتك
               </Link>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: (links.length + 1) * 0.07, duration: 0.4 }}
+            >
+              <ThemeToggle />
             </motion.div>
           </motion.div>
         )}

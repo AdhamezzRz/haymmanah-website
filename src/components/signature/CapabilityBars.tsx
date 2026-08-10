@@ -51,7 +51,7 @@ export function CapabilityBars({ bars = defaultBars }: CapabilityBarsProps) {
               {bar.value}٪
             </span>
           </div>
-          <div style={{ height: 2, background: 'rgba(32,26,18,0.1)', borderRadius: 2, overflow: 'hidden' }}>
+          <div style={{ height: 2, background: 'rgba(var(--ivory-rgb),0.1)', borderRadius: 2, overflow: 'hidden' }}>
             <div
               style={{
                 height: '100%',

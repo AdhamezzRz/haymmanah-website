@@ -4,9 +4,9 @@ export const metadata = { title: 'Styleguide — هيمنة' }
 
 function Token({ name, value, type }: { name: string; value: string; type?: string }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.5rem 0', borderBottom: '1px solid rgba(32,26,18,0.08)' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.5rem 0', borderBottom: '1px solid rgba(var(--ivory-rgb),0.08)' }}>
       {type === 'color' && (
-        <div style={{ width: 40, height: 40, borderRadius: 4, background: value, flexShrink: 0, border: '1px solid rgba(32,26,18,0.15)' }} />
+        <div style={{ width: 40, height: 40, borderRadius: 4, background: value, flexShrink: 0, border: '1px solid rgba(var(--ivory-rgb),0.15)' }} />
       )}
       <div>
         <code style={{ color: 'var(--gold)', fontSize: '0.875rem' }}>{name}</code>
