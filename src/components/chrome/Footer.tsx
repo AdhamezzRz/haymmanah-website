@@ -160,9 +160,17 @@ export function Footer() {
           <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'rgba(var(--muted-rgb),0.6)' }}>
             © {new Date().getFullYear()} هيمنة للخدمات التسويقية — جميع الحقوق محفوظة
           </p>
-          <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'rgba(var(--muted-rgb),0.6)', direction: 'ltr' }}>
-            CR 1010612147
-          </p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
+            <Link href="/privacy" style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'rgba(var(--muted-rgb),0.6)', textDecoration: 'none' }}>
+              سياسة الخصوصية
+            </Link>
+            <Link href="/terms" style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'rgba(var(--muted-rgb),0.6)', textDecoration: 'none' }}>
+              الشروط والأحكام
+            </Link>
+            <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'rgba(var(--muted-rgb),0.6)', direction: 'ltr', margin: 0 }}>
+              CR 1010612147
+            </p>
+          </div>
         </div>
       </div>
     </footer>

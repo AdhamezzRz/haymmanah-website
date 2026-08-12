@@ -20,6 +20,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/approach`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/insights`, lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.85 },
     { url: `${BASE}/contact`,  lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/calculator`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/privacy`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${BASE}/terms`,   lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
   ]
 
   const serviceRoutes: MetadataRoute.Sitemap = services.map(s => ({

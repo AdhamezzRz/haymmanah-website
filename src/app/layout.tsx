@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Aref_Ruqaa, Almarai } from 'next/font/google'
-import { Preloader, Cursor, LenisProvider, ScrollProgress, Nav, Footer, PageTransition, FloatingWhatsApp } from '@/components/chrome'
+import { Preloader, Cursor, LenisProvider, ScrollProgress, Nav, Footer, PageTransition, FloatingWhatsApp, CookieConsent, Analytics } from '@/components/chrome'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { globalSchema } from '@/lib/schema'
 import './globals.css'
@@ -81,6 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={almarai.className}>
         <a href="#main-content" className="skip-link">تخطى إلى المحتوى الرئيسي</a>
+        <Analytics />
         <Preloader />
         <Cursor />
         <ScrollProgress />
@@ -92,6 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <FloatingWhatsApp />
         </LenisProvider>
+        <CookieConsent />
       </body>
     </html>
   )

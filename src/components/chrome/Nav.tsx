@@ -8,11 +8,12 @@ import { AnimatePresence, motion } from 'motion/react'
 import { ThemeToggle } from './ThemeToggle'
 
 const links = [
-  { href: '/services', label: 'الخدمات' },
-  { href: '/work',     label: 'أعمالنا' },
-  { href: '/about',    label: 'من نحن' },
-  { href: '/approach', label: 'منهجيتنا' },
-  { href: '/insights', label: 'المقالات' },
+  { href: '/services',   label: 'الخدمات' },
+  { href: '/work',       label: 'أعمالنا' },
+  { href: '/calculator', label: 'احسب عائدك' },
+  { href: '/about',      label: 'من نحن' },
+  { href: '/approach',   label: 'منهجيتنا' },
+  { href: '/insights',   label: 'المقالات' },
 ]
 
 
