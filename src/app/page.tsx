@@ -184,10 +184,12 @@ export default function Home() {
                     </div>
                     <h3 style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-h3)', color: 'var(--ivory)', marginBottom: '0.5rem' }}>{c.client}</h3>
                     <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)', marginBottom: '1.5rem' }}>{c.tagline}</p>
-                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
-                      <span className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-h2)' }}>{c.results[0].value}</span>
-                      <span style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)' }}>{c.results[0].label}</span>
-                    </div>
+                    {c.results && c.results[0] && (
+                      <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
+                        <span className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-h2)' }}>{c.results[0].value}</span>
+                        <span style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)' }}>{c.results[0].label}</span>
+                      </div>
+                    )}
                   </GlowCard>
                 </Link>
               </Reveal>

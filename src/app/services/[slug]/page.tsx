@@ -136,8 +136,12 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                     <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{c.sector}</p>
                     <h3 style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-h3)', color: 'var(--ivory)', marginBottom: '0.5rem' }}>{c.client}</h3>
                     <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)' }}>{c.tagline}</p>
-                    <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-h2)', marginTop: '1rem' }}>{c.results[0].value}</p>
-                    <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'var(--muted)' }}>{c.results[0].label}</p>
+                    {c.results && c.results[0] && (
+                      <>
+                        <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-h2)', marginTop: '1rem' }}>{c.results[0].value}</p>
+                        <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'var(--muted)' }}>{c.results[0].label}</p>
+                      </>
+                    )}
                   </Link>
                 </Reveal>
               ))}

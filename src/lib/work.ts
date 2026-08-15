@@ -23,8 +23,12 @@ export interface CaseStudy {
   challenge: string
   strategy: string
   deliverables: string[]
-  results: { label: string; value: string }[]
-  testimonial: { quote: string; author: string; role: string }
+  /** Omitted for real clients whose performance numbers we don't have on record — never fabricate these. */
+  results?: { label: string; value: string }[]
+  /** Omitted unless the client gave us an actual quote — never fabricate these. */
+  testimonial?: { quote: string; author: string; role: string }
+  /** Real delivered creative, in /public/work/<slug>/ — shown as a gallery instead of the abstract card art. */
+  media?: string[]
   nextSlug: string
   disciplines: Discipline[]
 }
@@ -291,8 +295,78 @@ export const work: CaseStudy[] = [
       author: 'عمر الدوسري',
       role: 'مقدم بودكاست صوت الرياض',
     },
-    nextSlug: 'zad-al-khalij',
+    nextSlug: 'asala-al-khaleej',
     disciplines: ['مونتاج وفيديو', 'سيو وخرائط جوجل', 'كتابة محتوى', 'بلوجرز ومودلز'],
+  },
+  {
+    slug: 'asala-al-khaleej',
+    client: 'أصالة الخليج لتأجير السيارات',
+    sector: 'سيارات',
+    year: 2025,
+    sectorColor: '#1a4a42',
+    tagline: 'هوية بصرية متكاملة لأسطول يليق بالخليج',
+    challenge: 'أصالة الخليج شركة تأجير سيارات فاخرة تحتاج محتوى بصري ثابت الجودة لعرض أسطولها المتجدد على انستقرام وتيك توك، بهوية تعكس مستوى السيارات المؤجرة دون الاعتماد على تصوير فوتوغرافي مكلف لكل سيارة جديدة.',
+    strategy: 'صمّمنا نظام قوالب بصرية قابلة لإعادة الاستخدام لكل سيارة جديدة تدخل الأسطول — من إطلاقات مثل Ford Taurus 2025 إلى محتوى توعوي للمستأجرين — بهوية موحدة بالأخضر الداكن والذهبي تُبقي العلامة متسقة عبر كل منشور.',
+    deliverables: ['تصميم بوسترات لإطلاقات السيارات', 'محتوى فيديو للأسطول', 'نظام قوالب هوية بصرية موحد', 'محتوى توعوي للمستأجرين'],
+    media: Array.from({ length: 12 }, (_, i) => `/work/asala-al-khaleej/${String(i + 1).padStart(2, '0')}.webp`),
+    nextSlug: 'roza-restaurant',
+    disciplines: ['هوية بصرية وجرافيك', 'تصوير', 'مونتاج وفيديو'],
+  },
+  {
+    slug: 'roza-restaurant',
+    client: 'مطعم روزا',
+    sector: 'مطاعم',
+    year: 2025,
+    sectorColor: '#5a1a2e',
+    tagline: 'هوية فاخرة لتجربة عائلية استثنائية',
+    challenge: 'روزا يقدّم تجربة ضيافة راقية في حديقة عائلية بالرياض، ويحتاج محتوى بصري بنفس مستوى الفخامة الذي يقدّمه على الطاولة — لا مجرد صور عادية للأطباق.',
+    strategy: 'أنتجنا محتوى بصرياً متكاملاً يبرز أجواء الحديقة والضيافة الفاخرة والتجربة العائلية، مع هوية بصرية بالأحمر العنّابي والذهبي تُترجم شخصية المكان في كل منشور.',
+    deliverables: ['تصميم بوسترات ترويجية', 'هوية بصرية للمنصات', 'محتوى تعريفي بالتجربة والأجواء'],
+    media: Array.from({ length: 8 }, (_, i) => `/work/roza-restaurant/${String(i + 1).padStart(2, '0')}.webp`),
+    nextSlug: 'nm-bright',
+    disciplines: ['هوية بصرية وجرافيك', 'تصوير'],
+  },
+  {
+    slug: 'nm-bright',
+    client: 'NM Bright للعناية بالسيارات',
+    sector: 'سيارات',
+    year: 2025,
+    sectorColor: '#1a2540',
+    tagline: 'من ورشة عناية إلى علامة موثوقة رقمياً',
+    challenge: 'NM Bright يقدّم خدمات حماية وتلميع سيارات متخصصة (PPF، تظليل، معالجة طلاء) في سوق مزدحم بالمنافسين، ويحتاج عروضاً وحملات موسمية تُترجم بوضوح للعميل قبل وصوله للورشة.',
+    strategy: 'صمّمنا نظام عروض أسعار بصري واضح يفصل بين السيارة الصغيرة والكبيرة لكل خدمة، بهوية داكنة فاخرة بالأزرق والذهبي تُبرز جودة الخدمة، مع تقويم عروض موسمية يحافظ على الحضور المستمر.',
+    deliverables: ['تصميم عروض أسعار موسمية', 'هوية بصرية للمنصات', 'محتوى ترويجي للخدمات'],
+    media: Array.from({ length: 20 }, (_, i) => `/work/nm-bright/${String(i + 1).padStart(2, '0')}.webp`),
+    nextSlug: 'rawaat-al-tareeq',
+    disciplines: ['هوية بصرية وجرافيك'],
+  },
+  {
+    slug: 'rawaat-al-tareeq',
+    client: 'روعة الطريق لتأجير السيارات',
+    sector: 'سيارات',
+    year: 2025,
+    sectorColor: '#16305a',
+    tagline: 'هيبة السيارة في كل بوستر',
+    challenge: 'روعة الطريق تُنافس بأسطول فاخر (مرسيدس جي كلاس وغيرها)، وتحتاج محتوى إعلاني يبرز فخامة كل سيارة فور توفرها، بسرعة تواكب دورة تجدد الأسطول.',
+    strategy: 'بنينا نظام تصميم سريع الإنتاج لكل سيارة جديدة تتوفر، بهوية بصرية بالأزرق الكحلي والبرتقالي تُبقي كل إعلان واضحاً ومباشراً — السيارة، والتوفر، ورقم التواصل — دون تعقيد.',
+    deliverables: ['تصميم بوسترات إطلاق السيارات', 'هوية بصرية موحدة', 'محتوى إعلاني موسمي'],
+    media: Array.from({ length: 26 }, (_, i) => `/work/rawaat-al-tareeq/${String(i + 1).padStart(2, '0')}.webp`),
+    nextSlug: 'rose-town',
+    disciplines: ['هوية بصرية وجرافيك'],
+  },
+  {
+    slug: 'rose-town',
+    client: 'روز تاون للشقق المفروشة',
+    sector: 'عقارات',
+    year: 2025,
+    sectorColor: '#3d2a10',
+    tagline: 'ضيافة خمس نجوم تُروى بصرياً',
+    challenge: 'روز تاون تقدّم إقامة فندقية فاخرة في الرياض، وتحتاج محتوى تسويقياً يعكس مستوى النجوم الخمس ويستثمر تقييمات الضيوف الحقيقية لبناء الثقة قبل الحجز.',
+    strategy: 'صمّمنا محتوى ترويجياً يدمج تقييمات الضيوف الفعلية مع تصوير الأجواء الداخلية الفاخرة، بهوية بصرية ذهبية داكنة تُبرز الطابع الفندقي الراقي وتدفع لحجز مباشر بعروض محدودة.',
+    deliverables: ['تصميم بوسترات عروض وحجوزات', 'دمج تقييمات الضيوف بصرياً', 'هوية بصرية فندقية فاخرة'],
+    media: Array.from({ length: 5 }, (_, i) => `/work/rose-town/${String(i + 1).padStart(2, '0')}.webp`),
+    nextSlug: 'zad-al-khalij',
+    disciplines: ['هوية بصرية وجرافيك', 'تصوير'],
   },
 ]
 

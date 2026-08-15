@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import Image from 'next/image'
 import { work, getCase } from '@/lib/work'
 import { LogoMark } from '@/components/signature/LogoMark'
 import { SectorIcon, DisciplineIcon } from '@/components/work/icons'
@@ -99,27 +100,57 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
       </section>
 
       {/* ── Quick stats strip ── */}
-      <section style={{ background: 'var(--ink)', borderBottom: '1px solid rgba(201,161,74,0.1)', padding: '0' }}>
-        <div style={{ maxWidth: 960, margin: '0 auto', display: 'grid', gridTemplateColumns: `repeat(${c.results.length}, 1fr)`, gap: 0 }}>
-          {c.results.map((r, i) => (
-            <div
-              key={r.label}
-              style={{
-                padding: '2rem 1.5rem',
-                textAlign: 'center',
-                borderInlineEnd: i < c.results.length - 1 ? '1px solid rgba(var(--ivory-rgb),0.08)' : 'none',
-              }}
-            >
-              <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.5rem,3vw,2.25rem)', lineHeight: 1 }}>
-                {r.value}
+      {c.results && c.results.length > 0 && (
+        <section style={{ background: 'var(--ink)', borderBottom: '1px solid rgba(201,161,74,0.1)', padding: '0' }}>
+          <div style={{ maxWidth: 960, margin: '0 auto', display: 'grid', gridTemplateColumns: `repeat(${c.results.length}, 1fr)`, gap: 0 }}>
+            {c.results.map((r, i) => (
+              <div
+                key={r.label}
+                style={{
+                  padding: '2rem 1.5rem',
+                  textAlign: 'center',
+                  borderInlineEnd: i < c.results!.length - 1 ? '1px solid rgba(var(--ivory-rgb),0.08)' : 'none',
+                }}
+              >
+                <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.5rem,3vw,2.25rem)', lineHeight: 1 }}>
+                  {r.value}
+                </p>
+                <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'var(--muted)', marginTop: '0.375rem', letterSpacing: '0.03em' }}>
+                  {r.label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ── Real delivered creative gallery ── */}
+      {c.media && c.media.length > 0 && (
+        <section style={{ padding: '5rem 2rem', background: 'var(--ink)' }}>
+          <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+            <Reveal>
+              <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '2rem', textAlign: 'center' }}>
+                من التصاميم المُسلَّمة فعلياً
               </p>
-              <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'var(--muted)', marginTop: '0.375rem', letterSpacing: '0.03em' }}>
-                {r.label}
-              </p>
+            </Reveal>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1rem' }}>
+              {c.media.map((src, i) => (
+                <Reveal key={src} delay={Math.min(i * 40, 400)}>
+                  <div style={{ position: 'relative', aspectRatio: '4 / 5', borderRadius: 10, overflow: 'hidden', border: '1px solid rgba(201,161,74,0.15)' }}>
+                    <Image
+                      src={src}
+                      alt={`${c.client} — تصميم ${i + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 45vw, 220px"
+                      style={{ objectFit: 'cover' }}
+                    />
+                  </div>
+                </Reveal>
+              ))}
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       {/* ── Challenge ── */}
       <section style={{ padding: '6rem 2rem', background: 'var(--navy-2)' }}>
@@ -240,37 +271,39 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
       </section>
 
       {/* ── Testimonial ── */}
-      <section style={{ padding: '6rem 2rem', background: `linear-gradient(135deg, var(--ink), ${c.sectorColor}20)`, position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.03, pointerEvents: 'none' }}>
-          <LogoMark size={600} mode="static" />
-        </div>
-        <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 2 }}>
-          <Reveal>
-            {/* Quote mark */}
-            <div style={{ fontFamily: 'var(--font-role-display)', fontSize: '5rem', color: 'var(--gold)', lineHeight: 0.6, opacity: 0.4, marginBottom: '2rem' }}>
-              "
-            </div>
-            <blockquote style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.1rem,2.5vw,1.5rem)', color: 'var(--ivory)', lineHeight: 1.75, marginBottom: '2.5rem', fontStyle: 'normal' }}>
-              {c.testimonial.quote}
-            </blockquote>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
-              <div style={{ width: 42, height: 42, borderRadius: '50%', background: `${c.sectorColor}60`, border: '2px solid rgba(201,161,74,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span style={{ fontFamily: 'var(--font-role-display)', fontSize: '1.1rem', color: 'var(--gold)' }}>
-                  {c.testimonial.author[0]}
-                </span>
+      {c.testimonial && (
+        <section style={{ padding: '6rem 2rem', background: `linear-gradient(135deg, var(--ink), ${c.sectorColor}20)`, position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.03, pointerEvents: 'none' }}>
+            <LogoMark size={600} mode="static" />
+          </div>
+          <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 2 }}>
+            <Reveal>
+              {/* Quote mark */}
+              <div style={{ fontFamily: 'var(--font-role-display)', fontSize: '5rem', color: 'var(--gold)', lineHeight: 0.6, opacity: 0.4, marginBottom: '2rem' }}>
+                "
               </div>
-              <div style={{ textAlign: 'start' }}>
-                <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.9375rem', color: 'var(--gold)' }}>
-                  {c.testimonial.author}
-                </p>
-                <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'var(--muted)' }}>
-                  {c.testimonial.role}
-                </p>
+              <blockquote style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.1rem,2.5vw,1.5rem)', color: 'var(--ivory)', lineHeight: 1.75, marginBottom: '2.5rem', fontStyle: 'normal' }}>
+                {c.testimonial.quote}
+              </blockquote>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
+                <div style={{ width: 42, height: 42, borderRadius: '50%', background: `${c.sectorColor}60`, border: '2px solid rgba(201,161,74,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ fontFamily: 'var(--font-role-display)', fontSize: '1.1rem', color: 'var(--gold)' }}>
+                    {c.testimonial.author[0]}
+                  </span>
+                </div>
+                <div style={{ textAlign: 'start' }}>
+                  <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.9375rem', color: 'var(--gold)' }}>
+                    {c.testimonial.author}
+                  </p>
+                  <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'var(--muted)' }}>
+                    {c.testimonial.role}
+                  </p>
+                </div>
               </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+            </Reveal>
+          </div>
+        </section>
+      )}
 
       {/* ── Next case ── */}
       {nextCase && (

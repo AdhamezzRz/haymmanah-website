@@ -10,30 +10,42 @@ import { ClipReveal } from '@/components/signature/ClipReveal'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'motion/react'
 
 type Mode = 'sector' | 'discipline'
 
 /* ─── Card visual header ────────────────────────────── */
 function CardVisual({ c, height = 240 }: { c: CaseStudy; height?: number }) {
+  const cover = c.media?.[0]
+
   return (
     <div style={{ position: 'relative', height, overflow: 'hidden', background: `linear-gradient(145deg, var(--ink) 0%, ${c.sectorColor}55 100%)` }}>
-      <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.04 }} xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id={`g-${c.slug}`} width="32" height="32" patternUnits="userSpaceOnUse">
-            <path d="M 32 0 L 0 0 0 32" fill="none" stroke="var(--gold)" strokeWidth="0.5" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill={`url(#g-${c.slug})`} />
-      </svg>
+      {cover ? (
+        <>
+          <Image src={cover} alt={c.client} fill sizes="(max-width: 768px) 100vw, 480px" style={{ objectFit: 'cover' }} />
+          <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, transparent 40%, ${c.sectorColor}90 100%)` }} />
+        </>
+      ) : (
+        <>
+          <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.04 }} xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id={`g-${c.slug}`} width="32" height="32" patternUnits="userSpaceOnUse">
+                <path d="M 32 0 L 0 0 0 32" fill="none" stroke="var(--gold)" strokeWidth="0.5" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill={`url(#g-${c.slug})`} />
+          </svg>
 
-      <div style={{ position: 'absolute', bottom: -40, insetInlineEnd: -40, opacity: 0.07, pointerEvents: 'none' }}>
-        <LogoMark size={220} mode="static" stroke={c.sectorColor} />
-      </div>
+          <div style={{ position: 'absolute', bottom: -40, insetInlineEnd: -40, opacity: 0.07, pointerEvents: 'none' }}>
+            <LogoMark size={220} mode="static" stroke={c.sectorColor} />
+          </div>
 
-      <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <SectorIcon sector={c.sector} size={80} />
-      </div>
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <SectorIcon sector={c.sector} size={80} />
+          </div>
+        </>
+      )}
 
       <div style={{ position: 'absolute', top: '1rem', insetInlineStart: '1rem' }}>
         <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.75rem', color: 'var(--muted)', background: 'rgba(var(--glass-rgb),0.8)', border: '1px solid rgba(var(--ivory-rgb),0.08)', padding: '0.2rem 0.6rem', borderRadius: 20 }}>
@@ -300,21 +312,27 @@ export default function WorkPage() {
                             <DisciplineChips items={featured.disciplines} onPick={jumpToDiscipline} />
                           </div>
 
-                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(var(--ivory-rgb),0.08)', marginBottom: '1.5rem' }}>
-                            {featured.results.map(r => (
-                              <div key={r.label}>
-                                <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.25rem,2vw,1.625rem)', lineHeight: 1 }}>{r.value}</p>
-                                <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.7rem', color: 'var(--muted)', marginTop: '0.25rem', letterSpacing: '0.03em' }}>{r.label}</p>
-                              </div>
-                            ))}
-                          </div>
+                          {featured.results && featured.results.length > 0 && (
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(var(--ivory-rgb),0.08)', marginBottom: '1.5rem' }}>
+                              {featured.results.map(r => (
+                                <div key={r.label}>
+                                  <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.25rem,2vw,1.625rem)', lineHeight: 1 }}>{r.value}</p>
+                                  <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.7rem', color: 'var(--muted)', marginTop: '0.25rem', letterSpacing: '0.03em' }}>{r.label}</p>
+                                </div>
+                              ))}
+                            </div>
+                          )}
 
-                          <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'rgba(var(--ivory-rgb),0.6)', lineHeight: 1.7, fontStyle: 'italic', marginBottom: '0.5rem' }}>
-                            "{featured.testimonial.quote.slice(0, 90)}…"
-                          </p>
-                          <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.1em' }}>
-                            — {featured.testimonial.author}
-                          </p>
+                          {featured.testimonial && (
+                            <>
+                              <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'rgba(var(--ivory-rgb),0.6)', lineHeight: 1.7, fontStyle: 'italic', marginBottom: '0.5rem' }}>
+                                "{featured.testimonial.quote.slice(0, 90)}…"
+                              </p>
+                              <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.1em' }}>
+                                — {featured.testimonial.author}
+                              </p>
+                            </>
+                          )}
                         </div>
 
                         <div style={{ marginTop: '1.5rem' }}>
@@ -350,14 +368,16 @@ export default function WorkPage() {
                               <DisciplineChips items={c.disciplines} onPick={jumpToDiscipline} />
                             </div>
 
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.875rem', paddingTop: '1.25rem', borderTop: '1px solid rgba(var(--ivory-rgb),0.08)', marginBottom: '1.25rem', marginTop: 'auto' }}>
-                              {c.results.slice(0, 2).map(r => (
-                                <div key={r.label}>
-                                  <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.1rem,2vw,1.375rem)', lineHeight: 1 }}>{r.value}</p>
-                                  <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.675rem', color: 'var(--muted)', marginTop: '0.2rem' }}>{r.label}</p>
-                                </div>
-                              ))}
-                            </div>
+                            {c.results && c.results.length > 0 && (
+                              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.875rem', paddingTop: '1.25rem', borderTop: '1px solid rgba(var(--ivory-rgb),0.08)', marginBottom: '1.25rem', marginTop: 'auto' }}>
+                                {c.results.slice(0, 2).map(r => (
+                                  <div key={r.label}>
+                                    <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.1rem,2vw,1.375rem)', lineHeight: 1 }}>{r.value}</p>
+                                    <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.675rem', color: 'var(--muted)', marginTop: '0.2rem' }}>{r.label}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
 
                             <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.8rem', color: 'var(--gold)', display: 'inline-flex', alignItems: 'center', gap: '0.375rem' }}>
                               اقرأ القصة

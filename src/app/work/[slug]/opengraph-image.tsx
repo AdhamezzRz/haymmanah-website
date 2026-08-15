@@ -34,7 +34,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <span style={{ fontSize: 26, color: '#8a93bf' }}>{c?.sector ?? 'أعمالنا'}</span>
           <span style={{ fontSize: 64, color: '#f3ecda', lineHeight: 1.15 }}>{c?.client ?? 'دراسة حالة'}</span>
-          {c && (
+          {c && c.results && c.results.length > 0 && (
             <div style={{ display: 'flex', gap: 48, marginTop: 24 }}>
               {c.results.slice(0, 3).map(r => (
                 <div key={r.label} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
