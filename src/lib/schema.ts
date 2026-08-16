@@ -40,7 +40,7 @@ export const organization = {
     {
       '@type': 'ContactPoint',
       telephone: '+966-57-059-1088',
-      email: 'RH-2025@outlook.sa',
+      email: 'haymannah@gmail.com',
       contactType: 'customer service',
       availableLanguage: ['Arabic', 'English'],
       contactOption: 'HearingImpairedSupported',
@@ -80,7 +80,7 @@ export const localBusiness = {
   name: 'هيمنة للخدمات التسويقية',
   url: BASE_URL,
   telephone: '+966570591088',
-  email: 'RH-2025@outlook.sa',
+  email: 'haymannah@gmail.com',
   priceRange: '$$$$',
   currenciesAccepted: 'SAR',
   paymentAccepted: 'Cash, Credit Card, Bank Transfer',

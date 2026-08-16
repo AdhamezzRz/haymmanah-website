@@ -18,7 +18,7 @@ const services = [
 
 const contact = [
   { href: 'tel:+966570591088',         label: '+966 57 059 1088' },
-  { href: 'mailto:RH-2025@outlook.sa', label: 'RH-2025@outlook.sa' },
+  { href: 'mailto:haymannah@gmail.com', label: 'haymannah@gmail.com' },
   { href: 'https://wa.me/966570591088?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1', label: 'واتساب', external: true },
   { href: '/contact',                  label: 'حجز استشارة' },
 ]

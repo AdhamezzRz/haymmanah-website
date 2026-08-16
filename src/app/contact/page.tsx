@@ -22,7 +22,7 @@ const contactFaqs = [
 
 const contactDetails = [
   { label: 'هاتف', value: '+966 57 059 1088', href: 'tel:+966570591088', ltr: true },
-  { label: 'بريد إلكتروني', value: 'RH-2025@outlook.sa', href: 'mailto:RH-2025@outlook.sa', ltr: true },
+  { label: 'بريد إلكتروني', value: 'haymannah@gmail.com', href: 'mailto:haymannah@gmail.com', ltr: true },
   { label: 'الموقع', value: 'حي المربع، الرياض', href: null, ltr: false },
   { label: 'السجل التجاري', value: '1010612147', href: null, ltr: true },
 ]
