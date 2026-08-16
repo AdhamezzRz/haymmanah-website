@@ -4,6 +4,8 @@ import { work, getCase } from '@/lib/work'
 import { LogoMark } from '@/components/signature/LogoMark'
 import { SectorIcon, DisciplineIcon } from '@/components/work/icons'
 import { disciplineColors } from '@/lib/work'
+import { AmbientReel } from '@/components/work/AmbientReel'
+import { SpotlightVideo } from '@/components/work/SpotlightVideo'
 import { ClipReveal } from '@/components/signature/ClipReveal'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
@@ -124,9 +126,24 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
         </section>
       )}
 
+      {/* ── Video reel ── */}
+      {(c.ambientReel || c.spotlightVideo) && (
+        <section style={{ padding: '5rem 2rem 2rem', background: 'var(--ink)' }}>
+          <div style={{ maxWidth: 420, margin: '0 auto' }}>
+            <Reveal>
+              <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '1.5rem', textAlign: 'center' }}>
+                من الفيديوهات المُنتَجة فعلياً
+              </p>
+              {c.ambientReel && <AmbientReel src={c.ambientReel.video} poster={c.ambientReel.poster} />}
+              {c.spotlightVideo && <SpotlightVideo src={c.spotlightVideo.video} poster={c.spotlightVideo.poster} />}
+            </Reveal>
+          </div>
+        </section>
+      )}
+
       {/* ── Real delivered creative gallery ── */}
       {c.media && c.media.length > 0 && (
-        <section style={{ padding: '5rem 2rem', background: 'var(--ink)' }}>
+        <section style={{ padding: (c.ambientReel || c.spotlightVideo) ? '3rem 2rem 5rem' : '5rem 2rem', background: 'var(--ink)' }}>
           <div style={{ maxWidth: 1100, margin: '0 auto' }}>
             <Reveal>
               <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '2rem', textAlign: 'center' }}>

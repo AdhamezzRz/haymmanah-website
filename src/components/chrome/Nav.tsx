@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion } from 'motion/react'
 import { ThemeToggle } from './ThemeToggle'
+import { SearchModal } from './SearchModal'
 
 const links = [
   { href: '/services',   label: 'الخدمات' },
@@ -94,6 +95,8 @@ export function Nav() {
               </li>
             ))}
           </ul>
+
+          <SearchModal />
 
           <ThemeToggle className="hidden-mobile" />
 

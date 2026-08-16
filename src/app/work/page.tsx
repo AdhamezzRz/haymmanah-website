@@ -23,8 +23,21 @@ function CardVisual({ c, height = 240 }: { c: CaseStudy; height?: number }) {
     <div style={{ position: 'relative', height, overflow: 'hidden', background: `linear-gradient(145deg, var(--ink) 0%, ${c.sectorColor}55 100%)` }}>
       {cover ? (
         <>
-          <Image src={cover} alt={c.client} fill sizes="(max-width: 768px) 100vw, 480px" style={{ objectFit: 'cover' }} />
+          <div className="work-card-cover" style={{ position: 'absolute', inset: 0 }}>
+            <Image src={cover} alt={c.client} fill sizes="(max-width: 768px) 100vw, 480px" style={{ objectFit: 'cover' }} />
+          </div>
           <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, transparent 40%, ${c.sectorColor}90 100%)` }} />
+          <div className="work-card-view-tag" style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+            <span style={{
+              display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+              fontFamily: 'var(--font-role-heading)', fontSize: '0.8125rem', letterSpacing: '0.08em',
+              color: '#fff', background: 'rgba(10,8,3,0.55)', border: '1px solid rgba(255,255,255,0.3)',
+              backdropFilter: 'blur(6px)', padding: '0.5rem 1.1rem', borderRadius: 30,
+            }}>
+              عرض المشروع
+              <svg viewBox="0 0 16 16" width={13} height={13} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M10 8H3M7 5l3 3-3 3" style={{ transform: 'scaleX(-1)', transformOrigin: 'center' }} /></svg>
+            </span>
+          </div>
         </>
       ) : (
         <>
@@ -289,7 +302,7 @@ export default function WorkPage() {
               {featured && (
                 <Reveal>
                   <Link href={`/work/${featured.slug}`} style={{ textDecoration: 'none', display: 'block', marginBottom: '1.5rem' }}>
-                    <GlowCard style={{ background: 'var(--navy-2)', display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: 340 }}>
+                    <GlowCard className="work-card" style={{ background: 'var(--navy-2)', display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: 340 }}>
                       <div style={{ position: 'relative' }}>
                         <CardVisual c={featured} height={340} />
                         <div style={{ position: 'absolute', bottom: '1.25rem', insetInlineStart: '1.25rem', zIndex: 3 }}>
@@ -353,7 +366,7 @@ export default function WorkPage() {
                   {rest.map((c, i) => (
                     <Reveal key={c.slug} delay={i * 70}>
                       <Link href={`/work/${c.slug}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
-                        <GlowCard style={{ background: 'var(--navy-2)', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                        <GlowCard className="work-card" style={{ background: 'var(--navy-2)', display: 'flex', flexDirection: 'column', height: '100%' }}>
                           <CardVisual c={c} height={200} />
 
                           <div style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', flex: 1 }}>

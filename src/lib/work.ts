@@ -29,6 +29,12 @@ export interface CaseStudy {
   testimonial?: { quote: string; author: string; role: string }
   /** Real delivered creative, in /public/work/<slug>/ — shown as a gallery instead of the abstract card art. */
   media?: string[]
+  /** Muted autoplay B-roll — only for footage with no identifiable people. */
+  ambientReel?: { video: string; poster: string }
+  /** Click-to-play footage with sound — used when a real person appears on camera. */
+  spotlightVideo?: { video: string; poster: string }
+  /** Real logo mark cropped from delivered creative, for the trusted-by strip. */
+  logo?: { src: string; width: number; height: number }
   nextSlug: string
   disciplines: Discipline[]
 }
@@ -45,6 +51,8 @@ export const work: CaseStudy[] = [
     strategy: 'صمّمنا نظام قوالب بصرية قابلة لإعادة الاستخدام لكل سيارة جديدة تدخل الأسطول — من إطلاقات مثل Ford Taurus 2025 إلى محتوى توعوي للمستأجرين — بهوية موحدة بالأخضر الداكن والذهبي تُبقي العلامة متسقة عبر كل منشور.',
     deliverables: ['تصميم بوسترات لإطلاقات السيارات', 'محتوى فيديو للأسطول', 'نظام قوالب هوية بصرية موحد', 'محتوى توعوي للمستأجرين'],
     media: Array.from({ length: 12 }, (_, i) => `/work/asala-al-khaleej/${String(i + 1).padStart(2, '0')}.webp`),
+    ambientReel: { video: '/work/asala-al-khaleej/video/reel.mp4', poster: '/work/asala-al-khaleej/video/poster.jpg' },
+    logo: { src: '/logos/asala-al-khaleej.webp', width: 290, height: 110 },
     nextSlug: 'roza-restaurant',
     disciplines: ['هوية بصرية وجرافيك', 'تصوير', 'مونتاج وفيديو'],
   },
@@ -59,6 +67,7 @@ export const work: CaseStudy[] = [
     strategy: 'أنتجنا محتوى بصرياً متكاملاً يبرز أجواء الحديقة والضيافة الفاخرة والتجربة العائلية، مع هوية بصرية بالأحمر العنّابي والذهبي تُترجم شخصية المكان في كل منشور.',
     deliverables: ['تصميم بوسترات ترويجية', 'هوية بصرية للمنصات', 'محتوى تعريفي بالتجربة والأجواء'],
     media: Array.from({ length: 8 }, (_, i) => `/work/roza-restaurant/${String(i + 1).padStart(2, '0')}.webp`),
+    logo: { src: '/logos/roza-restaurant.webp', width: 2154, height: 1394 },
     nextSlug: 'nm-bright',
     disciplines: ['هوية بصرية وجرافيك', 'تصوير'],
   },
@@ -73,6 +82,8 @@ export const work: CaseStudy[] = [
     strategy: 'صمّمنا نظام عروض أسعار بصري واضح يفصل بين السيارة الصغيرة والكبيرة لكل خدمة، بهوية داكنة فاخرة بالأزرق والذهبي تُبرز جودة الخدمة، مع تقويم عروض موسمية يحافظ على الحضور المستمر.',
     deliverables: ['تصميم عروض أسعار موسمية', 'هوية بصرية للمنصات', 'محتوى ترويجي للخدمات'],
     media: Array.from({ length: 20 }, (_, i) => `/work/nm-bright/${String(i + 1).padStart(2, '0')}.webp`),
+    spotlightVideo: { video: '/work/nm-bright/video/reel.mp4', poster: '/work/nm-bright/video/poster.jpg' },
+    logo: { src: '/logos/nm-bright.webp', width: 720, height: 280 },
     nextSlug: 'rawaat-al-tareeq',
     disciplines: ['هوية بصرية وجرافيك'],
   },
@@ -87,6 +98,7 @@ export const work: CaseStudy[] = [
     strategy: 'بنينا نظام تصميم سريع الإنتاج لكل سيارة جديدة تتوفر، بهوية بصرية بالأزرق الكحلي والبرتقالي تُبقي كل إعلان واضحاً ومباشراً — السيارة، والتوفر، ورقم التواصل — دون تعقيد.',
     deliverables: ['تصميم بوسترات إطلاق السيارات', 'هوية بصرية موحدة', 'محتوى إعلاني موسمي'],
     media: Array.from({ length: 26 }, (_, i) => `/work/rawaat-al-tareeq/${String(i + 1).padStart(2, '0')}.webp`),
+    logo: { src: '/logos/rawaat-al-tareeq.webp', width: 310, height: 180 },
     nextSlug: 'rose-town',
     disciplines: ['هوية بصرية وجرافيك'],
   },
@@ -101,6 +113,8 @@ export const work: CaseStudy[] = [
     strategy: 'صمّمنا محتوى ترويجياً يدمج تقييمات الضيوف الفعلية مع تصوير الأجواء الداخلية الفاخرة، بهوية بصرية ذهبية داكنة تُبرز الطابع الفندقي الراقي وتدفع لحجز مباشر بعروض محدودة.',
     deliverables: ['تصميم بوسترات عروض وحجوزات', 'دمج تقييمات الضيوف بصرياً', 'هوية بصرية فندقية فاخرة'],
     media: Array.from({ length: 5 }, (_, i) => `/work/rose-town/${String(i + 1).padStart(2, '0')}.webp`),
+    ambientReel: { video: '/work/rose-town/video/reel.mp4', poster: '/work/rose-town/video/poster.jpg' },
+    logo: { src: '/logos/rose-town.webp', width: 320, height: 200 },
     nextSlug: 'zad-al-khalij',
     disciplines: ['هوية بصرية وجرافيك', 'تصوير'],
   },

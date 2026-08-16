@@ -12,6 +12,8 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { faqSchema, BASE_URL } from '@/lib/schema'
 import { work } from '@/lib/work'
+import { AmbientReel } from '@/components/work/AmbientReel'
+import { TrustedByMarquee } from '@/components/signature/TrustedByMarquee'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
@@ -54,6 +56,8 @@ const testimonials = [
 ]
 
 const featuredWork = work.slice(0, 3)
+const reelClients = work.filter(c => c.ambientReel)
+const logoClients = work.filter(c => c.logo)
 
 export default function Home() {
   return (
@@ -136,6 +140,16 @@ export default function Home() {
         <Marquee items={disciplines} />
       </div>
 
+      {/* ── TRUSTED BY ── */}
+      {logoClients.length > 0 && (
+        <div style={{ padding: '3rem 0', background: 'var(--ink)' }}>
+          <p style={{ textAlign: 'center', fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--muted)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '2rem' }}>
+            علامات حقيقية وثقت بنا
+          </p>
+          <TrustedByMarquee items={logoClients.map(c => ({ slug: c.slug, client: c.client, logo: c.logo!.src, width: c.logo!.width, height: c.logo!.height }))} />
+        </div>
+      )}
+
       {/* ── STAT BAND ── */}
       <section style={{ padding: '6rem 2rem', background: 'var(--navy-2)' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
@@ -203,6 +217,38 @@ export default function Home() {
           </Reveal>
         </div>
       </section>
+
+      {/* ── SHOWREEL ── */}
+      {reelClients.length > 0 && (
+        <section style={{ padding: '2rem 2rem 6rem' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <Reveal>
+              <SectionHeading eyebrow="من إنتاجنا" sub="فيديوهات حقيقية سلّمناها لعملاء حقيقيين، لا عرض تجريبي.">
+                محتوى يتحرك
+              </SectionHeading>
+            </Reveal>
+            <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(reelClients.length, 2)}, 1fr)`, gap: '1.5rem', marginTop: '3rem' }}>
+              {reelClients.map((c, i) => (
+                <Reveal key={c.slug} delay={i * 140}>
+                  <Link href={`/work/${c.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
+                    <div style={{ position: 'relative' }}>
+                      <AmbientReel src={c.ambientReel!.video} poster={c.ambientReel!.poster} ratio="3 / 4" />
+                      <div style={{ position: 'absolute', insetInlineStart: '1.25rem', bottom: '1.25rem', zIndex: 2 }}>
+                        <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.7rem', letterSpacing: '0.15em', color: 'var(--gold)', textTransform: 'uppercase', marginBottom: '0.3rem' }}>
+                          {c.sector}
+                        </p>
+                        <h3 style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.1rem,2vw,1.375rem)', color: '#fff', lineHeight: 1.15 }}>
+                          {c.client}
+                        </h3>
+                      </div>
+                    </div>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── CAPABILITY BARS ── */}
       <section style={{ padding: '6rem 2rem', background: 'var(--ink)' }}>
