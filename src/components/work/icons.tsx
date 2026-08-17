@@ -5,7 +5,7 @@ import type { Sector, Discipline } from '@/lib/work'
 function Ring({ size, ring = true, children }: { size: number; ring?: boolean; children: React.ReactNode }) {
   return (
     <svg viewBox="0 0 96 96" width={size} height={size} fill="none">
-      {ring && <circle cx="48" cy="48" r="40" fill="rgba(201,161,74,0.08)" stroke="rgba(201,161,74,0.2)" strokeWidth="1" />}
+      {ring && <circle cx="48" cy="48" r="40" fill="rgba(76,99,199,0.08)" stroke="rgba(76,99,199,0.2)" strokeWidth="1" />}
       <g transform="translate(24,24)" stroke="var(--gold)" strokeWidth={ring ? 2.5 : 4} strokeLinecap="round" strokeLinejoin="round" fill="none">
         {children}
       </g>

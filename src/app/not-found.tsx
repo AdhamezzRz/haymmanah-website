@@ -47,7 +47,7 @@ export default function NotFound() {
                 fontSize: '0.875rem',
                 color: 'var(--gold)',
                 textDecoration: 'none',
-                border: '1px solid rgba(201,161,74,0.3)',
+                border: '1px solid rgba(76,99,199,0.3)',
                 borderRadius: 30,
                 padding: '0.5rem 1.25rem',
                 transition: 'border-color 0.2s',

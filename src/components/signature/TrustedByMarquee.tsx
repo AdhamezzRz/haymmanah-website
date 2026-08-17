@@ -35,7 +35,7 @@ export function TrustedByMarquee({ items, speed = 55 }: { items: LogoItem[]; spe
             style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               height: 100, minWidth: 170, padding: '0 1.75rem',
-              background: 'var(--navy-2)', border: '1px solid rgba(201,161,74,0.12)', borderRadius: 12,
+              background: 'var(--navy-2)', border: '1px solid rgba(76,99,199,0.12)', borderRadius: 12,
               transition: 'border-color 0.2s, transform 0.2s',
             }}
           >

@@ -8,7 +8,7 @@ export function SpotlightVideo({ src, poster, ratio = '9 / 16' }: { src: string;
   const videoRef = useRef<HTMLVideoElement>(null)
 
   return (
-    <div style={{ position: 'relative', aspectRatio: ratio, borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(201,161,74,0.18)', background: 'var(--ink)' }}>
+    <div style={{ position: 'relative', aspectRatio: ratio, borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(76,99,199,0.18)', background: 'var(--ink)' }}>
       <video
         ref={videoRef}
         src={src}

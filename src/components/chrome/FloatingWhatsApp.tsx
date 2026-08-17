@@ -32,7 +32,7 @@ export function FloatingWhatsApp() {
             transition={{ duration: 0.2 }}
             style={{
               background: 'var(--ink)',
-              border: '1px solid rgba(201,161,74,0.2)',
+              border: '1px solid rgba(76,99,199,0.2)',
               borderRadius: 6,
               padding: '0.5rem 1rem',
               fontFamily: 'var(--font-role-heading)',

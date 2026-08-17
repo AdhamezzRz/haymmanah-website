@@ -87,9 +87,9 @@ export function SearchModal() {
               exit={{ opacity: 0, y: -10, scale: 0.98 }}
               transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
               onClick={e => e.stopPropagation()}
-              style={{ width: '100%', maxWidth: 560, background: 'var(--navy-2)', border: '1px solid rgba(201,161,74,0.25)', borderRadius: 14, overflow: 'hidden', boxShadow: '0 30px 80px rgba(0,0,0,0.5)' }}
+              style={{ width: '100%', maxWidth: 560, background: 'var(--navy-2)', border: '1px solid rgba(76,99,199,0.25)', borderRadius: 14, overflow: 'hidden', boxShadow: '0 30px 80px rgba(0,0,0,0.5)' }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1.1rem 1.25rem', borderBottom: '1px solid rgba(201,161,74,0.12)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1.1rem 1.25rem', borderBottom: '1px solid rgba(76,99,199,0.12)' }}>
                 <svg viewBox="0 0 20 20" width={18} height={18} fill="none" stroke="var(--gold)" strokeWidth="1.6"><circle cx="9" cy="9" r="6" /><path d="M17 17l-3.5-3.5" strokeLinecap="round" /></svg>
                 <input
                   autoFocus

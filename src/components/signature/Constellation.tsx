@@ -56,7 +56,7 @@ export function Constellation({ className, style }: { className?: string; style?
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(201,161,74,0.6)'
+        ctx.fillStyle = 'rgba(76,99,199,0.6)'
         ctx.fill()
       }
 
@@ -69,7 +69,7 @@ export function Constellation({ className, style }: { className?: string; style?
             ctx.beginPath()
             ctx.moveTo(particles[i].x, particles[i].y)
             ctx.lineTo(particles[j].x, particles[j].y)
-            ctx.strokeStyle = `rgba(201,161,74,${0.15 * (1 - d / LINK_DIST)})`
+            ctx.strokeStyle = `rgba(76,99,199,${0.15 * (1 - d / LINK_DIST)})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }

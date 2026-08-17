@@ -67,7 +67,7 @@ export default function AboutPage() {
               'نرفض الحلول المؤقتة. نبني منظومات تنمو معك، لا حملات تنتهي عند انتهاء الميزانية.',
             ].map((p, i) => (
               <Reveal key={i} delay={i * 80}>
-                <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-body)', color: 'var(--muted)', lineHeight: 1.8, paddingInlineStart: '1.5rem', borderInlineStart: '2px solid rgba(201,161,74,0.3)' }}>
+                <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-body)', color: 'var(--muted)', lineHeight: 1.8, paddingInlineStart: '1.5rem', borderInlineStart: '2px solid rgba(76,99,199,0.3)' }}>
                   {p}
                 </p>
               </Reveal>
@@ -99,7 +99,7 @@ export default function AboutPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '2rem', marginTop: '3rem' }}>
             {values.map((v, i) => (
               <Reveal key={v.n} delay={i * 100}>
-                <div style={{ padding: '2rem', borderTop: '2px solid rgba(201,161,74,0.3)' }}>
+                <div style={{ padding: '2rem', borderTop: '2px solid rgba(76,99,199,0.3)' }}>
                   <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: '3rem', lineHeight: 1, marginBottom: '1rem' }}>{v.n}</p>
                   <h3 style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-h3)', color: 'var(--ivory)', marginBottom: '0.75rem' }}>{v.title}</h3>
                   <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)', lineHeight: 1.7 }}>{v.body}</p>
@@ -107,6 +107,51 @@ export default function AboutPage() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Company profile downloads */}
+      <section style={{ padding: '5rem 2rem', background: 'var(--navy-2)' }}>
+        <div style={{ maxWidth: 700, margin: '0 auto', textAlign: 'center' }}>
+          <Reveal>
+            <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '1rem' }}>
+              ملف الشركة
+            </p>
+            <h2 style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-h2)', color: 'var(--ivory)', marginBottom: '1rem', lineHeight: 1.1 }}>
+              حمّل بروفايل هيمنة
+            </h2>
+            <p style={{ fontFamily: 'var(--font-role-body)', color: 'var(--muted)', maxWidth: 460, margin: '0 auto 2.5rem', lineHeight: 1.8 }}>
+              ملف تعريفي كامل بخدماتنا ومنهجيتنا، متوفر بالعربية والإنجليزية.
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+              <a
+                href="/profile/haymanah-profile-ar.pdf"
+                download
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                  fontFamily: 'var(--font-role-heading)', fontWeight: 600, fontSize: '1.0625rem',
+                  padding: '1rem 2.5rem', borderRadius: 4, textDecoration: 'none',
+                  background: 'var(--gold-grad)', color: 'var(--on-gold)',
+                }}
+              >
+                <svg viewBox="0 0 20 20" width={18} height={18} fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M10 3v10m0 0l-4-4m4 4l4-4M4 17h12" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                البروفايل بالعربية
+              </a>
+              <a
+                href="/profile/haymanah-profile-en.pdf"
+                download
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                  fontFamily: 'var(--font-role-heading)', fontWeight: 600, fontSize: '1.0625rem',
+                  padding: '1rem 2.5rem', borderRadius: 4, textDecoration: 'none',
+                  background: 'transparent', color: 'var(--gold)', border: '1px solid var(--gold)',
+                }}
+              >
+                <svg viewBox="0 0 20 20" width={18} height={18} fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M10 3v10m0 0l-4-4m4 4l4-4M4 17h12" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                Profile in English
+              </a>
+            </div>
+          </Reveal>
         </div>
       </section>
 

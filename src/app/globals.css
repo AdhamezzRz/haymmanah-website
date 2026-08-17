@@ -8,25 +8,29 @@
 }
 
 :root {
-  /* Brand color tokens — light mode (default) */
-  --ink: #ECE0C2;      /* warm champagne-sand — statement bands (hero, footer, CTA) */
-  --navy: #FDFBF6;     /* near-white — base page background */
-  --navy-2: #F7F1E2;   /* soft cream — card / alternate section background */
-  --royal: #2E2416;    /* deep warm brown — secondary dark accent */
-  --gold: #c9a14a;
-  --gold-bright: #ecd08a;
-  --gold-deep: #8a6d2c;
-  --ivory: #201A12;    /* primary text */
-  --muted: #6B5E49;    /* secondary text — warm taupe */
+  /* Brand color tokens — light mode (default)
+     Extracted directly from the official profile PDF (پdftoppm + pixel sampling):
+     navy #2E3373, light bg #EBF4FB / #D9EAF8. The accent trio and --royal/--ivory/--muted
+     are computed in the same hue family to preserve legible contrast the flat 2-tone
+     source palette didn't provide on its own. */
+  --ink: #2E3373;      /* deep royal navy — statement bands (hero, footer, CTA) */
+  --navy: #EBF4FB;     /* near-white sky blue — base page background */
+  --navy-2: #D9EAF8;   /* light sky blue — card / alternate section background */
+  --royal: #1B2150;    /* darker navy variant — secondary dark accent / depth */
+  --gold: #4C63C7;
+  --gold-bright: #8CA6E5;
+  --gold-deep: #33449E;
+  --ivory: #1B2140;    /* primary text */
+  --muted: #5B678F;    /* secondary text — muted blue-gray */
 
   /* RGB triplets for composable rgba() — must track --ivory / --muted per theme */
-  --ivory-rgb: 32, 26, 18;
-  --muted-rgb: 107, 94, 73;
-  --glass-rgb: 253, 251, 246;   /* translucent panel base (nav glass, floating badges) */
+  --ivory-rgb: 27, 33, 64;
+  --muted-rgb: 91, 103, 143;
+  --glass-rgb: 235, 244, 251;   /* translucent panel base (nav glass, floating badges) */
 
-  /* Text sitting on the gold accent (buttons, active pills, badges) — gold is a fixed
-     mid-brightness color in both themes, so this stays dark regardless of theme. */
-  --on-gold: #1a1408;
+  /* Text sitting on the accent gradient (buttons, active pills, badges) — the gradient
+     stays mid-to-light blue in both themes, so dark text stays legible regardless of theme. */
+  --on-gold: #16193B;
 
   /* Gradients */
   --gold-grad: linear-gradient(135deg, var(--gold-deep), var(--gold), var(--gold-bright));
@@ -40,16 +44,16 @@
 }
 
 :root[data-theme='dark'] {
-  --ink: #05081a;
-  --navy: #0a1030;
-  --navy-2: #0f1741;
-  --royal: #1d2f7a;
-  --ivory: #f3ecda;
-  --muted: #8a93bf;
+  --ink: #14173A;
+  --navy: #2E3373;     /* exact profile navy */
+  --navy-2: #363C82;
+  --royal: #4C56A8;
+  --ivory: #EBF4FB;
+  --muted: #9AACD6;
 
-  --ivory-rgb: 243, 236, 218;
-  --muted-rgb: 138, 147, 191;
-  --glass-rgb: 10, 16, 48;
+  --ivory-rgb: 235, 244, 251;
+  --muted-rgb: 154, 172, 214;
+  --glass-rgb: 20, 23, 58;
 
   color-scheme: dark;
 }
@@ -161,8 +165,8 @@ select option { background: var(--navy); color: var(--ivory); }
 
 /* Gold glow pulse on headings */
 @keyframes gold-glow-pulse {
-  0%, 100% { text-shadow: 0 0 20px rgba(201,161,74,0); }
-  50%       { text-shadow: 0 0 40px rgba(201,161,74,0.35), 0 0 80px rgba(201,161,74,0.15); }
+  0%, 100% { text-shadow: 0 0 20px rgba(76,99,199,0); }
+  50%       { text-shadow: 0 0 40px rgba(76,99,199,0.35), 0 0 80px rgba(76,99,199,0.15); }
 }
 
 /* Float up ambient animation */
@@ -239,11 +243,11 @@ select option { background: var(--navy); color: var(--ivory); }
    these elements also carry an inline `style` border, which otherwise
    always wins over an external rule regardless of :has() specificity. */
 .choice-pill:hover {
-  border-color: rgba(201,161,74,0.45) !important;
+  border-color: rgba(76,99,199,0.45) !important;
 }
 .choice-pill:has(input:checked) {
   border-color: var(--gold) !important;
-  background: rgba(201,161,74,0.08) !important;
+  background: rgba(76,99,199,0.08) !important;
 }
 
 /* Work-grid card: real-photo cover zooms and a "view project" tag reveals on hover */

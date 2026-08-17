@@ -136,7 +136,7 @@ export default function Home() {
       </section>
 
       {/* ── MARQUEE ── */}
-      <div style={{ borderTop: '1px solid rgba(201,161,74,0.15)', borderBottom: '1px solid rgba(201,161,74,0.15)', padding: '1.25rem 0', background: 'var(--ink)' }}>
+      <div style={{ borderTop: '1px solid rgba(76,99,199,0.15)', borderBottom: '1px solid rgba(76,99,199,0.15)', padding: '1.25rem 0', background: 'var(--ink)' }}>
         <Marquee items={disciplines} />
       </div>
 
@@ -191,7 +191,7 @@ export default function Home() {
                       <LogoMark size={160} mode="static" />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
-                      <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.1em', padding: '0.25rem 0.75rem', border: '1px solid rgba(201,161,74,0.3)', borderRadius: 3, textTransform: 'uppercase' }}>
+                      <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.1em', padding: '0.25rem 0.75rem', border: '1px solid rgba(76,99,199,0.3)', borderRadius: 3, textTransform: 'uppercase' }}>
                         {c.sector}
                       </span>
                       <span style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'var(--muted)' }}>{c.year}</span>
@@ -279,7 +279,7 @@ export default function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '2rem', marginTop: '3rem' }}>
             {process.map((p, i) => (
               <Reveal key={p.n} delay={i * 100}>
-                <div style={{ padding: '2rem', borderTop: '2px solid rgba(201,161,74,0.3)' }}>
+                <div style={{ padding: '2rem', borderTop: '2px solid rgba(76,99,199,0.3)' }}>
                   <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: '3rem', lineHeight: 1, marginBottom: '1rem' }}>{p.n}</p>
                   <h3 style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-h3)', color: 'var(--ivory)', marginBottom: '0.75rem' }}>{p.title}</h3>
                   <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)', lineHeight: 1.7 }}>{p.body}</p>
@@ -308,7 +308,7 @@ export default function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginTop: '3rem' }}>
             {testimonials.map((t, i) => (
               <Reveal key={i} delay={i * 120}>
-                <div style={{ padding: '2rem', background: 'var(--navy-2)', borderRadius: 8, border: '1px solid rgba(201,161,74,0.1)', position: 'relative' }}>
+                <div style={{ padding: '2rem', background: 'var(--navy-2)', borderRadius: 8, border: '1px solid rgba(76,99,199,0.1)', position: 'relative' }}>
                   <p style={{ fontFamily: 'var(--font-role-display)', fontSize: '3rem', color: 'var(--gold)', lineHeight: 0.5, marginBottom: '1rem', opacity: 0.4 }}>"</p>
                   <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-body)', color: 'var(--ivory)', lineHeight: 1.8, marginBottom: '1.5rem' }}>
                     {t.quote}

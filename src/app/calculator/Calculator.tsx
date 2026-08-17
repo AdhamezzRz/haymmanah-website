@@ -39,8 +39,8 @@ export function Calculator() {
                   gap: '0.5rem',
                   padding: '1rem 0.75rem',
                   borderRadius: 8,
-                  border: `1px solid ${active ? 'var(--gold)' : 'rgba(201,161,74,0.2)'}`,
-                  background: active ? 'rgba(201,161,74,0.08)' : 'transparent',
+                  border: `1px solid ${active ? 'var(--gold)' : 'rgba(76,99,199,0.2)'}`,
+                  background: active ? 'rgba(76,99,199,0.08)' : 'transparent',
                   cursor: 'pointer',
                   transition: 'border-color 0.2s, background 0.2s',
                 }}
@@ -95,7 +95,7 @@ export function Calculator() {
           { label: 'عملاء فعليون متوقعون', value: result.customers, suffix: '' },
           { label: 'إيراد إضافي تقديري', value: result.revenue, suffix: ' ريال' },
         ].map(stat => (
-          <div key={stat.label} style={{ padding: '1.5rem', background: 'var(--navy-2)', border: '1px solid rgba(201,161,74,0.15)', borderRadius: 10, textAlign: 'center' }}>
+          <div key={stat.label} style={{ padding: '1.5rem', background: 'var(--navy-2)', border: '1px solid rgba(76,99,199,0.15)', borderRadius: 10, textAlign: 'center' }}>
             <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.25rem,2.5vw,1.75rem)', lineHeight: 1, marginBottom: '0.5rem' }}>
               <LiveNumber value={stat.value} suffix={stat.suffix} />
             </p>

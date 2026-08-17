@@ -40,7 +40,7 @@ export function Footer() {
     <footer
       style={{
         background: 'var(--ink)',
-        borderTop: '1px solid rgba(201,161,74,0.15)',
+        borderTop: '1px solid rgba(76,99,199,0.15)',
         padding: '4rem 2rem 2rem',
       }}
     >

@@ -99,7 +99,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
 
           <Reveal delay={100}>
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1.5rem', alignItems: 'center' }}>
-              <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.1em', textTransform: 'uppercase', border: '1px solid rgba(201,161,74,0.25)', padding: '0.25rem 0.75rem', borderRadius: 3 }}>
+              <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.1em', textTransform: 'uppercase', border: '1px solid rgba(76,99,199,0.25)', padding: '0.25rem 0.75rem', borderRadius: 3 }}>
                 {ins.topic}
               </span>
               <span style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.8125rem', color: 'var(--muted)' }}>
@@ -154,7 +154,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               {ins.faqs.map((faq, i) => (
                 <Reveal key={i} delay={i * 80}>
-                  <div style={{ borderBottom: '1px solid rgba(201,161,74,0.1)', paddingBottom: '1.5rem' }}>
+                  <div style={{ borderBottom: '1px solid rgba(76,99,199,0.1)', paddingBottom: '1.5rem' }}>
                     <h3 style={{ fontFamily: 'var(--font-role-heading)', fontSize: '1.0625rem', color: 'var(--gold)', marginBottom: '0.75rem', lineHeight: 1.4 }}>
                       {faq.q}
                     </h3>
@@ -194,7 +194,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
               {related.map(r => (
-                <Link key={r.slug} href={`/insights/${r.slug}`} style={{ display: 'block', padding: '1.5rem', background: 'var(--navy)', borderRadius: 6, border: '1px solid rgba(201,161,74,0.1)', textDecoration: 'none', transition: 'border-color 0.2s' }}>
+                <Link key={r.slug} href={`/insights/${r.slug}`} style={{ display: 'block', padding: '1.5rem', background: 'var(--navy)', borderRadius: 6, border: '1px solid rgba(76,99,199,0.1)', textDecoration: 'none', transition: 'border-color 0.2s' }}>
                   <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>{r.topic}</p>
                   <h3 style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.9375rem', color: 'var(--ivory)', lineHeight: 1.4 }}>{r.title}</h3>
                   <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.8125rem', color: 'var(--muted)', marginTop: '0.5rem' }}>{r.readingTime} دقائق</p>

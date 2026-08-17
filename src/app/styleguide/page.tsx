@@ -18,15 +18,15 @@ function Token({ name, value, type }: { name: string; value: string; type?: stri
 
 export default function StyleguidePage() {
   const colors = [
-    { name: '--ink',        value: '#ECE0C2' },
-    { name: '--navy',       value: '#FDFBF6' },
-    { name: '--navy-2',     value: '#F7F1E2' },
-    { name: '--royal',      value: '#2E2416' },
-    { name: '--gold',       value: '#c9a14a' },
-    { name: '--gold-bright',value: '#ecd08a' },
-    { name: '--gold-deep',  value: '#8a6d2c' },
-    { name: '--ivory',      value: '#201A12' },
-    { name: '--muted',      value: '#6B5E49' },
+    { name: '--ink',        value: '#2E3373' },
+    { name: '--navy',       value: '#EBF4FB' },
+    { name: '--navy-2',     value: '#D9EAF8' },
+    { name: '--royal',      value: '#1B2150' },
+    { name: '--gold',       value: '#4C63C7' },
+    { name: '--gold-bright',value: '#8CA6E5' },
+    { name: '--gold-deep',  value: '#33449E' },
+    { name: '--ivory',      value: '#1B2140' },
+    { name: '--muted',      value: '#5B678F' },
   ]
 
   const typeScale = [
@@ -44,7 +44,7 @@ export default function StyleguidePage() {
       <div style={{ maxWidth: 960, margin: '0 auto' }}>
 
         {/* Header */}
-        <div style={{ marginBottom: '4rem', paddingBottom: '2rem', borderBottom: '1px solid rgba(201,161,74,0.3)' }}>
+        <div style={{ marginBottom: '4rem', paddingBottom: '2rem', borderBottom: '1px solid rgba(76,99,199,0.3)' }}>
           <h1 className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-display)', lineHeight: 1 }}>
             هيمنة
           </h1>
@@ -135,7 +135,7 @@ export default function StyleguidePage() {
             <div>
               <p style={{ color: 'var(--muted)', fontSize: '0.75rem', marginBottom: '0.75rem' }}>Reveal (scroll-triggered)</p>
               <Reveal delay={0}>
-                <div style={{ padding: '1.5rem', background: 'var(--navy-2)', borderRadius: 6, border: '1px solid rgba(201,161,74,0.2)' }}>
+                <div style={{ padding: '1.5rem', background: 'var(--navy-2)', borderRadius: 6, border: '1px solid rgba(76,99,199,0.2)' }}>
                   <p style={{ fontFamily: 'var(--font-role-body)', color: 'var(--ivory)' }}>هذا العنصر يظهر بسلاسة عند التمرير — Reveal component</p>
                 </div>
               </Reveal>

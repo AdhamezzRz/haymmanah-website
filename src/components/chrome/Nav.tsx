@@ -53,7 +53,7 @@ export function Nav() {
           justifyContent: 'space-between',
           background: scrolled ? 'rgba(var(--glass-rgb),0.85)' : 'transparent',
           backdropFilter: scrolled ? 'blur(16px)' : 'none',
-          borderBottom: scrolled ? '1px solid rgba(201,161,74,0.1)' : 'none',
+          borderBottom: scrolled ? '1px solid rgba(76,99,199,0.1)' : 'none',
           transition: 'background 0.4s, backdrop-filter 0.4s, border-color 0.4s',
         }}
       >

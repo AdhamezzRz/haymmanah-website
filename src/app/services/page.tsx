@@ -156,7 +156,7 @@ export default function ServicesPage() {
       </section>
 
       {/* ── Platform logos strip ── */}
-      <section style={{ background: 'var(--ink)', borderTop: '1px solid rgba(201,161,74,0.08)', borderBottom: '1px solid rgba(201,161,74,0.08)', padding: '2rem', overflow: 'hidden' }}>
+      <section style={{ background: 'var(--ink)', borderTop: '1px solid rgba(76,99,199,0.08)', borderBottom: '1px solid rgba(76,99,199,0.08)', padding: '2rem', overflow: 'hidden' }}>
         <p style={{ textAlign: 'center', fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--muted)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '1.75rem' }}>
           المنصات التي نُسيطر عليها
         </p>
@@ -224,7 +224,7 @@ export default function ServicesPage() {
                         {serviceNumbers[i]}
                       </span>
                       {/* Service icon */}
-                      <div style={{ width: 52, height: 52, background: 'rgba(201,161,74,0.1)', border: '1px solid rgba(201,161,74,0.2)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <div style={{ width: 52, height: 52, background: 'rgba(76,99,199,0.1)', border: '1px solid rgba(76,99,199,0.2)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                         <svg viewBox="0 0 24 24" width={26} height={26} fill="none" stroke="var(--gold)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                           <path d={s.icon} />
                         </svg>
@@ -285,7 +285,7 @@ export default function ServicesPage() {
                         fontFamily: 'var(--font-role-heading)',
                         fontSize: '0.875rem',
                         color: 'var(--gold)',
-                        border: '1px solid rgba(201,161,74,0.3)',
+                        border: '1px solid rgba(76,99,199,0.3)',
                         borderRadius: 4,
                         padding: '0.5rem 1rem',
                       }}>

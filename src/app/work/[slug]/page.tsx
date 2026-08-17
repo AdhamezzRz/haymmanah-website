@@ -77,7 +77,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
           <div style={{ display: 'flex', gap: '0.625rem', marginTop: '1.75rem', marginBottom: '1.25rem', flexWrap: 'wrap' }}>
             <ClipReveal delay={100}>
-              <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--gold)', border: '1px solid rgba(201,161,74,0.3)', padding: '0.2rem 0.75rem', borderRadius: 20 }}>
+              <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--gold)', border: '1px solid rgba(76,99,199,0.3)', padding: '0.2rem 0.75rem', borderRadius: 20 }}>
                 {c.sector}
               </span>
             </ClipReveal>
@@ -103,7 +103,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
       {/* ── Quick stats strip ── */}
       {c.results && c.results.length > 0 && (
-        <section style={{ background: 'var(--ink)', borderBottom: '1px solid rgba(201,161,74,0.1)', padding: '0' }}>
+        <section style={{ background: 'var(--ink)', borderBottom: '1px solid rgba(76,99,199,0.1)', padding: '0' }}>
           <div style={{ maxWidth: 960, margin: '0 auto', display: 'grid', gridTemplateColumns: `repeat(${c.results.length}, 1fr)`, gap: 0 }}>
             {c.results.map((r, i) => (
               <div
@@ -153,7 +153,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1rem' }}>
               {c.media.map((src, i) => (
                 <Reveal key={src} delay={Math.min(i * 40, 400)}>
-                  <div style={{ position: 'relative', aspectRatio: '4 / 5', borderRadius: 10, overflow: 'hidden', border: '1px solid rgba(201,161,74,0.15)' }}>
+                  <div style={{ position: 'relative', aspectRatio: '4 / 5', borderRadius: 10, overflow: 'hidden', border: '1px solid rgba(76,99,199,0.15)' }}>
                     <Image
                       src={src}
                       alt={`${c.client} — تصميم ${i + 1}`}
@@ -174,7 +174,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
         <div style={{ maxWidth: 800, margin: '0 auto' }}>
           <Reveal>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
-              <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(201,161,74,0.12)', border: '1px solid rgba(201,161,74,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(76,99,199,0.12)', border: '1px solid rgba(76,99,199,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <svg viewBox="0 0 20 20" width={18} height={18} fill="none" stroke="var(--gold)" strokeWidth="1.5">
                   <path d="M10 6v4M10 14h.01" strokeLinecap="round"/>
                   <circle cx="10" cy="10" r="8"/>
@@ -196,7 +196,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
         <div style={{ maxWidth: 960, margin: '0 auto', display: 'grid', gridTemplateColumns: '1.6fr 1fr', gap: '5rem', alignItems: 'start' }}>
           <Reveal>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
-              <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(201,161,74,0.12)', border: '1px solid rgba(201,161,74,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(76,99,199,0.12)', border: '1px solid rgba(76,99,199,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <svg viewBox="0 0 20 20" width={18} height={18} fill="none" stroke="var(--gold)" strokeWidth="1.5">
                   <path d="M3 7h14M7 11h6M9 15h2" strokeLinecap="round"/>
                 </svg>
@@ -212,7 +212,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
           <Reveal delay={150}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
-              <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(201,161,74,0.12)', border: '1px solid rgba(201,161,74,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(76,99,199,0.12)', border: '1px solid rgba(76,99,199,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <svg viewBox="0 0 20 20" width={18} height={18} fill="none" stroke="var(--gold)" strokeWidth="1.5">
                   <path d="M5 10l4 4 6-8" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
@@ -234,9 +234,9 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
                     color: 'var(--muted)',
                     lineHeight: 1.6,
                     padding: '0.875rem 1rem',
-                    background: 'rgba(201,161,74,0.04)',
+                    background: 'rgba(76,99,199,0.04)',
                     borderRadius: 6,
-                    border: '1px solid rgba(201,161,74,0.08)',
+                    border: '1px solid rgba(76,99,199,0.08)',
                   }}
                 >
                   <span style={{ color: 'var(--gold)', flexShrink: 0, fontFamily: 'var(--font-role-heading)', fontSize: '0.75rem', marginTop: '0.1rem', opacity: 0.7 }}>
@@ -251,7 +251,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
       </section>
 
       {/* ── Disciplines used ── */}
-      <section style={{ padding: '4rem 2rem 5rem', background: 'var(--navy-2)', borderTop: '1px solid rgba(201,161,74,0.08)' }}>
+      <section style={{ padding: '4rem 2rem 5rem', background: 'var(--navy-2)', borderTop: '1px solid rgba(76,99,199,0.08)' }}>
         <div style={{ maxWidth: 960, margin: '0 auto' }}>
           <Reveal>
             <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--muted)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '1.25rem' }}>
@@ -303,7 +303,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
                 {c.testimonial.quote}
               </blockquote>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
-                <div style={{ width: 42, height: 42, borderRadius: '50%', background: `${c.sectorColor}60`, border: '2px solid rgba(201,161,74,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: 42, height: 42, borderRadius: '50%', background: `${c.sectorColor}60`, border: '2px solid rgba(76,99,199,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <span style={{ fontFamily: 'var(--font-role-display)', fontSize: '1.1rem', color: 'var(--gold)' }}>
                     {c.testimonial.author[0]}
                   </span>
@@ -324,7 +324,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
       {/* ── Next case ── */}
       {nextCase && (
-        <section style={{ padding: '4rem 2rem', background: 'var(--navy-2)', borderTop: '1px solid rgba(201,161,74,0.08)' }}>
+        <section style={{ padding: '4rem 2rem', background: 'var(--navy-2)', borderTop: '1px solid rgba(76,99,199,0.08)' }}>
           <div style={{ maxWidth: 960, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1.5rem' }}>
             <div>
               <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--muted)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>

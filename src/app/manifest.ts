@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: 'وكالة تسويق رقمي سعودية في الرياض — إعلانات الأداء، الهوية البصرية، تحسين محركات البحث.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#FDFBF6',
-    theme_color: '#c9a14a',
+    background_color: '#EBF4FB',
+    theme_color: '#2E3373',
     lang: 'ar-SA',
     dir: 'rtl',
     icons: [

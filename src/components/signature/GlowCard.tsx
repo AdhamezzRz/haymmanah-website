@@ -36,7 +36,7 @@ export function GlowCard({ children, className, style }: GlowCardProps) {
         position: 'relative',
         overflow: 'hidden',
         borderRadius: 8,
-        border: `1px solid ${hovered ? 'rgba(201,161,74,0.3)' : 'rgba(201,161,74,0.1)'}`,
+        border: `1px solid ${hovered ? 'rgba(76,99,199,0.3)' : 'rgba(76,99,199,0.1)'}`,
         transition: 'border-color 0.3s',
         ...style,
       }}
@@ -63,7 +63,7 @@ export function GlowCard({ children, className, style }: GlowCardProps) {
         style={{
           position: 'absolute',
           inset: 0,
-          background: `radial-gradient(350px circle at ${glow.x}% ${glow.y}%, rgba(201,161,74,0.09), transparent 70%)`,
+          background: `radial-gradient(350px circle at ${glow.x}% ${glow.y}%, rgba(76,99,199,0.09), transparent 70%)`,
           opacity: glow.opacity,
           transition: 'opacity 0.3s',
           pointerEvents: 'none',

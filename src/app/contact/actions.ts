@@ -84,7 +84,7 @@ export async function submitContact(
 
   const html = `
     <div dir="rtl" style="font-family:Arial,sans-serif;max-width:640px">
-      <h2 style="color:#c9a14a">استشارة جديدة من موقع هيمنة</h2>
+      <h2 style="color:#4C63C7">استشارة جديدة من موقع هيمنة</h2>
       <table style="width:100%;border-collapse:collapse">
         ${row('الاسم', name)}
         ${row('الشركة', company)}
@@ -136,7 +136,7 @@ export async function submitCallbackRequest(
 
   const html = `
     <div dir="rtl" style="font-family:Arial,sans-serif;max-width:640px">
-      <h2 style="color:#c9a14a">طلب اتصال سريع من موقع هيمنة</h2>
+      <h2 style="color:#4C63C7">طلب اتصال سريع من موقع هيمنة</h2>
       <table style="width:100%;border-collapse:collapse">
         ${row('الاسم', name)}
         ${row('رقم الهاتف', phone)}

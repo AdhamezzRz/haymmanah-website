@@ -44,7 +44,7 @@ export default function CalculatorPage() {
       <section style={{ padding: '4rem 2rem 6rem' }}>
         <div style={{ maxWidth: 720, margin: '0 auto' }}>
           <Reveal delay={150}>
-            <div style={{ background: 'var(--navy-2)', border: '1px solid rgba(201,161,74,0.15)', borderRadius: 14, padding: 'clamp(1.5rem, 4vw, 3rem)' }}>
+            <div style={{ background: 'var(--navy-2)', border: '1px solid rgba(76,99,199,0.15)', borderRadius: 14, padding: 'clamp(1.5rem, 4vw, 3rem)' }}>
               <Calculator />
             </div>
           </Reveal>

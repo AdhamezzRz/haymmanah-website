@@ -68,7 +68,7 @@ export function Cursor() {
         height: big ? 48 : 20,
         borderRadius: '50%',
         border: `1.5px solid var(--gold)`,
-        background: big ? 'rgba(201,161,74,0.08)' : 'transparent',
+        background: big ? 'rgba(76,99,199,0.08)' : 'transparent',
         pointerEvents: 'none',
         zIndex: 9998,
         opacity: visible ? 1 : 0,

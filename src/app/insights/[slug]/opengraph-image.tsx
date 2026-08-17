@@ -20,24 +20,24 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           flexDirection: 'column',
           justifyContent: 'space-between',
           padding: 80,
-          background: 'linear-gradient(135deg, #0a1030 0%, #1d2f7a 140%)',
+          background: 'linear-gradient(135deg, #14173A 0%, #2E3373 140%)',
           fontFamily: 'Almarai',
           direction: 'rtl',
           textAlign: 'right',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <div style={{ width: 10, height: 10, borderRadius: 999, background: '#c9a14a', display: 'flex' }} />
-          <span style={{ fontSize: 28, color: '#c9a14a', letterSpacing: 4 }}>هيمنة — المقالات</span>
+          <div style={{ width: 10, height: 10, borderRadius: 999, background: '#4C63C7', display: 'flex' }} />
+          <span style={{ fontSize: 28, color: '#4C63C7', letterSpacing: 4 }}>هيمنة — المقالات</span>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           {ins && (
-            <span style={{ fontSize: 24, color: '#8a93bf' }}>
+            <span style={{ fontSize: 24, color: '#9AACD6' }}>
               {ins.topic} · {ins.readingTime} دقائق قراءة
             </span>
           )}
-          <span style={{ fontSize: 56, color: '#f3ecda', lineHeight: 1.3 }}>
+          <span style={{ fontSize: 56, color: '#EBF4FB', lineHeight: 1.3 }}>
             {ins?.title ?? 'مقال من هيمنة'}
           </span>
         </div>

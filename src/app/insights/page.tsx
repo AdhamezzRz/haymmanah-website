@@ -49,14 +49,14 @@ export default function InsightsPage() {
           <Reveal>
             <Link
               href={`/insights/${featured.slug}`}
-              style={{ display: 'block', background: 'var(--navy-2)', border: '1px solid rgba(201,161,74,0.15)', borderRadius: 8, padding: '3rem', textDecoration: 'none', marginBottom: '3rem', position: 'relative', overflow: 'hidden' }}
+              style={{ display: 'block', background: 'var(--navy-2)', border: '1px solid rgba(76,99,199,0.15)', borderRadius: 8, padding: '3rem', textDecoration: 'none', marginBottom: '3rem', position: 'relative', overflow: 'hidden' }}
             >
               <div style={{ position: 'absolute', insetInlineEnd: '-2rem', bottom: '-2rem', opacity: 0.04, pointerEvents: 'none' }}>
                 <LogoMark size={220} mode="static" />
               </div>
               <div style={{ position: 'relative', zIndex: 2 }}>
                 <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', alignItems: 'center' }}>
-                  <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.1em', textTransform: 'uppercase', border: '1px solid rgba(201,161,74,0.3)', padding: '0.2rem 0.75rem', borderRadius: 3 }}>مقال مُختار</span>
+                  <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.1em', textTransform: 'uppercase', border: '1px solid rgba(76,99,199,0.3)', padding: '0.2rem 0.75rem', borderRadius: 3 }}>مقال مُختار</span>
                   <span style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.75rem', color: 'var(--muted)' }}>{featured.topic}</span>
                 </div>
                 <h2 style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-h2)', color: 'var(--ivory)', marginBottom: '1rem', maxWidth: '55ch', lineHeight: 1.3 }}>{featured.title}</h2>
@@ -72,7 +72,7 @@ export default function InsightsPage() {
               <Reveal key={ins.slug} delay={i * 100}>
                 <Link
                   href={`/insights/${ins.slug}`}
-                  style={{ display: 'block', background: 'var(--navy-2)', border: '1px solid rgba(201,161,74,0.1)', borderRadius: 8, padding: '2rem', textDecoration: 'none' }}
+                  style={{ display: 'block', background: 'var(--navy-2)', border: '1px solid rgba(76,99,199,0.1)', borderRadius: 8, padding: '2rem', textDecoration: 'none' }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
                     <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{ins.topic}</span>

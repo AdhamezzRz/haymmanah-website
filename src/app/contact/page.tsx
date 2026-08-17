@@ -121,7 +121,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
 
             {/* Quick callback form */}
             <Reveal delay={480}>
-              <div style={{ marginTop: '2.5rem', padding: '1.5rem', background: 'var(--navy-2)', border: '1px solid rgba(201,161,74,0.15)', borderRadius: 10 }}>
+              <div style={{ marginTop: '2.5rem', padding: '1.5rem', background: 'var(--navy-2)', border: '1px solid rgba(76,99,199,0.15)', borderRadius: 10 }}>
                 <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.9375rem', color: 'var(--ivory)', marginBottom: '0.375rem' }}>
                   لا وقت لديك للنموذج الكامل؟
                 </p>
@@ -140,7 +140,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
 
           {/* Right — form */}
           <Reveal delay={200}>
-            <div style={{ background: 'var(--navy-2)', border: '1px solid rgba(201,161,74,0.12)', borderRadius: 10, padding: '3rem' }}>
+            <div style={{ background: 'var(--navy-2)', border: '1px solid rgba(76,99,199,0.12)', borderRadius: 10, padding: '3rem' }}>
               <h2 style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-h3)', color: 'var(--ivory)', marginBottom: '2rem' }}>
                 أرسل رسالتك
               </h2>

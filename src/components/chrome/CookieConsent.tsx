@@ -37,7 +37,7 @@ export function CookieConsent() {
             bottom: 0,
             zIndex: 9995,
             background: 'var(--ink)',
-            borderTop: '1px solid rgba(201,161,74,0.25)',
+            borderTop: '1px solid rgba(76,99,199,0.25)',
             padding: '1.25rem 2rem',
             boxShadow: '0 -8px 30px rgba(0,0,0,0.15)',
           }}
@@ -65,7 +65,7 @@ export function CookieConsent() {
                   fontSize: '0.875rem',
                   color: 'var(--muted)',
                   background: 'transparent',
-                  border: '1px solid rgba(201,161,74,0.2)',
+                  border: '1px solid rgba(76,99,199,0.2)',
                   borderRadius: 4,
                   padding: '0.625rem 1.25rem',
                   cursor: 'pointer',

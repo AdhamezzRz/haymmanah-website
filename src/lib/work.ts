@@ -413,7 +413,7 @@ export const disciplines: Discipline[] = [
 ]
 
 export const disciplineColors: Record<Discipline, string> = {
-  'تسويق وإدارة حملات': '#c9a14a',
+  'تسويق وإدارة حملات': '#4C63C7',
   'هوية بصرية وجرافيك': '#b0589e',
   'تصوير': '#4a90b8',
   'مونتاج وفيديو': '#c4504a',

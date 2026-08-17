@@ -112,7 +112,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           <ul style={{ listStyle: 'none', padding: 0, margin: '2rem 0 0', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {s.deliverables.map((d, i) => (
               <Reveal key={i} delay={i * 80}>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem 1.5rem', background: 'var(--navy-2)', borderRadius: 6, border: '1px solid rgba(201,161,74,0.1)' }}>
+                <li style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem 1.5rem', background: 'var(--navy-2)', borderRadius: 6, border: '1px solid rgba(76,99,199,0.1)' }}>
                   <span style={{ color: 'var(--gold)', fontSize: '1.25rem', flexShrink: 0 }}>◆</span>
                   <span style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-body)', color: 'var(--ivory)' }}>{d}</span>
                 </li>
@@ -132,7 +132,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginTop: '2rem' }}>
               {related.map((c, i) => (
                 <Reveal key={c.slug} delay={i * 100}>
-                  <Link href={`/work/${c.slug}`} style={{ display: 'block', padding: '2rem', background: 'var(--navy-2)', borderRadius: 8, border: '1px solid rgba(201,161,74,0.1)', textDecoration: 'none' }}>
+                  <Link href={`/work/${c.slug}`} style={{ display: 'block', padding: '2rem', background: 'var(--navy-2)', borderRadius: 8, border: '1px solid rgba(76,99,199,0.1)', textDecoration: 'none' }}>
                     <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{c.sector}</p>
                     <h3 style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-h3)', color: 'var(--ivory)', marginBottom: '0.5rem' }}>{c.client}</h3>
                     <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)' }}>{c.tagline}</p>

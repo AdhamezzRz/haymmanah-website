@@ -67,7 +67,7 @@ function CardVisual({ c, height = 240 }: { c: CaseStudy; height?: number }) {
       </div>
 
       <div style={{ position: 'absolute', top: '1rem', insetInlineEnd: '1rem' }}>
-        <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.7rem', letterSpacing: '0.12em', color: 'var(--gold-deep)', background: 'rgba(var(--glass-rgb),0.85)', border: '1px solid rgba(201,161,74,0.35)', padding: '0.2rem 0.6rem', borderRadius: 20, textTransform: 'uppercase' }}>
+        <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.7rem', letterSpacing: '0.12em', color: 'var(--gold-deep)', background: 'rgba(var(--glass-rgb),0.85)', border: '1px solid rgba(76,99,199,0.35)', padding: '0.2rem 0.6rem', borderRadius: 20, textTransform: 'uppercase' }}>
           {c.sector}
         </span>
       </div>
@@ -180,7 +180,7 @@ export default function WorkPage() {
       </section>
 
       {/* ── Stats band ── */}
-      <section style={{ background: 'var(--navy-2)', borderBottom: '1px solid rgba(201,161,74,0.15)', padding: '2rem' }}>
+      <section style={{ background: 'var(--navy-2)', borderBottom: '1px solid rgba(76,99,199,0.15)', padding: '2rem' }}>
         <div style={{ maxWidth: 800, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
           {aggregates.map((a, i) => (
             <Reveal key={a.label} delay={i * 100}>
@@ -198,11 +198,11 @@ export default function WorkPage() {
       </section>
 
       {/* ── Mode toggle + filter pills ── */}
-      <div id={filterBarId} style={{ padding: '1.75rem 2rem', borderBottom: '1px solid rgba(201,161,74,0.08)', background: 'var(--navy-2)', position: 'sticky', top: 72, zIndex: 10 }}>
+      <div id={filterBarId} style={{ padding: '1.75rem 2rem', borderBottom: '1px solid rgba(76,99,199,0.08)', background: 'var(--navy-2)', position: 'sticky', top: 72, zIndex: 10 }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.25rem', alignItems: 'center' }}>
 
           {/* Segmented mode switcher */}
-          <div style={{ display: 'inline-flex', padding: 4, background: 'var(--navy)', border: '1px solid rgba(201,161,74,0.25)', borderRadius: 40, gap: 2 }}>
+          <div style={{ display: 'inline-flex', padding: 4, background: 'var(--navy)', border: '1px solid rgba(76,99,199,0.25)', borderRadius: 40, gap: 2 }}>
             {([
               { id: 'sector' as Mode, label: 'تصفّح حسب القطاع' },
               { id: 'discipline' as Mode, label: 'تصفّح حسب التخصص' },
@@ -251,7 +251,7 @@ export default function WorkPage() {
                         fontFamily: 'var(--font-role-heading)', fontSize: '0.8rem', letterSpacing: '0.05em',
                         padding: '0.4rem 1rem', borderRadius: 40, border: '1px solid',
                         borderColor: isActive ? 'var(--gold)' : 'rgba(var(--ivory-rgb),0.12)',
-                        background: isActive ? 'rgba(201,161,74,0.12)' : 'transparent',
+                        background: isActive ? 'rgba(76,99,199,0.12)' : 'transparent',
                         color: isActive ? 'var(--gold)' : 'var(--muted)',
                         cursor: 'pointer', transition: 'all 0.2s',
                       }}
@@ -279,7 +279,7 @@ export default function WorkPage() {
                         fontFamily: 'var(--font-role-heading)', fontSize: '0.8rem', letterSpacing: '0.02em',
                         padding: '0.4rem 1.1rem', borderRadius: 40, border: '1px solid',
                         borderColor: isActive ? 'var(--gold)' : `${color}30`,
-                        background: isActive ? 'rgba(201,161,74,0.12)' : `${color}0a`,
+                        background: isActive ? 'rgba(76,99,199,0.12)' : `${color}0a`,
                         color: isActive ? 'var(--gold)' : 'var(--muted)',
                         cursor: 'pointer', transition: 'all 0.2s',
                       }}
