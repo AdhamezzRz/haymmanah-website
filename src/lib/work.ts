@@ -1,7 +1,7 @@
 export type Sector =
   | 'مطاعم' | 'كافيهات' | 'تجزئة' | 'سيارات' | 'أمن'
   | 'عقارات' | 'تعليم' | 'مقاولات' | 'عيادات'
-  | 'مناسبات وفعاليات' | 'بودكاست'
+  | 'مناسبات وفعاليات' | 'بودكاست' | 'ترفيه'
 
 export type Discipline =
   | 'برمجة وتطوير'
@@ -115,8 +115,55 @@ export const work: CaseStudy[] = [
     media: Array.from({ length: 5 }, (_, i) => `/work/rose-town/${String(i + 1).padStart(2, '0')}.webp`),
     ambientReel: { video: '/work/rose-town/video/reel.mp4', poster: '/work/rose-town/video/poster.jpg' },
     logo: { src: '/logos/rose-town.webp', width: 320, height: 200 },
-    nextSlug: 'zad-al-khalij',
+    nextSlug: 'gg-gaming',
     disciplines: ['هوية بصرية وجرافيك', 'تصوير'],
+  },
+  {
+    slug: 'gg-gaming',
+    client: 'GG جالاكتيك جيمز',
+    sector: 'ترفيه',
+    year: 2025,
+    sectorColor: '#2a1a4a',
+    tagline: 'حملات إطلاق تملأ صالة الألعاب من أول يوم',
+    challenge: 'GG جالاكتيك جيمز مركز ترفيهي جديد (بولينج وألعاب) يحتاج حملة عروض تُترجم بوضوح ثنائي اللغة لجذور جمهور متنوع، وتخلق زخماً حول اليوم الوطني ويوم الافتتاح.',
+    strategy: 'صمّمنا نظام بوسترات موحد بهوية فضائية جذابة (رواد فضاء وألوان نيون) لكل عرض، بنسختين عربي وإنجليزي لكل تصميم، مع محتوى فيديو من داخل الصالة يُظهر الأجواء الفعلية.',
+    deliverables: ['تصميم بوسترات عروض ثنائية اللغة', 'محتوى فيديو من داخل الصالة', 'هوية بصرية موحدة للحملات'],
+    media: Array.from({ length: 5 }, (_, i) => `/work/gg-gaming/${String(i + 1).padStart(2, '0')}.webp`),
+    ambientReel: { video: '/work/gg-gaming/video/reel.mp4', poster: '/work/gg-gaming/video/poster.jpg' },
+    logo: { src: '/logos/gg-gaming.webp', width: 420, height: 175 },
+    nextSlug: 'asas-alam-aldhil',
+    disciplines: ['هوية بصرية وجرافيك', 'مونتاج وفيديو'],
+  },
+  {
+    slug: 'asas-alam-aldhil',
+    client: 'شركة اسس عالم الظل',
+    sector: 'مقاولات',
+    year: 2025,
+    sectorColor: '#1b2a4a',
+    tagline: 'تنفيذ متقن يستحق توثيقاً بصرياً يليق به',
+    challenge: 'اسس عالم الظل شركة حدادة وألمنيوم متخصصة (مظلات، سواتر، هناجر، أعمال حديد فنية) بمستوى تنفيذ عالٍ، لكن مشاريعها المُنجزة لم تكن موثّقة بصرياً بما يعكس جودتها الفعلية لعملاء جدد.',
+    strategy: 'وثّقنا المشاريع المُنفَّذة فعلياً — من المظلات الفاخرة إلى الدرابزين الحديدي المُشغَّل بالليزر — في ملف تعريفي احترافي، مع محتوى فيديو ميداني يُظهر دقة التنفيذ من الموقع مباشرة.',
+    deliverables: ['توثيق مصوّر للمشاريع المُنفَّذة', 'محتوى فيديو ميداني للتنفيذ', 'ملف تعريفي للشركة'],
+    media: Array.from({ length: 7 }, (_, i) => `/work/asas-alam-aldhil/${String(i + 1).padStart(2, '0')}.webp`),
+    ambientReel: { video: '/work/asas-alam-aldhil/video/reel.mp4', poster: '/work/asas-alam-aldhil/video/poster.jpg' },
+    logo: { src: '/logos/asas-alam-aldhil.webp', width: 360, height: 240 },
+    nextSlug: 'maxmo-lube',
+    disciplines: ['تصوير', 'مونتاج وفيديو', 'هوية بصرية وجرافيك'],
+  },
+  {
+    slug: 'maxmo-lube',
+    client: 'MAXMO LUBE',
+    sector: 'سيارات',
+    year: 2025,
+    sectorColor: '#5a1414',
+    tagline: 'هوية بصرية توحّد صورة المندوبين في الميدان',
+    challenge: 'زيت سيارتك للتجارة، موزّع MAXMO LUBE، احتاجت بطاقة عمل احترافية موحدة لفريق المبيعات الميداني تعكس هوية العلامتين (الموزّع والمنتج) بشكل واحد متسق.',
+    strategy: 'صمّمنا بطاقة عمل بهوية بصرية حمراء جريئة تجمع شعاري TOP N وMAXMO LUBE بتوازن بصري واضح، مع تنسيق يسهل قراءته وحفظه من أول لمسة.',
+    deliverables: ['تصميم بطاقة عمل احترافية', 'هوية بصرية موحدة للمندوبين'],
+    media: Array.from({ length: 3 }, (_, i) => `/work/maxmo-lube/${String(i + 1).padStart(2, '0')}.webp`),
+    logo: { src: '/logos/maxmo-lube.webp', width: 460, height: 140 },
+    nextSlug: 'zad-al-khalij',
+    disciplines: ['هوية بصرية وجرافيك'],
   },
   {
     slug: 'zad-al-khalij',
@@ -398,7 +445,7 @@ export function getCasesByDiscipline(discipline: Discipline) {
 
 export const sectors: Sector[] = [
   'مطاعم', 'كافيهات', 'تجزئة', 'عقارات', 'مقاولات',
-  'سيارات', 'تعليم', 'عيادات', 'مناسبات وفعاليات', 'بودكاست', 'أمن',
+  'سيارات', 'تعليم', 'عيادات', 'مناسبات وفعاليات', 'بودكاست', 'أمن', 'ترفيه',
 ]
 
 export const disciplines: Discipline[] = [
