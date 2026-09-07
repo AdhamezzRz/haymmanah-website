@@ -129,13 +129,25 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
       {/* ── Video reel ── */}
       {(c.ambientReel || c.spotlightVideo) && (
         <section style={{ padding: '5rem 2rem 2rem', background: 'var(--ink)' }}>
-          <div style={{ maxWidth: 420, margin: '0 auto' }}>
+          <div style={{ maxWidth: c.secondaryVideo ? 780 : 420, margin: '0 auto' }}>
             <Reveal>
               <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '1.5rem', textAlign: 'center' }}>
                 من الفيديوهات المُنتَجة فعلياً
               </p>
-              {c.ambientReel && <AmbientReel src={c.ambientReel.video} poster={c.ambientReel.poster} />}
-              {c.spotlightVideo && <SpotlightVideo src={c.spotlightVideo.video} poster={c.spotlightVideo.poster} />}
+              <div style={{ display: 'grid', gridTemplateColumns: c.secondaryVideo ? 'repeat(auto-fit, minmax(280px, 1fr))' : '1fr', gap: '1.5rem' }}>
+                <div>
+                  {c.ambientReel && <AmbientReel src={c.ambientReel.video} poster={c.ambientReel.poster} />}
+                  {c.spotlightVideo && <SpotlightVideo src={c.spotlightVideo.video} poster={c.spotlightVideo.poster} />}
+                </div>
+                {c.secondaryVideo && (
+                  <div>
+                    <AmbientReel src={c.secondaryVideo.video} poster={c.secondaryVideo.poster} />
+                    <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.8125rem', color: 'var(--muted)', textAlign: 'center', marginTop: '0.75rem' }}>
+                      {c.secondaryVideo.label}
+                    </p>
+                  </div>
+                )}
+              </div>
             </Reveal>
           </div>
         </section>

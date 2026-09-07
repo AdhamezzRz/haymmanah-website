@@ -33,6 +33,8 @@ export interface CaseStudy {
   ambientReel?: { video: string; poster: string }
   /** Click-to-play footage with sound — used when a real person appears on camera. */
   spotlightVideo?: { video: string; poster: string }
+  /** A second ambient reel with its own caption — e.g. blogger/influencer coverage shown alongside the primary reel. */
+  secondaryVideo?: { video: string; poster: string; label: string }
   /** Real logo mark cropped from delivered creative, for the trusted-by strip. */
   logo?: { src: string; width: number; height: number }
   nextSlug: string
@@ -65,12 +67,13 @@ export const work: CaseStudy[] = [
     tagline: 'هوية فاخرة لتجربة عائلية استثنائية',
     challenge: 'روزا يقدّم تجربة ضيافة راقية في حديقة عائلية بالرياض، ويحتاج محتوى بصري بنفس مستوى الفخامة الذي يقدّمه على الطاولة — لا مجرد صور عادية للأطباق.',
     strategy: 'أنتجنا محتوى بصرياً متكاملاً يبرز أجواء الحديقة والضيافة الفاخرة والتجربة العائلية، مع هوية بصرية بالأحمر العنّابي والذهبي تُترجم شخصية المكان في كل منشور.',
-    deliverables: ['تصميم بوسترات ترويجية', 'هوية بصرية للمنصات', 'محتوى تعريفي بالتجربة والأجواء'],
+    deliverables: ['تصميم بوسترات ترويجية', 'هوية بصرية للمنصات', 'محتوى تعريفي بالتجربة والأجواء', 'تنسيق تغطية مدونين ومؤثرين'],
     media: Array.from({ length: 8 }, (_, i) => `/work/roza-restaurant/${String(i + 1).padStart(2, '0')}.webp`),
     ambientReel: { video: '/work/roza-restaurant/video/reel.mp4', poster: '/work/roza-restaurant/video/poster.jpg' },
+    secondaryVideo: { video: '/work/roza-restaurant/video-bloggers/reel.mp4', poster: '/work/roza-restaurant/video-bloggers/poster.jpg', label: 'من تغطية المدونين' },
     logo: { src: '/logos/roza-restaurant.webp', width: 2154, height: 1394 },
     nextSlug: 'nm-bright',
-    disciplines: ['هوية بصرية وجرافيك', 'تصوير'],
+    disciplines: ['هوية بصرية وجرافيك', 'تصوير', 'بلوجرز ومودلز'],
   },
   {
     slug: 'nm-bright',
@@ -226,8 +229,24 @@ export const work: CaseStudy[] = [
     media: ['/work/zeebart/01.webp'],
     ambientReel: { video: '/work/zeebart/video/reel.mp4', poster: '/work/zeebart/video/poster.jpg' },
     logo: { src: '/logos/zeebart.webp', width: 290, height: 120 },
-    nextSlug: 'zad-al-khalij',
+    nextSlug: 'lvh-invest',
     disciplines: ['تسويق وإدارة حملات'],
+  },
+  {
+    slug: 'lvh-invest',
+    client: 'LVH INVEST',
+    sector: 'مقاولات',
+    year: 2025,
+    sectorColor: '#2a1f0a',
+    tagline: 'تشطيب فاخر يستحق عرضاً بمستواه',
+    challenge: 'LVH Invest متخصصة في التشطيبات الفاخرة (مطابخ، أرضيات، ديكورات داخلية) وتنفّذ مشاريع بمستوى تصميمي عالٍ، لكنها احتاجت محتوى بصرياً يُترجم فخامة التنفيذ الفعلي إلى محتوى يجذب عميل التشطيب الراقي قبل أن يزور الموقع.',
+    strategy: 'صمّمنا نظام بوسترات موحد يعرض كل مساحة (مطبخ، غرفة نوم، صالة) كقطعة تصميم متكاملة، بهوية بصرية ذهبية داكنة فاخرة، مع محتوى فيديو ميداني من مواقع التنفيذ الفعلية يُظهر فريق العمل وجودة الإشراف.',
+    deliverables: ['تصميم بوسترات لكل مساحة تشطيب', 'هوية بصرية فاخرة موحدة', 'محتوى فيديو ميداني من مواقع التنفيذ'],
+    media: Array.from({ length: 30 }, (_, i) => `/work/lvh-invest/${String(i + 1).padStart(2, '0')}.webp`),
+    ambientReel: { video: '/work/lvh-invest/video/reel.mp4', poster: '/work/lvh-invest/video/poster.jpg' },
+    logo: { src: '/logos/lvh-invest.webp', width: 260, height: 190 },
+    nextSlug: 'zad-al-khalij',
+    disciplines: ['هوية بصرية وجرافيك', 'تصوير', 'مونتاج وفيديو'],
   },
   {
     slug: 'zad-al-khalij',
