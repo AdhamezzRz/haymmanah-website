@@ -1,7 +1,7 @@
 export type Sector =
   | 'مطاعم' | 'كافيهات' | 'تجزئة' | 'سيارات' | 'أمن'
   | 'عقارات' | 'تعليم' | 'مقاولات' | 'عيادات'
-  | 'مناسبات وفعاليات' | 'بودكاست' | 'ترفيه'
+  | 'مناسبات وفعاليات' | 'بودكاست' | 'ترفيه' | 'مؤسسات'
 
 export type Discipline =
   | 'برمجة وتطوير'
@@ -213,8 +213,23 @@ export const work: CaseStudy[] = [
     deliverables: ['تصوير وتوثيق فعالية حية', 'مونتاج محتوى تعريفي بالبرنامج'],
     spotlightVideo: { video: '/work/rise-academy/video/reel.mp4', poster: '/work/rise-academy/video/poster.jpg' },
     logo: { src: '/logos/rise-academy.webp', width: 260, height: 170 },
-    nextSlug: 'zeebart',
+    nextSlug: 'preclass',
     disciplines: ['تصوير', 'مونتاج وفيديو'],
+  },
+  {
+    slug: 'preclass',
+    client: 'بريكلاس PreClass',
+    sector: 'تعليم',
+    year: 2026,
+    sectorColor: '#2a4a6a',
+    tagline: 'حلقات حوارية تشرح فكرة المؤسسة لا تُعلن عنها فقط',
+    challenge: 'بريكلاس مؤسسة تعليمية للأطفال تحتاج طريقة تشرح فلسفتها التربوية بعمق، لا مجرد بوستر يعلن عن التسجيل — جمهورها (الأهالي) يحتاج يفهم "لماذا" قبل "أين يسجّل".',
+    strategy: 'أنتجنا حلقة حوارية ضمن برنامج بودكاست بهوية بصرية مخصصة، حيث تشرح فيها ممثلة المؤسسة فلسفة التعليم المبكر مباشرة أمام الكاميرا — محتوى يبني فهماً وثقة، لا مجرد وصول.',
+    deliverables: ['إنتاج حلقة حوارية مصوّرة', 'هوية بصرية للحلقة والبودكاست'],
+    spotlightVideo: { video: '/work/preclass/video-spotlight/reel.mp4', poster: '/work/preclass/video-spotlight/poster.jpg' },
+    logo: { src: '/logos/preclass.webp', width: 150, height: 90 },
+    nextSlug: 'zeebart',
+    disciplines: ['تصوير', 'مونتاج وفيديو', 'هوية بصرية وجرافيك'],
   },
   {
     slug: 'zeebart',
@@ -269,8 +284,22 @@ export const work: CaseStudy[] = [
       author: 'فهد العتيبي',
       role: 'المدير التنفيذي، زاد الخليج',
     },
-    nextSlug: 'alam-al-shay',
+    nextSlug: 'agree-cafe',
     disciplines: ['تسويق وإدارة حملات', 'تصوير', 'مونتاج وفيديو', 'برمجة وتطوير'],
+  },
+  {
+    slug: 'agree-cafe',
+    client: 'أجري AGREE',
+    sector: 'كافيهات',
+    year: 2026,
+    sectorColor: '#1a1a1a',
+    tagline: 'شخصية بصرية جريئة لكافيه لا يشبه غيره',
+    challenge: 'أجري كافيه يحتاج هوية تعبئة (أكواب وأكياس) تُميّزه فوراً في يد العميل وعلى طاولته، في سوق تمتلئ عبواته بتصاميم متشابهة بيضاء أو كرافت بلا شخصية.',
+    strategy: 'صممنا هوية تعبئة بطابع رسوم كوميدية جريئة (Pop Art) بالأبيض والأسود مع لمسة برتقالية، وشخصية كرتونية مرحة (حبة قهوة متحركة) تُظهرها كل عبوة — فتتحول العبوة نفسها لأداة تسويق يحملها العميل خارج الكافيه.',
+    deliverables: ['هوية تعبئة كاملة (أكواب وأكياس)', 'شخصية بصرية كرتونية للبراند', 'نظام ألوان وطباعة قابل للتوسع'],
+    media: ['/work/agree-cafe/02.webp', '/work/agree-cafe/03.webp', '/work/agree-cafe/01.webp'],
+    nextSlug: 'alam-al-shay',
+    disciplines: ['هوية بصرية وجرافيك'],
   },
   {
     slug: 'alam-al-shay',
@@ -561,8 +590,25 @@ export const work: CaseStudy[] = [
       author: 'د. لمى القحطاني',
       role: 'المديرة الطبية، عيادات روح',
     },
-    nextSlug: 'layali-events',
+    nextSlug: 'tala-events',
     disciplines: ['سيو وخرائط جوجل', 'كتابة محتوى', 'تسويق وإدارة حملات'],
+  },
+  {
+    slug: 'tala-events',
+    client: 'تالا إيفنت',
+    sector: 'مناسبات وفعاليات',
+    year: 2026,
+    sectorColor: '#6a1a4a',
+    tagline: 'ديكور يحوّل كل حفلة لحديث الكل',
+    challenge: 'تالا إيفنت تصمم ديكورات حفلات فاخرة (كوش، أقواس زهور، طاولات) لكن كانت أعمالها تظهر فقط لمن حضر الحفلة نفسها — بلا أرشيف بصري يجذب عرائس ومنظّمي مناسبات جدد قبل موسم الحجوزات.',
+    strategy: 'صوّرنا كل تصميم ديكور فور تجهيزه في موقع الحفلة (بلا حضور ضيوف)، بمونتاج قصير يبرز التفاصيل (الثريات، الزهور، الإضاءة) مع دعوة واضحة للتواصل في نهاية كل مقطع.',
+    deliverables: ['محتوى فيديو لكل تصميم ديكور فور تجهيزه', 'أرشيف بصري لمعرض الأعمال', 'دعوة تواصل مباشرة في كل مقطع'],
+    media: ['/work/tala-events/01.webp'],
+    ambientReel: { video: '/work/tala-events/video/reel.mp4', poster: '/work/tala-events/video/poster.jpg' },
+    secondaryVideo: { video: '/work/tala-events/video-secondary/reel.mp4', poster: '/work/tala-events/video-secondary/poster.jpg', label: 'من تصميم حفلة أخرى' },
+    logo: { src: '/logos/tala-events.webp', width: 220, height: 130 },
+    nextSlug: 'layali-events',
+    disciplines: ['تصوير', 'مونتاج وفيديو'],
   },
   {
     slug: 'layali-events',
@@ -609,8 +655,23 @@ export const work: CaseStudy[] = [
       author: 'عمر الدوسري',
       role: 'مقدم بودكاست صوت الرياض',
     },
-    nextSlug: 'asala-al-khaleej',
+    nextSlug: 'surge-brand',
     disciplines: ['مونتاج وفيديو', 'سيو وخرائط جوجل', 'كتابة محتوى', 'بلوجرز ومودلز'],
+  },
+  {
+    slug: 'surge-brand',
+    client: 'سيرج SURGE',
+    sector: 'مؤسسات',
+    year: 2025,
+    sectorColor: '#4a6a2a',
+    tagline: 'هوية كاملة لمؤسسة عنوانها الابتكار والاستدامة',
+    challenge: 'سيرج مؤسسة تعمل في الابتكار والاستدامة الاجتماعية، تحتاج هوية بصرية تعكس رسالتها منذ الانطلاق — من الشعار إلى القرطاسية إلى الموقع — لا مجرد شعار بلا نظام واضح للاستخدام.',
+    strategy: 'بنينا دليل هوية بصرية كامل: مفهوم الشعار وأشكاله، الألوان الرئيسية والثانوية ومعانيها، الخطوط والأنماط والأيقونات، وتطبيقات فعلية على القرطاسية والموقع والمنتجات — مرجع واحد يضمن اتساق العلامة في كل نقطة تواصل.',
+    deliverables: ['دليل هوية بصرية كامل (شعار، ألوان، خطوط)', 'تصميم قرطاسية (بطاقات، ترويسة)', 'تطبيقات الهوية على المنتجات والموقع'],
+    media: ['/work/surge-brand/01.webp', '/work/surge-brand/02.webp'],
+    logo: { src: '/logos/surge-brand.webp', width: 820, height: 170 },
+    nextSlug: 'asala-al-khaleej',
+    disciplines: ['هوية بصرية وجرافيك'],
   },
 ]
 
@@ -628,7 +689,7 @@ export function getCasesByDiscipline(discipline: Discipline) {
 
 export const sectors: Sector[] = [
   'مطاعم', 'كافيهات', 'تجزئة', 'عقارات', 'مقاولات',
-  'سيارات', 'تعليم', 'عيادات', 'مناسبات وفعاليات', 'بودكاست', 'أمن', 'ترفيه',
+  'سيارات', 'تعليم', 'عيادات', 'مناسبات وفعاليات', 'بودكاست', 'أمن', 'ترفيه', 'مؤسسات',
 ]
 
 export const disciplines: Discipline[] = [

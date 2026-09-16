@@ -111,6 +111,13 @@ const sectorIcons: Record<Sector, (size: number, ring: boolean) => React.ReactNo
       <circle cx="34" cy="34" r="1.6" fill="var(--gold)" strokeWidth={0} />
     </Ring>
   ),
+  'مؤسسات': (size, ring) => (
+    <Ring size={size} ring={ring}>
+      <path d="M4 44V16l16-10 16 10v28" />
+      <path d="M4 44h32M12 44V28h8v16M28 44V28h8v16" />
+      <path d="M18 20h4M22 12l6 4-6 4-6-4z" strokeWidth={1.5} opacity={0.6} />
+    </Ring>
+  ),
 }
 
 export function SectorIcon({ sector, size = 80, ring = true }: { sector: Sector; size?: number; ring?: boolean }) {
