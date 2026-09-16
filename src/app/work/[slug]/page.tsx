@@ -127,18 +127,19 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
       )}
 
       {/* ── Video reel ── */}
-      {(c.ambientReel || c.spotlightVideo) && (
+      {(c.ambientReel || c.spotlightVideo) && (() => {
+        const reelCount = [c.ambientReel, c.spotlightVideo, c.secondaryVideo].filter(Boolean).length
+        const wide = reelCount > 1
+        return (
         <section style={{ padding: '5rem 2rem 2rem', background: 'var(--ink)' }}>
-          <div style={{ maxWidth: c.secondaryVideo ? 780 : 420, margin: '0 auto' }}>
+          <div style={{ maxWidth: wide ? 780 : 420, margin: '0 auto' }}>
             <Reveal>
               <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '1.5rem', textAlign: 'center' }}>
                 من الفيديوهات المُنتَجة فعلياً
               </p>
-              <div style={{ display: 'grid', gridTemplateColumns: c.secondaryVideo ? 'repeat(auto-fit, minmax(280px, 1fr))' : '1fr', gap: '1.5rem' }}>
-                <div>
-                  {c.ambientReel && <AmbientReel src={c.ambientReel.video} poster={c.ambientReel.poster} />}
-                  {c.spotlightVideo && <SpotlightVideo src={c.spotlightVideo.video} poster={c.spotlightVideo.poster} />}
-                </div>
+              <div style={{ display: 'grid', gridTemplateColumns: wide ? 'repeat(auto-fit, minmax(280px, 1fr))' : '1fr', gap: '1.5rem' }}>
+                {c.ambientReel && <div><AmbientReel src={c.ambientReel.video} poster={c.ambientReel.poster} /></div>}
+                {c.spotlightVideo && <div><SpotlightVideo src={c.spotlightVideo.video} poster={c.spotlightVideo.poster} /></div>}
                 {c.secondaryVideo && (
                   <div>
                     <AmbientReel src={c.secondaryVideo.video} poster={c.secondaryVideo.poster} />
@@ -151,7 +152,8 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
             </Reveal>
           </div>
         </section>
-      )}
+        )
+      })()}
 
       {/* ── Real delivered creative gallery ── */}
       {c.media && c.media.length > 0 && (

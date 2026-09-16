@@ -74,7 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('haymanah-theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t)}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem('haymanah-theme');if(!t){t='light'}document.documentElement.setAttribute('data-theme',t)}catch(e){}})();`,
           }}
         />
         <JsonLd data={globalSchema} />
