@@ -266,3 +266,71 @@ select option { background: var(--navy); color: var(--ivory); }
   opacity: 1;
   transform: translateY(0) scale(1);
 }
+
+/* Work filters: label + wrapping pill row. Sticky only where it stays short. */
+@media (min-width: 1024px) {
+  .work-filter-bar { position: sticky; top: 72px; }
+}
+.work-filter-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.work-filter-row > span:first-child { padding-top: 0.45rem; min-width: 4.5rem; }
+@media (max-width: 639px) {
+  .work-filter-row { flex-direction: column; gap: 0.5rem; }
+  .work-filter-row > span:first-child { padding-top: 0; }
+}
+
+/* Work grid: explicit column counts so the showreel tile (always last) can
+   stretch across whatever the final row leaves empty. */
+.work-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.work-grid > div { min-width: 0; }
+.work-grid-cell { height: 100%; }
+.work-grid > .work-reel:nth-child(3n + 1) { grid-column: span 3; }
+.work-grid > .work-reel:nth-child(3n + 2) { grid-column: span 2; }
+@media (max-width: 1023px) {
+  .work-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .work-grid > .work-reel { grid-column: span 1; }
+  .work-grid > .work-reel:nth-child(odd) { grid-column: span 2; }
+}
+@media (max-width: 639px) {
+  .work-grid { grid-template-columns: 1fr; }
+  .work-grid > .work-reel,
+  .work-grid > .work-reel:nth-child(odd) { grid-column: span 1; }
+}
+
+/* Showreel tile: video on top when narrow, side-by-side when it spans columns */
+.work-reel { container-type: inline-size; }
+.work-reel-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100%;
+}
+.work-reel-video {
+  position: relative;
+  height: 200px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.work-reel-copy {
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+@container (min-width: 600px) {
+  .work-reel-inner { flex-direction: row; }
+  .work-reel-video { height: auto; width: 42%; min-height: 300px; }
+  .work-reel-copy { padding: 2.5rem; }
+}
+@container (min-width: 900px) {
+  .work-reel-video { width: 50%; }
+  .work-reel-copy { padding: 3rem 3.5rem; max-width: 560px; }
+}

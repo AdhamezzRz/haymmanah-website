@@ -127,27 +127,34 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
       )}
 
       {/* ── Video reel ── */}
-      {(c.ambientReel || c.spotlightVideo) && (() => {
-        const reelCount = [c.ambientReel, c.spotlightVideo, c.secondaryVideo].filter(Boolean).length
-        const wide = reelCount > 1
+      {(c.ambientReel || c.spotlightVideo || c.moreVideos?.length) && (() => {
+        const extra = c.moreVideos ?? []
+        const reelCount = [c.ambientReel, c.spotlightVideo].filter(Boolean).length + extra.length
+        // 1 → single centred column, 2 → pair, 3+ → three-up rows
+        const maxWidth = reelCount === 1 ? 420 : reelCount === 2 ? 780 : 1100
+        const cols = reelCount === 1 ? '1fr' : reelCount === 2 ? 'repeat(auto-fit, minmax(280px, 1fr))' : 'repeat(auto-fill, minmax(240px, 1fr))'
         return (
         <section style={{ padding: '5rem 2rem 2rem', background: 'var(--ink)' }}>
-          <div style={{ maxWidth: wide ? 780 : 420, margin: '0 auto' }}>
+          <div style={{ maxWidth, margin: '0 auto' }}>
             <Reveal>
               <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '1.5rem', textAlign: 'center' }}>
                 من الفيديوهات المُنتَجة فعلياً
               </p>
-              <div style={{ display: 'grid', gridTemplateColumns: wide ? 'repeat(auto-fit, minmax(280px, 1fr))' : '1fr', gap: '1.5rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: cols, gap: '1.5rem' }}>
                 {c.ambientReel && <div><AmbientReel src={c.ambientReel.video} poster={c.ambientReel.poster} /></div>}
                 {c.spotlightVideo && <div><SpotlightVideo src={c.spotlightVideo.video} poster={c.spotlightVideo.poster} /></div>}
-                {c.secondaryVideo && (
-                  <div>
-                    <AmbientReel src={c.secondaryVideo.video} poster={c.secondaryVideo.poster} />
-                    <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.8125rem', color: 'var(--muted)', textAlign: 'center', marginTop: '0.75rem' }}>
-                      {c.secondaryVideo.label}
-                    </p>
+                {extra.map(v => (
+                  <div key={v.video}>
+                    {v.withSound
+                      ? <SpotlightVideo src={v.video} poster={v.poster} />
+                      : <AmbientReel src={v.video} poster={v.poster} />}
+                    {v.label && (
+                      <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.8125rem', color: 'var(--muted)', textAlign: 'center', marginTop: '0.75rem' }}>
+                        {v.label}
+                      </p>
+                    )}
                   </div>
-                )}
+                ))}
               </div>
             </Reveal>
           </div>
@@ -157,7 +164,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
       {/* ── Real delivered creative gallery ── */}
       {c.media && c.media.length > 0 && (
-        <section style={{ padding: (c.ambientReel || c.spotlightVideo) ? '3rem 2rem 5rem' : '5rem 2rem', background: 'var(--ink)' }}>
+        <section style={{ padding: (c.ambientReel || c.spotlightVideo || c.moreVideos?.length) ? '3rem 2rem 5rem' : '5rem 2rem', background: 'var(--ink)' }}>
           <div style={{ maxWidth: 1100, margin: '0 auto' }}>
             <Reveal>
               <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '2rem', textAlign: 'center' }}>

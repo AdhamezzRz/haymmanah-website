@@ -13,8 +13,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'motion/react'
 
-type Mode = 'sector' | 'discipline'
-
 /* ─── Card visual header ────────────────────────────── */
 function CardVisual({ c, height = 240 }: { c: CaseStudy; height?: number }) {
   const cover = c.media?.[0]
@@ -110,14 +108,59 @@ function DisciplineChips({ items, onPick }: { items: Discipline[]; onPick: (d: D
   )
 }
 
+/* ─── Showreel tile: fills whatever the last grid row leaves empty ── */
+function ShowreelTile({ projectCount, sectorCount }: { projectCount: number; sectorCount: number }) {
+  return (
+    <GlowCard className="work-card work-reel-card" style={{ background: 'var(--ink)', height: '100%' }}>
+      <div className="work-reel-inner">
+        <div className="work-reel-video">
+          <video
+            src="/work/showreel/reel.mp4"
+            poster="/work/showreel/poster.jpg"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,8,3,0.1) 0%, rgba(10,8,3,0.55) 100%)', pointerEvents: 'none' }} />
+          <span style={{ position: 'absolute', top: '1rem', insetInlineEnd: '1rem', fontFamily: 'var(--font-role-heading)', fontSize: '0.7rem', letterSpacing: '0.15em', color: 'var(--on-gold)', background: 'var(--gold)', padding: '0.25rem 0.7rem', borderRadius: 20, textTransform: 'uppercase' }}>
+            شو ريل
+          </span>
+        </div>
+
+        <div className="work-reel-copy">
+          <p style={{ fontFamily: 'var(--font-role-heading)', fontSize: 'var(--text-eyebrow)', color: 'var(--gold)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>
+            من كل القطاعات
+          </p>
+          <h2 style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-h3)', color: 'var(--ivory)', lineHeight: 1.15, marginBottom: '0.75rem' }}>
+            {projectCount.toLocaleString('ar-EG')} مشروعاً في {sectorCount.toLocaleString('ar-EG')} قطاعاً — في دقيقة واحدة
+          </h2>
+          <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)', lineHeight: 1.7, marginBottom: '1.25rem' }}>
+            لقطات حقيقية من أعمال أنتجناها لعملائنا: ورش سيارات، مطاعم، عيادات، مناسبات، ومواقع مشاريع.
+          </p>
+          <Button href="/contact" variant="outline" size="sm">ابدأ قصتك معنا</Button>
+        </div>
+      </div>
+    </GlowCard>
+  )
+}
+
 const aggregates = [
-  { value: '١١+', label: 'قطاع نخدمه' },
+  { value: `${sectors.length.toLocaleString('ar-EG')}`, label: 'قطاعاً نخدمه' },
   { value: '٩٢٠٪', label: 'أعلى نمو حققناه' },
   { value: '٨.٢×', label: 'أعلى عائد إنفاق إعلاني' },
 ]
 
+const pillBase: React.CSSProperties = {
+  display: 'flex', alignItems: 'center', gap: '0.35rem',
+  fontFamily: 'var(--font-role-heading)', fontSize: '0.75rem', letterSpacing: '0.03em',
+  padding: '0.3rem 0.8rem', borderRadius: 40, border: '1px solid',
+  cursor: 'pointer', transition: 'all 0.2s',
+}
+
 export default function WorkPage() {
-  const [mode, setMode] = useState<Mode>('sector')
   const [activeSector, setActiveSector] = useState<Sector | 'الكل'>('الكل')
   const [activeDiscipline, setActiveDiscipline] = useState<Discipline | 'الكل'>('الكل')
   const filterBarId = useId()
@@ -127,19 +170,15 @@ export default function WorkPage() {
     const params = new URLSearchParams(window.location.search)
     const d = params.get('discipline')
     const s = params.get('sector')
-    if (d && (disciplines as string[]).includes(d)) {
-      setMode('discipline')
-      setActiveDiscipline(d as Discipline)
-    } else if (s && (sectors as string[]).includes(s)) {
-      setMode('sector')
-      setActiveSector(s as Sector)
-    }
+    if (d && (disciplines as string[]).includes(d)) setActiveDiscipline(d as Discipline)
+    if (s && (sectors as string[]).includes(s)) setActiveSector(s as Sector)
   }, [])
 
-  const filtered =
-    mode === 'sector'
-      ? activeSector === 'الكل' ? work : work.filter(c => c.sector === activeSector)
-      : activeDiscipline === 'الكل' ? work : work.filter(c => c.disciplines.includes(activeDiscipline as Discipline))
+  // Both rows combine: sector AND type of work.
+  const filtered = work.filter(c =>
+    (activeSector === 'الكل' || c.sector === activeSector) &&
+    (activeDiscipline === 'الكل' || c.disciplines.includes(activeDiscipline))
+  )
 
   const featured = filtered[0]
   const rest = filtered.slice(1)
@@ -147,10 +186,16 @@ export default function WorkPage() {
   function jumpToDiscipline(d: Discipline, e: React.MouseEvent) {
     e.preventDefault()
     e.stopPropagation()
-    setMode('discipline')
+    setActiveSector('الكل')
     setActiveDiscipline(d)
     document.getElementById(filterBarId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
+
+  const rowLabel = (text: string) => (
+    <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.7rem', letterSpacing: '0.18em', color: 'var(--muted)', textTransform: 'uppercase', whiteSpace: 'nowrap', opacity: 0.8 }}>
+      {text}
+    </span>
+  )
 
   return (
     <div style={{ background: 'var(--navy)', color: 'var(--ivory)', minHeight: '100vh' }}>
@@ -197,106 +242,75 @@ export default function WorkPage() {
         </div>
       </section>
 
-      {/* ── Mode toggle + filter pills ── */}
-      <div id={filterBarId} style={{ padding: '1.75rem 2rem', borderBottom: '1px solid rgba(76,99,199,0.08)', background: 'var(--navy-2)', position: 'sticky', top: 72, zIndex: 10 }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.25rem', alignItems: 'center' }}>
+      {/* ── Filters: sector row + type-of-work row, combinable ── */}
+      <div id={filterBarId} className="work-filter-bar" style={{ padding: '1rem 2rem', borderBottom: '1px solid rgba(76,99,199,0.08)', background: 'var(--navy-2)', zIndex: 10 }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
 
-          {/* Segmented mode switcher */}
-          <div style={{ display: 'inline-flex', padding: 4, background: 'var(--navy)', border: '1px solid rgba(76,99,199,0.25)', borderRadius: 40, gap: 2 }}>
-            {([
-              { id: 'sector' as Mode, label: 'تصفّح حسب القطاع' },
-              { id: 'discipline' as Mode, label: 'تصفّح حسب التخصص' },
-            ]).map(({ id, label }) => (
-              <button
-                key={id}
-                onClick={() => setMode(id)}
-                style={{
-                  position: 'relative',
-                  padding: '0.6rem 1.5rem',
-                  borderRadius: 40,
-                  border: 'none',
-                  background: 'transparent',
-                  cursor: 'pointer',
-                  fontFamily: 'var(--font-role-heading)',
-                  fontSize: '0.8125rem',
-                  letterSpacing: '0.02em',
-                }}
-              >
-                {mode === id && (
-                  <motion.div
-                    layoutId="mode-pill-bg"
-                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-                    style={{ position: 'absolute', inset: 0, background: 'var(--gold-grad)', borderRadius: 40, zIndex: 0 }}
-                  />
-                )}
-                <span style={{ position: 'relative', zIndex: 1, color: mode === id ? 'var(--on-gold)' : 'var(--muted)', fontWeight: mode === id ? 600 : 400, transition: 'color 0.2s' }}>
-                  {label}
-                </span>
-              </button>
-            ))}
+          {/* Row 1 — sectors */}
+          <div className="work-filter-row">
+            {rowLabel('القطاع')}
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              {(['الكل', ...sectors] as const).map(sec => {
+                const isActive = activeSector === sec
+                return (
+                  <motion.button
+                    key={sec}
+                    onClick={() => setActiveSector(sec as Sector | 'الكل')}
+                    whileTap={{ scale: 0.97 }}
+                    aria-pressed={isActive}
+                    style={{
+                      ...pillBase,
+                      borderColor: isActive ? 'var(--gold)' : 'rgba(var(--ivory-rgb),0.12)',
+                      background: isActive ? 'rgba(76,99,199,0.12)' : 'transparent',
+                      color: isActive ? 'var(--gold)' : 'var(--muted)',
+                    }}
+                  >
+                    {sec !== 'الكل' && (
+                      <span style={{ display: 'inline-flex', opacity: isActive ? 1 : 0.75 }}>
+                        <SectorIcon sector={sec as Sector} size={16} ring={false} />
+                      </span>
+                    )}
+                    {sec}
+                  </motion.button>
+                )
+              })}
+            </div>
           </div>
 
-          {/* Filter pills — sector or discipline depending on mode */}
-          <div style={{ display: 'flex', gap: '0.625rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-              {mode === 'sector' ? (
-                (['الكل', ...sectors] as const).map(sec => {
-                  const isActive = activeSector === sec
-                  return (
-                    <motion.button
-                      key={sec}
-                      onClick={() => setActiveSector(sec as Sector | 'الكل')}
-                      whileTap={{ scale: 0.97 }}
-                      style={{
-                        display: 'flex', alignItems: 'center', gap: '0.4rem',
-                        fontFamily: 'var(--font-role-heading)', fontSize: '0.8rem', letterSpacing: '0.05em',
-                        padding: '0.4rem 1rem', borderRadius: 40, border: '1px solid',
-                        borderColor: isActive ? 'var(--gold)' : 'rgba(var(--ivory-rgb),0.12)',
-                        background: isActive ? 'rgba(76,99,199,0.12)' : 'transparent',
-                        color: isActive ? 'var(--gold)' : 'var(--muted)',
-                        cursor: 'pointer', transition: 'all 0.2s',
-                      }}
-                    >
-                      {sec !== 'الكل' && (
-                        <span style={{ display: 'inline-flex', opacity: isActive ? 1 : 0.75 }}>
-                          <SectorIcon sector={sec as Sector} size={16} ring={false} />
-                        </span>
-                      )}
-                      {sec}
-                    </motion.button>
-                  )
-                })
-              ) : (
-                (['الكل', ...disciplines] as const).map(d => {
-                  const isActive = activeDiscipline === d
-                  const color = d === 'الكل' ? 'var(--gold)' : disciplineColors[d as Discipline]
-                  return (
-                    <motion.button
-                      key={d}
-                      onClick={() => setActiveDiscipline(d as Discipline | 'الكل')}
-                      whileTap={{ scale: 0.97 }}
-                      style={{
-                        display: 'flex', alignItems: 'center', gap: '0.45rem',
-                        fontFamily: 'var(--font-role-heading)', fontSize: '0.8rem', letterSpacing: '0.02em',
-                        padding: '0.4rem 1.1rem', borderRadius: 40, border: '1px solid',
-                        borderColor: isActive ? 'var(--gold)' : `${color}30`,
-                        background: isActive ? 'rgba(76,99,199,0.12)' : `${color}0a`,
-                        color: isActive ? 'var(--gold)' : 'var(--muted)',
-                        cursor: 'pointer', transition: 'all 0.2s',
-                      }}
-                    >
-                      {d !== 'الكل' && <DisciplineIcon discipline={d as Discipline} size={14} color={isActive ? 'var(--gold)' : color} />}
-                      {d}
-                    </motion.button>
-                  )
-                })
-              )}
+          {/* Row 2 — type of work (programming & websites, identity, bloggers…) */}
+          <div className="work-filter-row">
+            {rowLabel('نوع العمل')}
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              {(['الكل', ...disciplines] as const).map(d => {
+                const isActive = activeDiscipline === d
+                const color = d === 'الكل' ? 'var(--gold)' : disciplineColors[d as Discipline]
+                return (
+                  <motion.button
+                    key={d}
+                    onClick={() => setActiveDiscipline(d as Discipline | 'الكل')}
+                    whileTap={{ scale: 0.97 }}
+                    aria-pressed={isActive}
+                    style={{
+                      ...pillBase,
+                      gap: '0.45rem',
+                      borderColor: isActive ? 'var(--gold)' : `${color}30`,
+                      background: isActive ? 'rgba(76,99,199,0.12)' : `${color}0a`,
+                      color: isActive ? 'var(--gold)' : 'var(--muted)',
+                    }}
+                  >
+                    {d !== 'الكل' && <DisciplineIcon discipline={d as Discipline} size={14} color={isActive ? 'var(--gold)' : color} />}
+                    {d}
+                  </motion.button>
+                )
+              })}
+            </div>
           </div>
         </div>
       </div>
 
       <section style={{ padding: '4rem 2rem 6rem' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div key={`${mode}-${activeSector}-${activeDiscipline}`}>
+          <div key={`${activeSector}-${activeDiscipline}`}>
 
               {/* ── Featured card (first result) ── */}
               {featured && (
@@ -360,54 +374,68 @@ export default function WorkPage() {
                 </Reveal>
               )}
 
-              {/* ── Rest: 3-col grid ── */}
-              {rest.length > 0 && (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.25rem' }}>
+              {/* ── Rest: grid, with the showreel tile filling whatever the last row leaves empty ── */}
+              {featured && (
+                <div className="work-grid">
                   {rest.map((c, i) => (
-                    <Reveal key={c.slug} delay={i * 70}>
-                      <Link href={`/work/${c.slug}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
-                        <GlowCard className="work-card" style={{ background: 'var(--navy-2)', display: 'flex', flexDirection: 'column', height: '100%' }}>
-                          <CardVisual c={c} height={200} />
+                    <div key={c.slug}>
+                      <Reveal delay={Math.min(i * 70, 420)} className="work-grid-cell">
+                        <Link href={`/work/${c.slug}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
+                          <GlowCard className="work-card" style={{ background: 'var(--navy-2)', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                            <CardVisual c={c} height={200} />
 
-                          <div style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                            <h2 style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-h3)', color: 'var(--ivory)', marginBottom: '0.375rem', lineHeight: 1.1 }}>
-                              {c.client}
-                            </h2>
-                            <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)', marginBottom: '1rem', lineHeight: 1.6 }}>
-                              {c.tagline}
-                            </p>
+                            <div style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                              <h2 style={{ fontFamily: 'var(--font-role-display)', fontSize: 'var(--text-h3)', color: 'var(--ivory)', marginBottom: '0.375rem', lineHeight: 1.1 }}>
+                                {c.client}
+                              </h2>
+                              <p style={{ fontFamily: 'var(--font-role-body)', fontSize: 'var(--text-small)', color: 'var(--muted)', marginBottom: '1rem', lineHeight: 1.6 }}>
+                                {c.tagline}
+                              </p>
 
-                            <div style={{ marginBottom: '1.25rem' }}>
-                              <DisciplineChips items={c.disciplines} onPick={jumpToDiscipline} />
-                            </div>
-
-                            {c.results && c.results.length > 0 && (
-                              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.875rem', paddingTop: '1.25rem', borderTop: '1px solid rgba(var(--ivory-rgb),0.08)', marginBottom: '1.25rem', marginTop: 'auto' }}>
-                                {c.results.slice(0, 2).map(r => (
-                                  <div key={r.label}>
-                                    <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.1rem,2vw,1.375rem)', lineHeight: 1 }}>{r.value}</p>
-                                    <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.675rem', color: 'var(--muted)', marginTop: '0.2rem' }}>{r.label}</p>
-                                  </div>
-                                ))}
+                              <div style={{ marginBottom: '1.25rem' }}>
+                                <DisciplineChips items={c.disciplines} onPick={jumpToDiscipline} />
                               </div>
-                            )}
 
-                            <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.8rem', color: 'var(--gold)', display: 'inline-flex', alignItems: 'center', gap: '0.375rem' }}>
-                              اقرأ القصة
-                              <svg viewBox="0 0 16 16" width={12} height={12} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M10 8H3M7 5l3 3-3 3" /></svg>
-                            </span>
-                          </div>
-                        </GlowCard>
-                      </Link>
-                    </Reveal>
+                              {c.results && c.results.length > 0 && (
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.875rem', paddingTop: '1.25rem', borderTop: '1px solid rgba(var(--ivory-rgb),0.08)', marginBottom: '1.25rem', marginTop: 'auto' }}>
+                                  {c.results.slice(0, 2).map(r => (
+                                    <div key={r.label}>
+                                      <p className="text-gold-grad" style={{ fontFamily: 'var(--font-role-display)', fontSize: 'clamp(1.1rem,2vw,1.375rem)', lineHeight: 1 }}>{r.value}</p>
+                                      <p style={{ fontFamily: 'var(--font-role-body)', fontSize: '0.675rem', color: 'var(--muted)', marginTop: '0.2rem' }}>{r.label}</p>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+
+                              <span style={{ fontFamily: 'var(--font-role-heading)', fontSize: '0.8rem', color: 'var(--gold)', display: 'inline-flex', alignItems: 'center', gap: '0.375rem', marginTop: 'auto' }}>
+                                اقرأ القصة
+                                <svg viewBox="0 0 16 16" width={12} height={12} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M10 8H3M7 5l3 3-3 3" /></svg>
+                              </span>
+                            </div>
+                          </GlowCard>
+                        </Link>
+                      </Reveal>
+                    </div>
                   ))}
+
+                  <div className="work-reel">
+                    <Reveal delay={Math.min(rest.length * 70, 420)} className="work-grid-cell">
+                      <ShowreelTile projectCount={work.length} sectorCount={sectors.length} />
+                    </Reveal>
+                  </div>
                 </div>
               )}
 
               {filtered.length === 0 && (
                 <div style={{ textAlign: 'center', padding: '6rem 2rem', color: 'var(--muted)' }}>
                   <LogoMark size={64} mode="static" />
-                  <p style={{ fontFamily: 'var(--font-role-heading)', marginTop: '1.5rem' }}>لا توجد أعمال مطابقة حالياً</p>
+                  <p style={{ fontFamily: 'var(--font-role-heading)', marginTop: '1.5rem' }}>لا توجد أعمال مطابقة لهذا المزيج حالياً</p>
+                  <button
+                    onClick={() => { setActiveSector('الكل'); setActiveDiscipline('الكل') }}
+                    style={{ ...pillBase, margin: '1.25rem auto 0', borderColor: 'var(--gold)', color: 'var(--gold)', background: 'transparent' }}
+                  >
+                    عرض كل الأعمال
+                  </button>
                 </div>
               )}
 

@@ -1,10 +1,10 @@
 export type Sector =
   | 'مطاعم' | 'كافيهات' | 'تجزئة' | 'سيارات' | 'أمن'
   | 'عقارات' | 'تعليم' | 'مقاولات' | 'عيادات'
-  | 'مناسبات وفعاليات' | 'بودكاست' | 'ترفيه' | 'مؤسسات'
+  | 'مناسبات وفعاليات' | 'بودكاست' | 'ترفيه' | 'مؤسسات' | 'بلوجرز'
 
 export type Discipline =
-  | 'برمجة وتطوير'
+  | 'برمجة ومواقع'
   | 'تسويق وإدارة حملات'
   | 'كتابة محتوى'
   | 'تصوير'
@@ -33,8 +33,11 @@ export interface CaseStudy {
   ambientReel?: { video: string; poster: string }
   /** Click-to-play footage with sound — used when a real person appears on camera. */
   spotlightVideo?: { video: string; poster: string }
-  /** A second ambient reel with its own caption — e.g. blogger/influencer coverage shown alongside the primary reel. */
-  secondaryVideo?: { video: string; poster: string; label: string }
+  /**
+   * Additional reels beyond the primary pair, each with an optional caption.
+   * `withSound` → click-to-play (a real person is on camera); otherwise muted autoplay B-roll.
+   */
+  moreVideos?: { video: string; poster: string; label?: string; withSound?: boolean }[]
   /** Real logo mark cropped from delivered creative, for the trusted-by strip. */
   logo?: { src: string; width: number; height: number }
   nextSlug: string
@@ -54,6 +57,9 @@ export const work: CaseStudy[] = [
     deliverables: ['تصميم بوسترات لإطلاقات السيارات', 'محتوى فيديو للأسطول', 'نظام قوالب هوية بصرية موحد', 'محتوى توعوي للمستأجرين'],
     media: Array.from({ length: 12 }, (_, i) => `/work/asala-al-khaleej/${String(i + 1).padStart(2, '0')}.webp`),
     ambientReel: { video: '/work/asala-al-khaleej/video/reel.mp4', poster: '/work/asala-al-khaleej/video/poster.jpg' },
+    moreVideos: [
+      { video: '/work/asala-al-khaleej/video-2/reel.mp4', poster: '/work/asala-al-khaleej/video-2/poster.jpg', label: 'من داخل المعرض وخدمة العملاء' },
+    ],
     logo: { src: '/logos/asala-al-khaleej.webp', width: 290, height: 110 },
     nextSlug: 'roza-restaurant',
     disciplines: ['هوية بصرية وجرافيك', 'تصوير', 'مونتاج وفيديو'],
@@ -70,7 +76,10 @@ export const work: CaseStudy[] = [
     deliverables: ['تصميم بوسترات ترويجية', 'هوية بصرية للمنصات', 'محتوى تعريفي بالتجربة والأجواء', 'تنسيق تغطية مدونين ومؤثرين'],
     media: Array.from({ length: 8 }, (_, i) => `/work/roza-restaurant/${String(i + 1).padStart(2, '0')}.webp`),
     ambientReel: { video: '/work/roza-restaurant/video/reel.mp4', poster: '/work/roza-restaurant/video/poster.jpg' },
-    secondaryVideo: { video: '/work/roza-restaurant/video-bloggers/reel.mp4', poster: '/work/roza-restaurant/video-bloggers/poster.jpg', label: 'من تغطية المدونين' },
+    moreVideos: [
+      { video: '/work/roza-restaurant/video-bloggers/reel.mp4', poster: '/work/roza-restaurant/video-bloggers/poster.jpg', label: 'من تغطية المدونين' },
+      { video: '/work/roza-restaurant/video-2/reel.mp4', poster: '/work/roza-restaurant/video-2/poster.jpg', label: 'الأطباق وأجواء الحديقة' },
+    ],
     logo: { src: '/logos/roza-restaurant.webp', width: 2154, height: 1394 },
     nextSlug: 'nm-bright',
     disciplines: ['هوية بصرية وجرافيك', 'تصوير', 'بلوجرز ومودلز'],
@@ -87,6 +96,10 @@ export const work: CaseStudy[] = [
     deliverables: ['تصميم عروض أسعار موسمية', 'هوية بصرية للمنصات', 'محتوى ترويجي للخدمات'],
     media: Array.from({ length: 20 }, (_, i) => `/work/nm-bright/${String(i + 1).padStart(2, '0')}.webp`),
     spotlightVideo: { video: '/work/nm-bright/video/reel.mp4', poster: '/work/nm-bright/video/poster.jpg' },
+    moreVideos: [
+      { video: '/work/nm-bright/video-spotlight-2/reel.mp4', poster: '/work/nm-bright/video-spotlight-2/poster.jpg', label: 'عرض حماية المقدمة', withSound: true },
+      { video: '/work/nm-bright/video-spotlight-3/reel.mp4', poster: '/work/nm-bright/video-spotlight-3/poster.jpg', label: 'عرض الشاشات الداخلية', withSound: true },
+    ],
     logo: { src: '/logos/nm-bright.webp', width: 720, height: 280 },
     nextSlug: 'rawaat-al-tareeq',
     disciplines: ['هوية بصرية وجرافيك'],
@@ -102,7 +115,11 @@ export const work: CaseStudy[] = [
     strategy: 'بنينا نظام تصميم سريع الإنتاج لكل سيارة جديدة تتوفر، بهوية بصرية بالأزرق الكحلي والبرتقالي تُبقي كل إعلان واضحاً ومباشراً — السيارة، والتوفر، ورقم التواصل — دون تعقيد.',
     deliverables: ['تصميم بوسترات إطلاق السيارات', 'هوية بصرية موحدة', 'محتوى إعلاني موسمي'],
     media: Array.from({ length: 26 }, (_, i) => `/work/rawaat-al-tareeq/${String(i + 1).padStart(2, '0')}.webp`),
-    ambientReel: { video: '/work/rawaat-al-tareeq/video/reel.mp4', poster: '/work/rawaat-al-tareeq/video/poster.jpg' },
+    ambientReel: { video: '/work/rawaat-al-tareeq/video-2/reel.mp4', poster: '/work/rawaat-al-tareeq/video-2/poster.jpg' },
+    moreVideos: [
+      { video: '/work/rawaat-al-tareeq/video-3/reel.mp4', poster: '/work/rawaat-al-tareeq/video-3/poster.jpg', label: 'الأسطول على الطريق' },
+      { video: '/work/rawaat-al-tareeq/video/reel.mp4', poster: '/work/rawaat-al-tareeq/video/poster.jpg', label: 'من المعرض', withSound: true },
+    ],
     logo: { src: '/logos/rawaat-al-tareeq.webp', width: 310, height: 180 },
     nextSlug: 'rose-town',
     disciplines: ['هوية بصرية وجرافيك'],
@@ -119,6 +136,10 @@ export const work: CaseStudy[] = [
     deliverables: ['تصميم بوسترات عروض وحجوزات', 'دمج تقييمات الضيوف بصرياً', 'هوية بصرية فندقية فاخرة'],
     media: Array.from({ length: 5 }, (_, i) => `/work/rose-town/${String(i + 1).padStart(2, '0')}.webp`),
     ambientReel: { video: '/work/rose-town/video/reel.mp4', poster: '/work/rose-town/video/poster.jpg' },
+    moreVideos: [
+      { video: '/work/rose-town/video-spotlight/reel.mp4', poster: '/work/rose-town/video-spotlight/poster.jpg', label: 'جولة في الاستقبال والشقق', withSound: true },
+      { video: '/work/rose-town/video-spotlight-2/reel.mp4', poster: '/work/rose-town/video-spotlight-2/poster.jpg', label: 'تجربة الضيف من الوصول للغرفة', withSound: true },
+    ],
     logo: { src: '/logos/rose-town.webp', width: 320, height: 200 },
     nextSlug: 'gg-gaming',
     disciplines: ['هوية بصرية وجرافيك', 'تصوير'],
@@ -135,6 +156,9 @@ export const work: CaseStudy[] = [
     deliverables: ['تصميم بوسترات عروض ثنائية اللغة', 'محتوى فيديو من داخل الصالة', 'هوية بصرية موحدة للحملات'],
     media: Array.from({ length: 5 }, (_, i) => `/work/gg-gaming/${String(i + 1).padStart(2, '0')}.webp`),
     ambientReel: { video: '/work/gg-gaming/video/reel.mp4', poster: '/work/gg-gaming/video/poster.jpg' },
+    moreVideos: [
+      { video: '/work/gg-gaming/video-2/reel.mp4', poster: '/work/gg-gaming/video-2/poster.jpg', label: 'جولة في الصالة' },
+    ],
     logo: { src: '/logos/gg-gaming.webp', width: 420, height: 175 },
     nextSlug: 'asas-alam-aldhil',
     disciplines: ['هوية بصرية وجرافيك', 'مونتاج وفيديو'],
@@ -151,6 +175,10 @@ export const work: CaseStudy[] = [
     deliverables: ['توثيق مصوّر للمشاريع المُنفَّذة', 'محتوى فيديو ميداني للتنفيذ', 'ملف تعريفي للشركة'],
     media: Array.from({ length: 7 }, (_, i) => `/work/asas-alam-aldhil/${String(i + 1).padStart(2, '0')}.webp`),
     ambientReel: { video: '/work/asas-alam-aldhil/video/reel.mp4', poster: '/work/asas-alam-aldhil/video/poster.jpg' },
+    moreVideos: [
+      { video: '/work/asas-alam-aldhil/video-2/reel.mp4', poster: '/work/asas-alam-aldhil/video-2/poster.jpg', label: 'تركيب ساتر بديكور خشبي' },
+      { video: '/work/asas-alam-aldhil/video-spotlight/reel.mp4', poster: '/work/asas-alam-aldhil/video-spotlight/poster.jpg', label: 'من موقع التنفيذ', withSound: true },
+    ],
     logo: { src: '/logos/asas-alam-aldhil.webp', width: 360, height: 240 },
     nextSlug: 'maxmo-lube',
     disciplines: ['تصوير', 'مونتاج وفيديو', 'هوية بصرية وجرافيك'],
@@ -165,7 +193,6 @@ export const work: CaseStudy[] = [
     challenge: 'زيت سيارتك للتجارة، موزّع MAXMO LUBE، احتاجت بطاقة عمل احترافية موحدة لفريق المبيعات الميداني تعكس هوية العلامتين (الموزّع والمنتج) بشكل واحد متسق.',
     strategy: 'صمّمنا بطاقة عمل بهوية بصرية حمراء جريئة تجمع شعاري TOP N وMAXMO LUBE بتوازن بصري واضح، مع تنسيق يسهل قراءته وحفظه من أول لمسة.',
     deliverables: ['تصميم بطاقة عمل احترافية', 'هوية بصرية موحدة للمندوبين'],
-    media: Array.from({ length: 3 }, (_, i) => `/work/maxmo-lube/${String(i + 1).padStart(2, '0')}.webp`),
     logo: { src: '/logos/maxmo-lube.webp', width: 460, height: 140 },
     nextSlug: 'strong-shield',
     disciplines: ['هوية بصرية وجرافيك'],
@@ -182,6 +209,10 @@ export const work: CaseStudy[] = [
     deliverables: ['تصميم بوسترات هوية موحدة', 'محتوى مقارنة قبل/بعد الحماية', 'محتوى فيديو من داخل الورشة'],
     media: Array.from({ length: 22 }, (_, i) => `/work/strong-shield/${String(i + 1).padStart(2, '0')}.webp`),
     ambientReel: { video: '/work/strong-shield/video/reel.mp4', poster: '/work/strong-shield/video/poster.jpg' },
+    moreVideos: [
+      { video: '/work/strong-shield/video-spotlight/reel.mp4', poster: '/work/strong-shield/video-spotlight/poster.jpg', label: 'الباقات والتقسيط', withSound: true },
+      { video: '/work/strong-shield/video-spotlight-2/reel.mp4', poster: '/work/strong-shield/video-spotlight-2/poster.jpg', label: 'قصة التوسع من كاليفورنيا', withSound: true },
+    ],
     logo: { src: '/logos/strong-shield.webp', width: 1287, height: 671 },
     nextSlug: 'temco-contracting',
     disciplines: ['هوية بصرية وجرافيك', 'تصوير', 'مونتاج وفيديو'],
@@ -243,6 +274,9 @@ export const work: CaseStudy[] = [
     deliverables: ['إدارة حسابات التواصل الاجتماعي', 'نشر محتوى العلامة المعتمد محلياً'],
     media: ['/work/zeebart/01.webp'],
     ambientReel: { video: '/work/zeebart/video/reel.mp4', poster: '/work/zeebart/video/poster.jpg' },
+    moreVideos: [
+      { video: '/work/zeebart/video-spotlight/reel.mp4', poster: '/work/zeebart/video-spotlight/poster.jpg', label: 'الإعلان الكامل', withSound: true },
+    ],
     logo: { src: '/logos/zeebart.webp', width: 290, height: 120 },
     nextSlug: 'lvh-invest',
     disciplines: ['تسويق وإدارة حملات'],
@@ -258,7 +292,11 @@ export const work: CaseStudy[] = [
     strategy: 'صمّمنا نظام بوسترات موحد يعرض كل مساحة (مطبخ، غرفة نوم، صالة) كقطعة تصميم متكاملة، بهوية بصرية ذهبية داكنة فاخرة، مع محتوى فيديو ميداني من مواقع التنفيذ الفعلية يُظهر فريق العمل وجودة الإشراف.',
     deliverables: ['تصميم بوسترات لكل مساحة تشطيب', 'هوية بصرية فاخرة موحدة', 'محتوى فيديو ميداني من مواقع التنفيذ'],
     media: Array.from({ length: 30 }, (_, i) => `/work/lvh-invest/${String(i + 1).padStart(2, '0')}.webp`),
-    ambientReel: { video: '/work/lvh-invest/video/reel.mp4', poster: '/work/lvh-invest/video/poster.jpg' },
+    ambientReel: { video: '/work/lvh-invest/video-2/reel.mp4', poster: '/work/lvh-invest/video-2/poster.jpg' },
+    moreVideos: [
+      { video: '/work/lvh-invest/video-spotlight/reel.mp4', poster: '/work/lvh-invest/video-spotlight/poster.jpg', label: 'جولة مع فريق إنفست', withSound: true },
+      { video: '/work/lvh-invest/video/reel.mp4', poster: '/work/lvh-invest/video/poster.jpg', label: 'من مواقع التنفيذ', withSound: true },
+    ],
     logo: { src: '/logos/lvh-invest.webp', width: 260, height: 190 },
     nextSlug: 'zad-al-khalij',
     disciplines: ['هوية بصرية وجرافيك', 'تصوير', 'مونتاج وفيديو'],
@@ -284,8 +322,23 @@ export const work: CaseStudy[] = [
       author: 'فهد العتيبي',
       role: 'المدير التنفيذي، زاد الخليج',
     },
+    nextSlug: 'abjadiya-cafe',
+    disciplines: ['تسويق وإدارة حملات', 'تصوير', 'مونتاج وفيديو', 'برمجة ومواقع'],
+  },
+  {
+    slug: 'abjadiya-cafe',
+    client: 'كوفي أبجدية',
+    sector: 'كافيهات',
+    year: 2026,
+    sectorColor: '#5a3a1e',
+    tagline: 'قهوة مختصة تُروى بلغة السينما',
+    challenge: 'أبجدية كافيه قهوة مختصة بواجهة خشبية دافئة وبار تحضير مكشوف، يحتاج محتوى يعكس طقوس التحضير نفسها — الطحن، التقطير، الاستخلاص — لا مجرد صورة لكوب جاهز.',
+    strategy: 'صوّرنا ريلز سينمائياً بلقطات مقرّبة على مراحل تحضير القهوة، بإضاءة ذهبية دافئة تطابق الواجهة الخشبية للمكان، بحيث يشعر المتابع بالرائحة قبل أن يصل — محتوى قصير يصلح للريلز والتيك توك معاً.',
+    deliverables: ['ريلز سينمائي لطقوس تحضير القهوة', 'لقطات للواجهة والبار المكشوف', 'هوية بصرية دافئة للمحتوى'],
+    media: ['/work/abjadiya-cafe/01.webp', '/work/abjadiya-cafe/02.webp'],
+    ambientReel: { video: '/work/abjadiya-cafe/video/reel.mp4', poster: '/work/abjadiya-cafe/video/poster.jpg' },
     nextSlug: 'agree-cafe',
-    disciplines: ['تسويق وإدارة حملات', 'تصوير', 'مونتاج وفيديو', 'برمجة وتطوير'],
+    disciplines: ['تصوير', 'مونتاج وفيديو'],
   },
   {
     slug: 'agree-cafe',
@@ -347,7 +400,7 @@ export const work: CaseStudy[] = [
       role: 'الرئيس التنفيذي، الدرع الأقوى',
     },
     nextSlug: 'west-avenue',
-    disciplines: ['تسويق وإدارة حملات', 'كتابة محتوى', 'برمجة وتطوير'],
+    disciplines: ['تسويق وإدارة حملات', 'كتابة محتوى', 'برمجة ومواقع'],
   },
   {
     slug: 'west-avenue',
@@ -395,7 +448,7 @@ export const work: CaseStudy[] = [
       role: 'مؤسس أوتو ماسك',
     },
     nextSlug: 'dar-al-tamkin',
-    disciplines: ['برمجة وتطوير', 'تسويق وإدارة حملات'],
+    disciplines: ['برمجة ومواقع', 'تسويق وإدارة حملات'],
   },
   {
     slug: 'dar-al-tamkin',
@@ -443,7 +496,7 @@ export const work: CaseStudy[] = [
       role: 'مدير المبيعات، مسار العقارية',
     },
     nextSlug: 'al-bunyan',
-    disciplines: ['تسويق وإدارة حملات', 'تصوير', 'مونتاج وفيديو', 'برمجة وتطوير'],
+    disciplines: ['تسويق وإدارة حملات', 'تصوير', 'مونتاج وفيديو', 'برمجة ومواقع'],
   },
   {
     slug: 'al-bunyan',
@@ -467,7 +520,7 @@ export const work: CaseStudy[] = [
       role: 'الرئيس التنفيذي، البنيان للمقاولات',
     },
     nextSlug: 'symphony-clinic',
-    disciplines: ['هوية بصرية وجرافيك', 'برمجة وتطوير', 'تصوير', 'تسويق وإدارة حملات'],
+    disciplines: ['هوية بصرية وجرافيك', 'برمجة ومواقع', 'تصوير', 'تسويق وإدارة حملات'],
   },
   {
     slug: 'symphony-clinic',
@@ -498,7 +551,9 @@ export const work: CaseStudy[] = [
     deliverables: ['توثيق تجربة الضيافة والاستقبال', 'محتوى فيديو للتصميم المعماري الداخلي', 'هوية بصرية ذهبية متّسقة'],
     media: ['/work/radiance-clinic/01.webp', '/work/radiance-clinic/02.webp'],
     spotlightVideo: { video: '/work/radiance-clinic/video-spotlight/reel.mp4', poster: '/work/radiance-clinic/video-spotlight/poster.jpg' },
-    ambientReel: { video: '/work/radiance-clinic/video/reel.mp4', poster: '/work/radiance-clinic/video/poster.jpg' },
+    moreVideos: [
+      { video: '/work/radiance-clinic/video/reel.mp4', poster: '/work/radiance-clinic/video/poster.jpg', label: 'التصميم الداخلي والاستقبال', withSound: true },
+    ],
     logo: { src: '/logos/radiance-clinic.webp', width: 890, height: 940 },
     nextSlug: 'riyadh-hospital',
     disciplines: ['تصوير', 'مونتاج وفيديو'],
@@ -605,7 +660,9 @@ export const work: CaseStudy[] = [
     deliverables: ['محتوى فيديو لكل تصميم ديكور فور تجهيزه', 'أرشيف بصري لمعرض الأعمال', 'دعوة تواصل مباشرة في كل مقطع'],
     media: ['/work/tala-events/01.webp'],
     ambientReel: { video: '/work/tala-events/video/reel.mp4', poster: '/work/tala-events/video/poster.jpg' },
-    secondaryVideo: { video: '/work/tala-events/video-secondary/reel.mp4', poster: '/work/tala-events/video-secondary/poster.jpg', label: 'من تصميم حفلة أخرى' },
+    moreVideos: [
+      { video: '/work/tala-events/video-secondary/reel.mp4', poster: '/work/tala-events/video-secondary/poster.jpg', label: 'من تصميم حفلة أخرى' },
+    ],
     logo: { src: '/logos/tala-events.webp', width: 220, height: 130 },
     nextSlug: 'layali-events',
     disciplines: ['تصوير', 'مونتاج وفيديو'],
@@ -655,8 +712,28 @@ export const work: CaseStudy[] = [
       author: 'عمر الدوسري',
       role: 'مقدم بودكاست صوت الرياض',
     },
-    nextSlug: 'surge-brand',
+    nextSlug: 'roza-bloggers',
     disciplines: ['مونتاج وفيديو', 'سيو وخرائط جوجل', 'كتابة محتوى', 'بلوجرز ومودلز'],
+  },
+  {
+    slug: 'roza-bloggers',
+    client: 'حملة مدونين — حديقة روزا',
+    sector: 'بلوجرز',
+    year: 2025,
+    sectorColor: '#7a2e3e',
+    tagline: 'ثمانية مدونين، تجربة واحدة تُروى بثماني عدسات',
+    challenge: 'مطعم روزا يحتاج وصولاً لجمهور جديد خارج متابعيه، بصوت يثق به الناس أكثر من الإعلان المباشر: مدونو الطعام والأماكن في الرياض — مع ضمان أن كل تغطية تُظهر الحديقة والأطباق بجودة تليق بالمكان.',
+    strategy: 'نسّقنا زيارات لمجموعة من مدونات ومدوني الأكل، ووجّهنا كل تغطية لزاوية مختلفة (الإفطار، البوفيه، أجواء المسبح ليلاً، الأطباق المميزة) بحيث لا تتكرر الفكرة، ثم أعدنا استخدام أفضل اللقطات في محتوى المطعم نفسه.',
+    deliverables: ['تنسيق وإدارة زيارات المدونين', 'توجيه زوايا التغطية لكل مدوّن', 'إعادة استخدام المحتوى في حسابات المطعم'],
+    media: ['/work/roza-bloggers/01.webp', '/work/roza-bloggers/02.webp'],
+    ambientReel: { video: '/work/roza-bloggers/video/reel.mp4', poster: '/work/roza-bloggers/video/poster.jpg' },
+    moreVideos: [
+      { video: '/work/roza-bloggers/video-2/reel.mp4', poster: '/work/roza-bloggers/video-2/poster.jpg', label: 'تغطية أجواء المسبح والجلسات' },
+      { video: '/work/roza-bloggers/video-3/reel.mp4', poster: '/work/roza-bloggers/video-3/poster.jpg', label: 'تغطية البوفيه' },
+      { video: '/work/roza-bloggers/video-4/reel.mp4', poster: '/work/roza-bloggers/video-4/poster.jpg', label: 'تغطية الجلسة الليلية' },
+    ],
+    nextSlug: 'surge-brand',
+    disciplines: ['بلوجرز ومودلز', 'تسويق وإدارة حملات'],
   },
   {
     slug: 'surge-brand',
@@ -689,7 +766,7 @@ export function getCasesByDiscipline(discipline: Discipline) {
 
 export const sectors: Sector[] = [
   'مطاعم', 'كافيهات', 'تجزئة', 'عقارات', 'مقاولات',
-  'سيارات', 'تعليم', 'عيادات', 'مناسبات وفعاليات', 'بودكاست', 'أمن', 'ترفيه', 'مؤسسات',
+  'سيارات', 'تعليم', 'عيادات', 'مناسبات وفعاليات', 'بودكاست', 'أمن', 'ترفيه', 'مؤسسات', 'بلوجرز',
 ]
 
 export const disciplines: Discipline[] = [
@@ -697,7 +774,7 @@ export const disciplines: Discipline[] = [
   'هوية بصرية وجرافيك',
   'تصوير',
   'مونتاج وفيديو',
-  'برمجة وتطوير',
+  'برمجة ومواقع',
   'كتابة محتوى',
   'سيو وخرائط جوجل',
   'بلوجرز ومودلز',
@@ -708,7 +785,7 @@ export const disciplineColors: Record<Discipline, string> = {
   'هوية بصرية وجرافيك': '#b0589e',
   'تصوير': '#4a90b8',
   'مونتاج وفيديو': '#c4504a',
-  'برمجة وتطوير': '#4aa876',
+  'برمجة ومواقع': '#4aa876',
   'كتابة محتوى': '#a8954a',
   'سيو وخرائط جوجل': '#4a7ac4',
   'بلوجرز ومودلز': '#c47a4a',

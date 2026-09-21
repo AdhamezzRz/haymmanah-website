@@ -118,6 +118,15 @@ const sectorIcons: Record<Sector, (size: number, ring: boolean) => React.ReactNo
       <path d="M18 20h4M22 12l6 4-6 4-6-4z" strokeWidth={1.5} opacity={0.6} />
     </Ring>
   ),
+  'بلوجرز': (size, ring) => (
+    <Ring size={size} ring={ring}>
+      {/* phone in portrait with a play mark — creator content */}
+      <rect x="12" y="-2" width="24" height="50" rx="5" />
+      <path d="M20 4h8" strokeWidth={1.5} opacity={0.6} />
+      <path d="M21 16l10 7-10 7z" fill="var(--gold)" strokeWidth={0} />
+      <path d="M2 30c0-4 3-7 6-7M46 30c0-4-3-7-6-7" strokeWidth={1.5} opacity={0.6} />
+    </Ring>
+  ),
 }
 
 export function SectorIcon({ sector, size = 80, ring = true }: { sector: Sector; size?: number; ring?: boolean }) {
@@ -127,7 +136,7 @@ export function SectorIcon({ sector, size = 80, ring = true }: { sector: Sector;
 /* ─── Discipline icons (compact, no ring) ────────────── */
 
 const disciplineIcons: Record<Discipline, (size: number, color: string) => React.ReactNode> = {
-  'برمجة وتطوير': (size, color) => (
+  'برمجة ومواقع': (size, color) => (
     <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="8 6 2 12 8 18" />
       <polyline points="16 6 22 12 16 18" />
