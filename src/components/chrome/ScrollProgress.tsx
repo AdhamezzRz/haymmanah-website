@@ -21,7 +21,7 @@ export function ScrollProgress() {
       aria-hidden="true"
       style={{
         position: 'fixed',
-        top: 0,
+        top: 'var(--nd-offset, 0px)',
         insetInlineStart: 0,
         width: `${pct}%`,
         height: 2,

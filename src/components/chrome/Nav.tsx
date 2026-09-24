@@ -43,7 +43,7 @@ export function Nav() {
       <header
         style={{
           position: 'fixed',
-          top: 0,
+          top: 'var(--nd-offset, 0px)',
           insetInline: 0,
           zIndex: 1000,
           padding: '0 2rem',

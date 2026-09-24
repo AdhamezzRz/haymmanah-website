@@ -269,7 +269,7 @@ select option { background: var(--navy); color: var(--ivory); }
 
 /* Work filters: label + wrapping pill row. Sticky only where it stays short. */
 @media (min-width: 1024px) {
-  .work-filter-bar { position: sticky; top: 72px; }
+  .work-filter-bar { position: sticky; top: calc(72px + var(--nd-offset, 0px)); }
 }
 .work-filter-row {
   display: flex;
@@ -333,4 +333,122 @@ select option { background: var(--navy); color: var(--ivory); }
 @container (min-width: 900px) {
   .work-reel-video { width: 50%; }
   .work-reel-copy { padding: 3rem 3.5rem; max-width: 560px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Saudi National Day theme — only while <html data-national="1"> (set by the
+   pre-paint head script for the celebration window, see src/lib/nationalDay.ts).
+   The whole token system turns Saudi green so every band, button, pill and
+   gradient on the site celebrates without touching a single component.
+   ═══════════════════════════════════════════════════════════════════════ */
+:root { --nd-offset: 0px; }
+
+:root[data-national='1'] {
+  --ink: #04231C;        /* deep emerald — statement bands */
+  --navy: #EEF7F1;       /* mint white — page background */
+  --navy-2: #DCEFE3;     /* pale green — cards / alternate sections */
+  --royal: #063D2B;
+  --gold: #0B7A3E;       /* Saudi green accent, dark enough for text on light */
+  --gold-bright: #4CC38A;
+  --gold-deep: #04512A;
+  --ivory: #0F2A1F;
+  --muted: #4A6B58;
+  --ivory-rgb: 15, 42, 31;
+  --muted-rgb: 74, 107, 88;
+  --glass-rgb: 238, 247, 241;
+  --on-gold: #F4FBF6;    /* the green gradient is mid-dark → light text on it */
+  --gold-grad: linear-gradient(135deg, #04512A, #0B7A3E 55%, #18B364);
+}
+:root[data-national='1'][data-theme='dark'] {
+  --ink: #031A13;
+  --navy: #06382A;
+  --navy-2: #0A4A37;
+  --royal: #1E7A55;
+  --gold: #2FBF75;
+  --gold-bright: #8FEBB8;
+  --gold-deep: #0F9A4F;
+  --ivory: #EBF7EF;
+  --muted: #9CC9B0;
+  --ivory-rgb: 235, 247, 239;
+  --muted-rgb: 156, 201, 176;
+  --glass-rgb: 4, 26, 19;
+  --on-gold: #04231C;
+  --gold-grad: linear-gradient(135deg, #0F9A4F, #2FBF75 55%, #8FEBB8);
+}
+
+/* Ribbon: checkered identity band above the nav, scrolling slogan, dismissible */
+.nd-ribbon {
+  position: fixed;
+  top: 0;
+  inset-inline: 0;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background:
+    repeating-conic-gradient(#0B6B3A 0 25%, #04231C 0 50%) 0 0 / 16px 16px;
+  border-bottom: 1px solid #18B364;
+  box-shadow: 0 1px 0 rgba(24,179,100,0.35), 0 6px 18px rgba(4,35,28,0.35);
+}
+.nd-ribbon::before {
+  /* a slow sweep of brighter cells, like the identity's live checker */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(24,179,100,0.35) 45%, rgba(127,224,168,0.45) 50%, rgba(24,179,100,0.35) 55%, transparent 100%);
+  background-size: 40% 100%;
+  background-repeat: no-repeat;
+  animation: nd-sweep 5.5s linear infinite;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.nd-ribbon-track {
+  display: flex;
+  width: max-content;
+  direction: ltr;
+  animation: nd-marquee 38s linear infinite;
+}
+.nd-ribbon:hover .nd-ribbon-track { animation-play-state: paused; }
+.nd-ribbon-run { display: flex; direction: rtl; }
+.nd-ribbon-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1.1rem;
+  font-family: var(--font-kufi), var(--font-role-heading);
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: #F4FBF6;
+  white-space: nowrap;
+  text-shadow: 0 1px 0 rgba(4,35,28,0.8);
+}
+.nd-ribbon-dot {
+  width: 6px; height: 6px;
+  background: #7FE0A8;
+  box-shadow: 0 0 0 2px #04231C;
+}
+.nd-ribbon-close {
+  position: absolute;
+  inset-inline-end: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: rgba(4,35,28,0.75);
+  border: 1px solid rgba(127,224,168,0.5);
+  color: #F4FBF6;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.nd-ribbon-close:hover { background: #0B6B3A; transform: translateY(-50%) scale(1.08); }
+@keyframes nd-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes nd-sweep { from { background-position: -40% 0; } to { background-position: 140% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .nd-ribbon-track { animation: none; }
+  .nd-ribbon::before { animation: none; }
+}
+@media (max-width: 639px) {
+  .nd-ribbon-item { font-size: 0.7rem; padding: 0 0.8rem; }
 }

@@ -78,11 +78,11 @@ export function Preloader() {
         >
           {/* Logo mark, filling in with load progress */}
           <div style={{ position: 'relative', width: 100, height: 164 }} aria-hidden="true">
-            <div style={{ ...logoMaskStyle, background: 'rgba(76,99,199,0.15)' }} />
+            <div style={{ ...logoMaskStyle, background: 'color-mix(in srgb, var(--gold) 18%, transparent)' }} />
             <motion.div
               style={{
                 ...logoMaskStyle,
-                background: 'linear-gradient(160deg, #33449E, #4C63C7 45%, #8CA6E5)',
+                background: 'var(--gold-grad)',
                 clipPath: `inset(${100 - pct}% 0 0 0)`,
               }}
               transition={{ duration: 0.1, ease: 'linear' }}

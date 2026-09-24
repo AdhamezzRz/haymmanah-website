@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
-import { Aref_Ruqaa, Almarai } from 'next/font/google'
+import { Aref_Ruqaa, Almarai, Noto_Kufi_Arabic } from 'next/font/google'
 import { Preloader, Cursor, LenisProvider, ScrollProgress, Nav, Footer, PageTransition, FloatingWhatsApp, CookieConsent, Analytics } from '@/components/chrome'
 import { JsonLd } from '@/components/seo/JsonLd'
+import { NationalDay } from '@/components/national/NationalDay'
+import { nationalDayHeadScript } from '@/lib/nationalDay'
 import { globalSchema } from '@/lib/schema'
 import './globals.css'
 
@@ -10,6 +12,15 @@ const arefRuqaa = Aref_Ruqaa({
   weight: ['400', '700'],
   variable: '--font-display',
   display: 'swap',
+})
+
+// Square-ish Kufi for the National Day slogan/ribbon only — not preloaded, self-hosted by next/font.
+const notoKufi = Noto_Kufi_Arabic({
+  subsets: ['arabic'],
+  weight: ['800'],
+  variable: '--font-kufi',
+  display: 'swap',
+  preload: false,
 })
 
 const almarai = Almarai({
@@ -70,13 +81,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" className={`${arefRuqaa.variable} ${almarai.variable}`} suppressHydrationWarning>
+    <html lang="ar" dir="rtl" className={`${arefRuqaa.variable} ${almarai.variable} ${notoKufi.variable}`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('haymanah-theme');if(!t){t='light'}document.documentElement.setAttribute('data-theme',t)}catch(e){}})();`,
           }}
         />
+        <script dangerouslySetInnerHTML={{ __html: nationalDayHeadScript }} />
         <JsonLd data={globalSchema} />
       </head>
       <body className={almarai.className}>
@@ -93,6 +105,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <FloatingWhatsApp />
         </LenisProvider>
+        <NationalDay />
         <CookieConsent />
       </body>
     </html>
