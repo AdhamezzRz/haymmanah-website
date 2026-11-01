@@ -33,3 +33,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# portal runtime data (embedded JSON store) — never commit team data
+/data/portal/*
+!/data/portal/.gitkeep

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -8,7 +9,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 export function LenisProvider({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+  const inPortal = pathname?.startsWith('/portal') ?? false
   useEffect(() => {
+    if (inPortal) return   // the portal is an app: native scrolling, no smooth-scroll hijack
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduced) return
 
@@ -23,7 +27,7 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
       lenis.destroy()
       gsap.ticker.remove((time) => lenis.raf(time * 1000))
     }
-  }, [])
+  }, [inPortal])
 
   return <>{children}</>
 }

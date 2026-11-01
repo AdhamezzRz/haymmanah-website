@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Aref_Ruqaa, Almarai, Noto_Kufi_Arabic } from 'next/font/google'
-import { Preloader, Cursor, LenisProvider, ScrollProgress, Nav, Footer, PageTransition, FloatingWhatsApp, CookieConsent, Analytics } from '@/components/chrome'
+import { Preloader, Cursor, LenisProvider, ScrollProgress, Nav, Footer, PageTransition, FloatingWhatsApp, CookieConsent, Analytics, MarketingChrome } from '@/components/chrome'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { NationalDay } from '@/components/national/NationalDay'
 import { nationalDayHeadScript } from '@/lib/nationalDay'
@@ -94,19 +94,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={almarai.className}>
         <a href="#main-content" className="skip-link">تخطى إلى المحتوى الرئيسي</a>
         <Analytics />
-        <Preloader />
-        <Cursor />
-        <ScrollProgress />
+        <MarketingChrome>
+          <Preloader />
+          <Cursor />
+          <ScrollProgress />
+        </MarketingChrome>
         <LenisProvider>
-          <Nav />
+          <MarketingChrome><Nav /></MarketingChrome>
           <PageTransition>
             <main id="main-content">{children}</main>
           </PageTransition>
-          <Footer />
-          <FloatingWhatsApp />
+          <MarketingChrome>
+            <Footer />
+            <FloatingWhatsApp />
+          </MarketingChrome>
         </LenisProvider>
-        <NationalDay />
-        <CookieConsent />
+        <MarketingChrome>
+          <NationalDay />
+          <CookieConsent />
+        </MarketingChrome>
       </body>
     </html>
   )
