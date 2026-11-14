@@ -5,7 +5,8 @@ import { Chip, OptionChip, Avatar } from './ui'
 import { Icon } from './Icon'
 import { useLookup } from './data'
 import { fmtMoney, fmtNumber, fmtDate, fmtDateTime, isOverdue, daysUntil } from '@/portal/format'
-import type { FieldDef, LineItem, ModuleDef } from '@/portal/schema'
+import type { FieldDef, LineItem, ModuleDef, ChecklistItem } from '@/portal/schema'
+import { Stars } from './charts'
 import { invoiceTotals } from '@/portal/zatca'
 import { getModule } from '@/portal/modules'
 
@@ -28,6 +29,7 @@ export function RelationValue({ module, id, avatar }: { module: string; id: unkn
 }
 
 export function FieldValue({ field, value, record, def, compact }: { field: FieldDef; value: unknown; record?: Record<string, unknown>; def?: ModuleDef; compact?: boolean }) {
+  if (field.type === 'rating') return <Stars value={typeof value === 'number' ? value : null} size={compact ? 14 : 18} showNumber={!compact} />
   if (value === undefined || value === null || value === '' || (Array.isArray(value) && value.length === 0)) {
     return <span className="pt-dim">—</span>
   }
@@ -61,6 +63,11 @@ export function FieldValue({ field, value, record, def, compact }: { field: Fiel
       return <span className="pt-money">{fmtMoney(t.total)} <span className="pt-dim" style={{ fontSize: '0.72rem' }}>({(value as LineItem[]).length} بند)</span></span>
     }
     case 'textarea': return <span className={compact ? '' : 'pre'} style={compact ? { display: 'inline-block', maxWidth: 260, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', verticalAlign: 'bottom' } : { whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>{String(value)}</span>
+    case 'checklist': {
+      const items = value as ChecklistItem[]
+      const done = items.filter(i => i.done).length
+      return <span className="pt-num">{done} / {items.length} خطوة</span>
+    }
     case 'password': return <span className="pt-dim">••••••••</span>
     default: return <>{String(value)}</>
   }

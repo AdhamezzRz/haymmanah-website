@@ -36,6 +36,8 @@ export function CommandPalette({ onClose, modules, role }: { onClose: () => void
     const nav: Item[] = [
       { id: 'nav-dash', group: 'انتقال', label: 'لوحة التحكم', icon: 'dashboard', run: () => go('/portal') },
       ...modules.map(m => ({ id: `nav-${m.key}`, group: 'انتقال', label: m.label, icon: m.icon, run: () => go(`/portal/${m.key}`) })),
+      ...(role !== 'member' ? [{ id: 'nav-crm', group: 'انتقال', label: 'نظرة المبيعات · CRM', icon: 'chart', run: () => go('/portal/crm') }] : []),
+      { id: 'nav-guide', group: 'انتقال', label: 'دليل الاستخدام', icon: 'guide', run: () => go('/portal/guide') },
       ...(role === 'admin' ? [{ id: 'nav-settings', group: 'انتقال', label: 'الإعدادات', icon: 'settings', run: () => go('/portal/settings') }] : []),
     ]
     const quick: Item[] = modules.map(m => ({ id: `new-${m.key}`, group: 'إجراء سريع', label: m.newLabel ?? `إضافة ${labelSingular(m.key)}`, icon: 'plus', run: () => go(`/portal/${m.key}?new=1`) }))
@@ -89,5 +91,5 @@ export function CommandPalette({ onClose, modules, role }: { onClose: () => void
 }
 
 function labelSingular(key: string) {
-  return ({ clients: 'عميل', projects: 'مشروع', tasks: 'مهمة', content: 'منشور', invoices: 'فاتورة', expenses: 'مصروف', team: 'عضو' } as Record<string, string>)[key] ?? 'سجل'
+  return ({ clients: 'عميل', deals: 'فرصة', interactions: 'تواصل', projects: 'مشروع', tasks: 'مهمة', content: 'منشور', invoices: 'فاتورة', expenses: 'مصروف', team: 'عضو' } as Record<string, string>)[key] ?? 'سجل'
 }

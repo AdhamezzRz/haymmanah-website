@@ -6,11 +6,14 @@ import { usePathname, useRouter } from 'next/navigation'
 import { Icon } from './Icon'
 import { Avatar, ToastProvider } from './ui'
 import { CommandPalette } from './CommandPalette'
+import { AlertsBell } from './AlertsBell'
 import { fmtHijri, fmtTime, fmtDate, ROLE_LABELS_SAFE } from './shellFormat'
+import { NAV_GROUP_LABELS, type NavGroup } from '@/portal/schema'
 import type { PortalUser } from '@/portal/auth'
-import type { ModuleDef } from '@/portal/schema'
 
-interface NavModule { key: string; label: string; icon: string; color: string; newLabel?: string }
+export interface NavModule { key: string; label: string; icon: string; color: string; newLabel?: string; group?: NavGroup }
+
+const GROUP_ORDER: NavGroup[] = ['crm', 'work', 'finance', 'system']
 
 export function PortalShell({ user, modules, storageOk, storageDir, children }: {
   user: PortalUser
@@ -24,6 +27,7 @@ export function PortalShell({ user, modules, storageOk, storageDir, children }: 
   const [open, setOpen] = useState(false)
   const [cmd, setCmd] = useState(false)
   const [now, setNow] = useState<Date | null>(null)
+  const isStaff = user.role === 'admin' || user.role === 'manager'
 
   useEffect(() => {
     setNow(new Date())
@@ -47,11 +51,19 @@ export function PortalShell({ user, modules, storageOk, storageDir, children }: 
     router.refresh()
   }
 
-  const current = (href: string) => (href === '/portal' ? pathname === '/portal' : pathname.startsWith(href))
+  const current = (href: string) => (href === '/portal' ? pathname === '/portal' : pathname === href || pathname.startsWith(`${href}/`))
   const title =
     pathname === '/portal' ? 'لوحة التحكم'
     : pathname.startsWith('/portal/settings') ? 'الإعدادات'
-    : modules.find(m => pathname.startsWith(`/portal/${m.key}`))?.label ?? 'هيمنة'
+    : pathname.startsWith('/portal/crm') ? 'المبيعات · CRM'
+    : pathname.startsWith('/portal/guide') ? 'دليل الاستخدام'
+    : modules.find(m => current(`/portal/${m.key}`))?.label ?? 'هيمنة'
+
+  const navLink = (href: string, icon: string, label: string) => (
+    <Link key={href} href={href} className="pt-nav-item" aria-current={current(href) ? 'page' : undefined}>
+      <Icon name={icon} /> {label}
+    </Link>
+  )
 
   return (
     <ToastProvider>
@@ -66,32 +78,34 @@ export function PortalShell({ user, modules, storageOk, storageDir, children }: 
           </Link>
 
           <nav className="pt-nav" aria-label="أقسام النظام">
-            <Link href="/portal" className="pt-nav-item" aria-current={current('/portal') ? 'page' : undefined}>
-              <Icon name="dashboard" /> لوحة التحكم
-            </Link>
-            <div className="pt-nav-label">العمل</div>
-            {modules.map(m => (
-              <Link key={m.key} href={`/portal/${m.key}`} className="pt-nav-item" aria-current={current(`/portal/${m.key}`) ? 'page' : undefined}>
-                <Icon name={m.icon} /> {m.label}
-              </Link>
-            ))}
-            {user.role === 'admin' && (
-              <>
-                <div className="pt-nav-label">النظام</div>
-                <Link href="/portal/settings" className="pt-nav-item" aria-current={current('/portal/settings') ? 'page' : undefined}>
-                  <Icon name="settings" /> الإعدادات
-                </Link>
-              </>
-            )}
+            {navLink('/portal', 'dashboard', 'لوحة التحكم')}
+            {GROUP_ORDER.map(g => {
+              const items = modules.filter(m => (m.group ?? 'work') === g)
+              const extras = g === 'crm' && isStaff ? [navLink('/portal/crm', 'chart', 'نظرة المبيعات')] : []
+              const tail = g === 'system' && user.role === 'admin' ? [navLink('/portal/settings', 'settings', 'الإعدادات')] : []
+              if (items.length + extras.length + tail.length === 0) return null
+              return (
+                <div key={g} style={{ display: 'contents' }}>
+                  <div className="pt-nav-label">{NAV_GROUP_LABELS[g]}</div>
+                  {extras}
+                  {items.map(m => navLink(`/portal/${m.key}`, m.icon, m.label))}
+                  {tail}
+                </div>
+              )
+            })}
+            <div className="pt-nav-label">مساعدة</div>
+            {navLink('/portal/guide', 'guide', 'دليل الاستخدام')}
           </nav>
 
           <div className="pt-side-foot">
             <div className="pt-user">
-              <Avatar name={user.name} color={user.color} size={34} />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div className="pt-user-name" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user.name}</div>
-                <div className="pt-user-role">{user.title || ROLE_LABELS_SAFE[user.role]}</div>
-              </div>
+              <Link href={`/portal/team/${user.id}`} title="ملفي" style={{ display: 'contents' }}>
+                <Avatar name={user.name} color={user.color} size={34} />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div className="pt-user-name" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user.name}</div>
+                  <div className="pt-user-role">{user.title || ROLE_LABELS_SAFE[user.role]}</div>
+                </div>
+              </Link>
               <button type="button" className="pt-btn pt-btn-ghost pt-btn-icon" onClick={logout} title="تسجيل الخروج" aria-label="تسجيل الخروج">
                 <Icon name="logout" />
               </button>
@@ -114,6 +128,7 @@ export function PortalShell({ user, modules, storageOk, storageDir, children }: 
             <span className="pt-clock-time">{now ? fmtTime(now) : '—'}</span>
             <span className="pt-clock-date">{now ? `${fmtDate(now)} · ${fmtHijri(now, 'short')}` : ''}</span>
           </div>
+          <AlertsBell />
         </header>
 
         <main className="pt-main">
@@ -129,7 +144,7 @@ export function PortalShell({ user, modules, storageOk, storageDir, children }: 
           {children}
         </main>
 
-        {cmd && <CommandPalette onClose={() => setCmd(false)} modules={modules as ModuleDef[]} role={user.role} />}
+        {cmd && <CommandPalette onClose={() => setCmd(false)} modules={modules} role={user.role} />}
       </div>
     </ToastProvider>
   )

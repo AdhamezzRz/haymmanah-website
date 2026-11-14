@@ -4,10 +4,12 @@ import { useMemo, useState } from 'react'
 import { Drawer, Spinner, useToast } from './ui'
 import { Icon } from './Icon'
 import { useRecords, createRecord, updateRecord, ApiError } from './data'
-import { emptyRecord, type FieldDef, type ModuleDef, type LineItem, type BaseRecord } from '@/portal/schema'
+import { emptyRecord, fieldVisible, type FieldDef, type ModuleDef, type LineItem, type BaseRecord, type ChecklistItem } from '@/portal/schema'
+import { StarInput } from './charts'
 import { fmtMoney } from '@/portal/format'
 import { invoiceTotals } from '@/portal/zatca'
 import { getModule } from '@/portal/modules'
+import type { Role } from '@/portal/schema'
 
 /* ── datetime helpers: inputs are Riyadh-local, storage is ISO with +03:00 ── */
 function isoToLocalInput(v: unknown): string {
@@ -20,27 +22,35 @@ function isoToLocalInput(v: unknown): string {
 }
 const localInputToIso = (v: string) => (v ? `${v}:00+03:00` : '')
 
-export function RecordForm({ def, record, initial, onClose, onSaved }: {
+export function RecordForm({ def, record, initial, onClose, onSaved, role }: {
   def: ModuleDef
+  /** Current user's role — hides fields this role may not change (e.g. task rating). */
+  role?: Role
   record?: BaseRecord            // editing
   initial?: Record<string, unknown>   // prefill for create (e.g. date from calendar)
   onClose: () => void
   onSaved?: (rec: BaseRecord) => void
 }) {
   const toast = useToast()
-  const [values, setValues] = useState<Record<string, unknown>>(() => ({ ...emptyRecord(def), ...(record ?? {}), ...(initial ?? {}) }))
+  const [values, setValues] = useState<Record<string, unknown>>(() => {
+    const base: Record<string, unknown> = { ...emptyRecord(def), ...(record ?? {}), ...(initial ?? {}) }
+    // a new record's required date/time starts at "now" (e.g. logging a call)
+    if (!record) for (const f of def.fields) if (f.type === 'datetime' && f.required && !base[f.key]) base[f.key] = new Date().toISOString()
+    return base
+  })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [busy, setBusy] = useState(false)
   const set = (k: string, v: unknown) => { setValues(s => ({ ...s, [k]: v })); setErrors(e => { const { [k]: _omit, ...rest } = e; void _omit; return rest }) }
 
-  const editable = def.fields.filter(f => !(f.readonly && !record) && !(f.readonly && record))
+  const editable = def.fields.filter(f => !f.readonly && (!f.writeRoles || !role || f.writeRoles.includes(role)))
+  const shown = editable.filter(f => fieldVisible(f, values))
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     setBusy(true)
     try {
       const payload: Record<string, unknown> = {}
-      for (const f of editable) {
+      for (const f of shown) {
         const v = values[f.key]
         if (f.type === 'password' && !v) continue
         payload[f.key] = v
@@ -71,7 +81,7 @@ export function RecordForm({ def, record, initial, onClose, onSaved }: {
       }
     >
       <form id={`form-${def.key}`} onSubmit={submit} className="pt-form-grid">
-        {editable.map(f => (
+        {shown.map(f => (
           <Field key={f.key} field={f} value={values[f.key]} onChange={v => set(f.key, v)} error={errors[f.key]} values={values} />
         ))}
       </form>
@@ -80,7 +90,7 @@ export function RecordForm({ def, record, initial, onClose, onSaved }: {
 }
 
 function Field({ field: f, value, onChange, error, values }: { field: FieldDef; value: unknown; onChange: (v: unknown) => void; error?: string; values: Record<string, unknown> }) {
-  const wide = !f.half || f.type === 'textarea' || f.type === 'items' || f.type === 'tags' || f.type === 'multiselect' || f.type === 'url'
+  const wide = !f.half || f.type === 'textarea' || f.type === 'items' || f.type === 'tags' || f.type === 'multiselect' || f.type === 'url' || f.type === 'checklist' || f.type === 'rating'
   const id = `f-${f.key}`
   const common = { id, 'aria-invalid': !!error, required: f.required && f.type !== 'password' }
   let control: React.ReactNode
@@ -124,6 +134,10 @@ function Field({ field: f, value, onChange, error, values }: { field: FieldDef; 
       control = <TagsInput id={id} value={(value as string[]) ?? []} onChange={onChange} />; break
     case 'items':
       control = <ItemsEditor value={(value as LineItem[]) ?? []} onChange={onChange} discount={values.discount} vatRate={values.vatRate} />; break
+    case 'rating':
+      control = <StarInput value={typeof value === 'number' ? value : null} onChange={onChange} />; break
+    case 'checklist':
+      control = <ChecklistEditor value={(value as ChecklistItem[]) ?? []} onChange={onChange} />; break
     case 'password':
       control = <input {...common} className="pt-input" type="password" dir="ltr" autoComplete="new-password" value={String(value ?? '')} onChange={e => onChange(e.target.value)} placeholder="••••••••" minLength={8} />; break
     case 'email':
@@ -154,6 +168,26 @@ function RelationSelect({ id, module, value, onChange, required, invalid }: { id
       <option value="">{loading ? 'جارٍ التحميل…' : `— اختر ${def?.singular ?? ''} —`}</option>
       {sorted.map(r => <option key={r.id} value={r.id}>{String(r[titleKey] ?? r.number ?? '')}</option>)}
     </select>
+  )
+}
+
+function ChecklistEditor({ value, onChange }: { value: ChecklistItem[]; onChange: (v: ChecklistItem[]) => void }) {
+  const [draft, setDraft] = useState('')
+  const add = () => { const t = draft.trim(); if (t) onChange([...value, { text: t, done: false }]); setDraft('') }
+  return (
+    <div className="pt-check">
+      {value.map((it, i) => (
+        <div key={i} className="pt-check-row" data-done={it.done}>
+          <input type="checkbox" checked={it.done} onChange={e => onChange(value.map((x, j) => (j === i ? { ...x, done: e.target.checked } : x)))} aria-label={`تم: ${it.text}`} />
+          <input type="text" value={it.text} onChange={e => onChange(value.map((x, j) => (j === i ? { ...x, text: e.target.value } : x)))} aria-label="نص الخطوة" />
+          <button type="button" className="pt-btn pt-btn-ghost pt-btn-icon" style={{ width: 28, height: 28 }} onClick={() => onChange(value.filter((_, j) => j !== i))} aria-label="حذف الخطوة"><Icon name="close" size={13} /></button>
+        </div>
+      ))}
+      <div className="pt-check-row">
+        <Icon name="plus" size={16} style={{ opacity: 0.5 }} />
+        <input type="text" value={draft} onChange={e => setDraft(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); add() } }} onBlur={add} placeholder="أضف خطوة واضغط Enter — مثال: تجهيز قائمة اللقطات" />
+      </div>
+    </div>
   )
 }
 

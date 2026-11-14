@@ -22,6 +22,8 @@ export type FieldType =
   | 'email' | 'phone' | 'url'
   | 'boolean' | 'color' | 'tags'
   | 'items'      // invoice line items: { description, qty, price }[]
+  | 'rating'     // 1–5 stars (null = not rated yet)
+  | 'checklist'  // sub-steps: { text, done }[]
   | 'password'   // write-only; never returned by the API
 
 export interface Option {
@@ -53,6 +55,26 @@ export interface FieldDef {
   min?: number
   max?: number
   step?: number
+  /** Only show (form + detail) when another field has one of these values. */
+  showIf?: { field: string; in: string[] }
+  /** Roles allowed to change this field; others' input for it is ignored. Default: the module's write roles. */
+  writeRoles?: Role[]
+}
+
+export type NavGroup = 'crm' | 'work' | 'finance' | 'system'
+
+export const NAV_GROUP_LABELS: Record<NavGroup, string> = {
+  crm: 'المبيعات · CRM',
+  work: 'العمل',
+  finance: 'المالية',
+  system: 'النظام',
+}
+
+/** Plain-language explainer shown on the module page and in the guide. */
+export interface ModuleHelp {
+  what: string
+  example: string
+  tips?: string[]
 }
 
 export type ViewKind = 'table' | 'board' | 'calendar'
@@ -84,6 +106,9 @@ export interface ModuleDef {
   permissions: { read: Role[]; write: Role[] }
   /** Show in the sidebar. */
   nav?: boolean
+  /** Sidebar section. */
+  group?: NavGroup
+  help?: ModuleHelp
 }
 
 export interface BaseRecord {
@@ -100,6 +125,17 @@ export interface LineItem {
   description: string
   qty: number
   price: number
+}
+
+export interface ChecklistItem {
+  text: string
+  done: boolean
+}
+
+/** Is this field visible for the given record values? */
+export function fieldVisible(f: FieldDef, values: Record<string, unknown>): boolean {
+  if (!f.showIf) return true
+  return f.showIf.in.includes(String(values[f.showIf.field] ?? ''))
 }
 
 export const ALL_ROLES: Role[] = ['admin', 'manager', 'member']
@@ -124,7 +160,8 @@ export function emptyRecord(def: ModuleDef): Record<string, unknown> {
   const out: Record<string, unknown> = {}
   for (const f of def.fields) {
     if (f.default !== undefined) out[f.key] = f.default
-    else if (f.type === 'multiselect' || f.type === 'tags' || f.type === 'items') out[f.key] = []
+    else if (f.type === 'multiselect' || f.type === 'tags' || f.type === 'items' || f.type === 'checklist') out[f.key] = []
+    else if (f.type === 'rating') out[f.key] = null
     else if (f.type === 'boolean') out[f.key] = false
     else out[f.key] = ''
   }
@@ -132,10 +169,13 @@ export function emptyRecord(def: ModuleDef): Record<string, unknown> {
 }
 
 /** Server-side validation + coercion. Returns cleaned data or a list of field errors. */
-export function validateRecord(def: ModuleDef, input: Record<string, unknown>, partial = false) {
+export function validateRecord(def: ModuleDef, input: Record<string, unknown>, partial = false, role?: Role) {
   const errors: Record<string, string> = {}
   const data: Record<string, unknown> = {}
   for (const f of def.fields) {
+    // server-managed fields and fields this role may not change are never taken from input
+    if (f.readonly) continue
+    if (f.writeRoles && role && !f.writeRoles.includes(role)) continue
     const has = Object.prototype.hasOwnProperty.call(input, f.key)
     if (!has) {
       if (!partial && f.required && f.type !== 'password') errors[f.key] = 'هذا الحقل مطلوب'
@@ -152,6 +192,25 @@ export function validateRecord(def: ModuleDef, input: Record<string, unknown>, p
         v = n; break
       }
       case 'boolean': v = Boolean(v); break
+      case 'rating': {
+        if (v === '' || v === null || v === undefined || Number(v) === 0) { v = null; break }
+        const n = Math.round(Number(v))
+        if (!Number.isFinite(n) || n < 1 || n > 5) { errors[f.key] = 'التقييم من ١ إلى ٥ نجوم'; continue }
+        v = n; break
+      }
+      case 'checklist':
+        v = Array.isArray(v)
+          ? (v as Partial<ChecklistItem>[]).slice(0, 100).map(it => ({ text: String(it?.text ?? '').trim().slice(0, 300), done: Boolean(it?.done) })).filter(it => it.text)
+          : []
+        break
+      case 'date':
+        v = v === null || v === undefined ? '' : String(v).trim().slice(0, 10)
+        if (v && !/^\d{4}-\d{2}-\d{2}$/.test(v as string)) { errors[f.key] = 'تاريخ غير صالح'; continue }
+        break
+      case 'datetime':
+        v = v === null || v === undefined ? '' : String(v).trim()
+        if (v && Number.isNaN(Date.parse(v as string))) { errors[f.key] = 'تاريخ ووقت غير صالحين'; continue }
+        break
       case 'multiselect': case 'tags':
         v = Array.isArray(v) ? v.map(String).filter(Boolean) : []; break
       case 'items':
@@ -178,7 +237,7 @@ export function validateRecord(def: ModuleDef, input: Record<string, unknown>, p
       case 'password':
         v = String(v ?? ''); break
       default:
-        v = v === null || v === undefined ? '' : String(v).trim()
+        v = v === null || v === undefined ? '' : String(v).trim().slice(0, 20000)
     }
     if (f.required && (v === '' || v === null || (Array.isArray(v) && v.length === 0)) && f.type !== 'password') {
       errors[f.key] = 'هذا الحقل مطلوب'; continue

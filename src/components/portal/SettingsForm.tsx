@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Icon } from './Icon'
 import { Spinner, useToast } from './ui'
 import { api } from './data'
@@ -10,6 +11,19 @@ export function SettingsForm({ fields, initial, storage }: { fields: FieldDef[];
   const toast = useToast()
   const [values, setValues] = useState<Record<string, unknown>>(initial)
   const [busy, setBusy] = useState(false)
+  const router = useRouter()
+  const [demo, setDemo] = useState<number | null>(null)
+  const [demoBusy, setDemoBusy] = useState(false)
+  useEffect(() => { api<{ count: number }>('/demo').then(r => setDemo(r.count)).catch(() => setDemo(0)) }, [])
+  const demoAction = async (method: 'POST' | 'DELETE') => {
+    setDemoBusy(true)
+    try {
+      const r = await api<{ count?: number; removed?: number }>('/demo', { method })
+      setDemo(method === 'POST' ? r.count ?? 0 : 0)
+      toast(method === 'POST' ? `تم تحميل ${r.count} سجلاً تجريبياً` : `تم حذف ${r.removed} سجلاً تجريبياً`, 'success')
+      router.refresh()
+    } catch (err) { toast((err as Error).message, 'error') } finally { setDemoBusy(false) }
+  }
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -32,7 +46,7 @@ export function SettingsForm({ fields, initial, storage }: { fields: FieldDef[];
         <button type="submit" className="pt-btn pt-btn-primary" disabled={busy}>{busy ? <Spinner /> : <Icon name="check" />} حفظ</button>
       </div>
 
-      <div className="pt-grid" style={{ gridTemplateColumns: '2fr 1fr' }}>
+      <div className="pt-grid pt-grid-2">
         <section className="pt-card pt-card-pad">
           <div className="pt-form-grid">
             {fields.map(f => (
@@ -56,6 +70,17 @@ export function SettingsForm({ fields, initial, storage }: { fields: FieldDef[];
             <p className="pt-dim" style={{ fontSize: '0.74rem', marginTop: '0.75rem', lineHeight: 1.7 }}>
               النسخ الاحتياطي: انسخ مجلد <code dir="ltr">data/portal</code> من الخادم. كل وحدة ملف JSON مستقل يمكن فتحه وقراءته.
             </p>
+          </section>
+          <section className="pt-card pt-card-pad">
+            <h3 className="pt-card-title" style={{ marginBottom: '0.75rem' }}><Icon name="sparkles" size={16} /> بيانات تجريبية</h3>
+            <p className="pt-muted" style={{ fontSize: '0.8rem', lineHeight: 1.8, margin: '0 0 0.75rem' }}>
+              عملاء وفرص ومهام وهمية معلّمة بكلمة «تجريبي» لتجرّب الرسوم والتنبيهات. لا تمسّ بياناتكم الحقيقية وتُحذف بضغطة.
+            </p>
+            {demo === null ? <Spinner /> : demo > 0 ? (
+              <button type="button" className="pt-btn pt-btn-danger" disabled={demoBusy} onClick={() => demoAction('DELETE')}>{demoBusy ? <Spinner /> : <Icon name="trash" />} حذف البيانات التجريبية ({demo})</button>
+            ) : (
+              <button type="button" className="pt-btn" disabled={demoBusy} onClick={() => demoAction('POST')}>{demoBusy ? <Spinner /> : <Icon name="sparkles" />} تحميل بيانات تجريبية</button>
+            )}
           </section>
           <section className="pt-card pt-card-pad">
             <h3 className="pt-card-title" style={{ marginBottom: '0.75rem' }}><Icon name="sparkles" size={16} /> اختصارات</h3>

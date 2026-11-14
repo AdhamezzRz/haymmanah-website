@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Icon } from './Icon'
-import { initials } from '@/portal/format'
+import { initials, fmtDateTime, fmtRelative } from '@/portal/format'
 import type { Option } from '@/portal/schema'
 
 /* ── Chip ─────────────────────────────────────────────────────────── */
@@ -27,6 +27,21 @@ export function Avatar({ name, color = '#4C63C7', size = 30 }: { name: string; c
       {initials(name || '؟')}
     </span>
   )
+}
+
+/* ── Relative time ────────────────────────────────────────────────────
+   "قبل ٥ دقائق" depends on the clock, so the server and the browser would
+   disagree during hydration. Render the absolute time first (identical on
+   both sides), then switch to the relative form once mounted. */
+export function RelTime({ at }: { at: unknown }) {
+  const [text, setText] = useState(() => fmtDateTime(at))
+  useEffect(() => {
+    const update = () => setText(fmtRelative(at) || fmtDateTime(at))
+    update()
+    const t = setInterval(update, 60_000)
+    return () => clearInterval(t)
+  }, [at])
+  return <time suppressHydrationWarning>{text}</time>
 }
 
 /* ── Empty state ───────────────────────────────────────────────────── */

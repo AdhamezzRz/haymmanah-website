@@ -18,7 +18,7 @@ export default async function PortalAppLayout({ children }: { children: React.Re
   const user = await getCurrentUser()
   if (!user) redirect('/portal/login')
   const health = await storageHealth()
-  const nav = modules.filter(m => m.nav && canRead(user.role, m)).map(m => ({ key: m.key, label: m.label, icon: m.icon, color: m.color, newLabel: m.newLabel }))
+  const nav = modules.filter(m => m.nav && canRead(user.role, m)).map(m => ({ key: m.key, label: m.label, icon: m.icon, color: m.color, newLabel: m.newLabel, group: m.group }))
 
   return (
     <PortalShell user={user} modules={nav} storageOk={health.ok} storageDir={health.dir}>

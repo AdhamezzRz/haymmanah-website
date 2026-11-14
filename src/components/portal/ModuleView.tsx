@@ -9,8 +9,9 @@ import { RecordTable } from './RecordTable'
 import { BoardView } from './BoardView'
 import { CalendarView } from './CalendarView'
 import { RecordForm } from './RecordForm'
-import { fieldByKey, type ModuleDef, type ViewKind, type BaseRecord } from '@/portal/schema'
-import { fmtMoney } from '@/portal/format'
+import { fieldByKey, type ModuleDef, type ViewKind, type BaseRecord, type Role } from '@/portal/schema'
+import { dealProbability, DEAL_CLOSED } from '@/portal/modules'
+import { fmtMoney, dayKey } from '@/portal/format'
 import { invoiceTotals } from '@/portal/zatca'
 import type { LineItem } from '@/portal/schema'
 
@@ -20,7 +21,7 @@ const VIEW_META: Record<ViewKind, { label: string; icon: string }> = {
   calendar: { label: 'تقويم', icon: 'calendar' },
 }
 
-export function ModuleView({ def, canWrite }: { def: ModuleDef; canWrite: boolean }) {
+export function ModuleView({ def, canWrite, role }: { def: ModuleDef; canWrite: boolean; role?: Role }) {
   const router = useRouter()
   const search = useSearchParams()
   const { rows, loading, error, refresh } = useRecords(def.key)
@@ -56,6 +57,17 @@ export function ModuleView({ def, canWrite }: { def: ModuleDef; canWrite: boolea
     if (def.key === 'invoices') {
       const t = (filtered as BaseRecord[]).reduce((acc, r) => { const x = invoiceTotals(r.items as LineItem[], r.discount, r.vatRate).total; if (r.status === 'paid') acc.paid += x; else if (r.status !== 'void' && r.status !== 'draft') acc.open += x; return acc }, { paid: 0, open: 0 })
       return `محصّل ${fmtMoney(t.paid)} · مستحق ${fmtMoney(t.open)}`
+    }
+    if (def.key === 'deals') {
+      const open = (filtered as BaseRecord[]).filter(r => !DEAL_CLOSED.includes(String(r.stage)))
+      const value = open.reduce((s, r) => s + (Number(r.value) || 0), 0)
+      const forecast = open.reduce((s, r) => s + (Number(r.value) || 0) * dealProbability(r) / 100, 0)
+      return `${open.length} مفتوحة · ${fmtMoney(value)} · المتوقّع ${fmtMoney(Math.round(forecast))}`
+    }
+    if (def.key === 'tasks') {
+      const open = (filtered as BaseRecord[]).filter(r => r.status !== 'done')
+      const late = open.filter(r => r.dueDate && String(r.dueDate) < dayKey()).length
+      return `${open.length} مفتوحة${late ? ` · ${late} متأخرة` : ''} · ${filtered.length - open.length} مكتملة`
     }
     if (def.key === 'expenses') return `الإجمالي ${fmtMoney((filtered as BaseRecord[]).reduce((s, r) => s + (Number(r.amount) || 0), 0))}`
     if (def.key === 'clients') return `${filtered.filter(r => r.status === 'active').length} نشط من ${filtered.length}`
@@ -103,6 +115,17 @@ export function ModuleView({ def, canWrite }: { def: ModuleDef; canWrite: boolea
         )}
       </div>
 
+      {def.help && (
+        <details className="pt-howto">
+          <summary><Icon name="guide" size={15} /> كيف أستخدم هذه الصفحة؟</summary>
+          <div className="pt-howto-body">
+            <p><strong>وش هي؟</strong> {def.help.what}</p>
+            <p>{def.help.example}</p>
+            {def.help.tips && <ul>{def.help.tips.map(t => <li key={t}>{t}</li>)}</ul>}
+          </div>
+        </details>
+      )}
+
       {error && <div className="pt-banner" role="alert"><Icon name="alert" /> {error}</div>}
       {loading ? (
         <div className="pt-empty"><Spinner size={28} /></div>
@@ -114,7 +137,7 @@ export function ModuleView({ def, canWrite }: { def: ModuleDef; canWrite: boolea
         <RecordTable def={def} rows={filtered} onNew={canWrite ? () => setForm({ open: true }) : undefined} />
       )}
 
-      {form.open && <RecordForm def={def} initial={form.prefill} onClose={() => setForm({ open: false })} />}
+      {form.open && <RecordForm def={def} role={role} initial={form.prefill} onClose={() => setForm({ open: false })} />}
     </div>
   )
 }

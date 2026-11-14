@@ -3,6 +3,7 @@ import { store, logActivity } from '@/portal/store'
 import { canRead, canWrite, hashPassword } from '@/portal/auth'
 import { validateRecord } from '@/portal/schema'
 import { json, fail, requireUser, sanitize, recordTitle, readBody } from '@/portal/api'
+import { beforeSave, afterSave } from '@/portal/hooks'
 
 export const dynamic = 'force-dynamic'
 
@@ -37,8 +38,11 @@ export async function PATCH(req: Request, { params }: Ctx) {
     // a member can't promote themselves or toggle their own activation
     delete body.role; delete body.active
   }
-  const { data, errors, ok } = validateRecord(def, body, true)
+  const { data, errors, ok } = validateRecord(def, body, true, auth.user.role)
   if (!ok) return fail('تحقق من الحقول', 422, { errors })
+  const changedKeys = Object.keys(data)
+  const hookErrors = beforeSave(def, data, existing, auth.user)
+  if (hookErrors) return fail('تحقق من الحقول', 422, { errors: hookErrors })
 
   if (def.key === 'team') {
     const pw = String(data.password ?? '')
@@ -62,7 +66,8 @@ export async function PATCH(req: Request, { params }: Ctx) {
 
   const rec = await store.update(def.key, id, data)
   if (!rec) return fail('السجل غير موجود', 404)
-  const changed = Object.keys(data).map(k => def.fields.find(f => f.key === k)?.label ?? k)
+  await afterSave(def, rec, existing, auth.user)
+  const changed = changedKeys.map(k => def.fields.find(f => f.key === k)?.label ?? k)
   await logActivity({ userId: auth.user.id, userName: auth.user.name, module: def.key, recordId: id, recordTitle: recordTitle(def, rec), action: 'update', summary: changed.slice(0, 4).join('، ') + (changed.length > 4 ? '…' : '') })
   return json({ record: sanitize(def, rec) })
 }

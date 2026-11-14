@@ -20,7 +20,7 @@ export default async function ModulePage({ params }: { params: Promise<{ module:
   if (!canRead(user.role, def)) redirect('/portal')
   return (
     <Suspense>
-      <ModuleView def={def} canWrite={canWrite(user.role, def)} />
+      <ModuleView def={def} canWrite={canWrite(user.role, def)} role={user.role} />
     </Suspense>
   )
 }
