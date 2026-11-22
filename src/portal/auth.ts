@@ -55,7 +55,9 @@ async function getSecret(): Promise<string> {
 
 /* ── Sessions ──────────────────────────────────────────────────────── */
 
-export interface Session { uid: string; role: Role; exp: number }
+/** `v` = the user's sessionVersion when the cookie was issued; bumping it on the
+ *  user (password change/reset) signs out every other device. */
+export interface Session { uid: string; role: Role; exp: number; v?: number }
 
 const b64u = (s: string | Buffer) => Buffer.from(s).toString('base64url')
 
@@ -91,8 +93,16 @@ export function sessionCookieOptions(maxAgeSeconds = SESSION_DAYS * 86400) {
   }
 }
 
-export async function createSessionToken(uid: string, role: Role) {
-  return signSession({ uid, role, exp: Date.now() + SESSION_DAYS * 86400 * 1000 })
+export async function createSessionToken(uid: string, role: Role, version = 0) {
+  return signSession({ uid, role, v: version, exp: Date.now() + SESSION_DAYS * 86400 * 1000 })
+}
+
+/** Can this team record sign in right now? Returns an Arabic reason when not. */
+export function accountBlock(rec: Record<string, unknown>): string | null {
+  if (rec.joinStatus === 'pending') return 'طلب انضمامك قيد المراجعة — سيصلك الدخول بعد موافقة مدير النظام'
+  if (rec.active === false) return 'هذا الحساب موقوف — تواصل مع مدير النظام'
+  if (!rec.passwordHash) return 'لم تُعيَّن كلمة مرور لهذا الحساب بعد — اطلب رابط الدعوة من مدير النظام'
+  return null
 }
 
 /* ── Current user ──────────────────────────────────────────────────── */
@@ -124,7 +134,8 @@ export async function getCurrentUser(): Promise<PortalUser | null> {
   const session = await verifySession(jar.get(SESSION_COOKIE)?.value)
   if (!session) return null
   const rec = await store.get('team', session.uid)
-  if (!rec || rec.active === false) return null
+  if (!rec || rec.active === false || rec.joinStatus === 'pending') return null
+  if ((Number(rec.sessionVersion) || 0) !== (session.v ?? 0)) return null
   return publicUser(rec)
 }
 
@@ -139,4 +150,26 @@ export function canRead(role: Role, def: ModuleDef) {
 }
 export function canWrite(role: Role, def: ModuleDef) {
   return def.permissions.write.includes(role)
+}
+
+/** Rules for any new password. Returns an Arabic error or null. */
+export function passwordProblem(pw: unknown, email?: string): string | null {
+  if (typeof pw !== 'string' || pw.length < 8) return 'كلمة المرور ٨ أحرف على الأقل'
+  if (pw.length > 200) return 'كلمة المرور طويلة جداً'
+  if (/^(.)\1+$/.test(pw) || /^(12345678|123456789|1234567890|password|qwertyui)/i.test(pw)) return 'كلمة المرور سهلة التخمين — اختر غيرها'
+  if (email && pw.toLowerCase() === email.toLowerCase()) return 'لا تستخدم بريدك ككلمة مرور'
+  return null
+}
+
+export const isEmail = (v: unknown): v is string => typeof v === 'string' && v.length <= 200 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())
+
+/** Issue a session cookie for a team record on a response. */
+export async function startSession(res: { cookies: { set: (name: string, value: string, opts: ReturnType<typeof sessionCookieOptions>) => void } }, rec: Record<string, unknown>) {
+  const token = await createSessionToken(String(rec.id), (rec.role as Role) || 'member', Number(rec.sessionVersion) || 0)
+  res.cookies.set(SESSION_COOKIE, token, sessionCookieOptions())
+}
+
+/** Join requests are on unless PORTAL_SIGNUP=off. */
+export function signupOpen() {
+  return process.env.PORTAL_SIGNUP !== 'off'
 }

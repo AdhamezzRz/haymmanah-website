@@ -7,8 +7,9 @@ import { RecordDetail } from '@/components/portal/RecordDetail'
 
 export const dynamic = 'force-dynamic'
 
-export default async function RecordPage({ params }: { params: Promise<{ module: string; id: string }> }) {
+export default async function RecordPage({ params, searchParams }: { params: Promise<{ module: string; id: string }>; searchParams: Promise<{ invite?: string }> }) {
   const { module, id } = await params
+  const { invite } = await searchParams
   const def = getModule(module)
   if (!def) notFound()
   const user = await getCurrentUser()
@@ -17,5 +18,5 @@ export default async function RecordPage({ params }: { params: Promise<{ module:
   const rec = await store.get(def.key, id)
   if (!rec) notFound()
   const selfEdit = def.key === 'team' && id === user.id
-  return <RecordDetail def={def} id={id} initial={sanitize(def, rec)} canWrite={canWrite(user.role, def) || selfEdit} role={user.role} />
+  return <RecordDetail def={def} id={id} initial={sanitize(def, rec)} canWrite={canWrite(user.role, def) || selfEdit} role={user.role} viewerId={user.id} autoInvite={invite === '1'} />
 }

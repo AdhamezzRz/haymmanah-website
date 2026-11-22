@@ -64,6 +64,10 @@ export function beforeSave(
     if (next.status === 'paid' && !next.paidAt) data.paidAt = dayKey()
   }
 
+  if (def.key === 'team' && data.active === true && existing?.joinStatus === 'pending') {
+    data.joinStatus = ''   // activating a join request approves it
+  }
+
   return null
 }
 

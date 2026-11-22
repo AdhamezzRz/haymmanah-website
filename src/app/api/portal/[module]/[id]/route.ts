@@ -1,6 +1,6 @@
 import { getModule } from '@/portal/modules'
 import { store, logActivity } from '@/portal/store'
-import { canRead, canWrite, hashPassword } from '@/portal/auth'
+import { canRead, canWrite, hashPassword, passwordProblem } from '@/portal/auth'
 import { validateRecord } from '@/portal/schema'
 import { json, fail, requireUser, sanitize, recordTitle, readBody } from '@/portal/api'
 import { beforeSave, afterSave } from '@/portal/hooks'
@@ -35,8 +35,9 @@ export async function PATCH(req: Request, { params }: Ctx) {
 
   const body = await readBody(req)
   if (selfEdit && !canWrite(auth.user.role, def)) {
-    // a member can't promote themselves or toggle their own activation
-    delete body.role; delete body.active
+    // a member can't promote themselves, toggle their own activation, or skip the
+    // current-password check (that goes through /api/portal/auth/password)
+    delete body.role; delete body.active; delete body.password
   }
   const { data, errors, ok } = validateRecord(def, body, true, auth.user.role)
   if (!ok) return fail('تحقق من الحقول', 422, { errors })
@@ -48,8 +49,10 @@ export async function PATCH(req: Request, { params }: Ctx) {
     const pw = String(data.password ?? '')
     delete data.password
     if (pw) {
-      if (pw.length < 8) return fail('تحقق من الحقول', 422, { errors: { password: 'كلمة المرور ٨ أحرف على الأقل' } })
+      const pwErr = passwordProblem(pw, String(existing.email ?? ''))
+      if (pwErr) return fail('تحقق من الحقول', 422, { errors: { password: pwErr } })
       data.passwordHash = await hashPassword(pw)
+      data.sessionVersion = (Number(existing.sessionVersion) || 0) + 1
     }
     if (data.email) {
       data.email = String(data.email).toLowerCase()

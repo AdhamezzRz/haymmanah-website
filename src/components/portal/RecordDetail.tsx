@@ -14,6 +14,7 @@ import { fieldByKey, fieldVisible, optionColor, optionLabel, type BaseRecord, ty
 import { fmtMoney, fmtDate, fmtDateTime, fmtNumber, dayKey } from '@/portal/format'
 import { invoiceTotals } from '@/portal/zatca'
 import type { Activity } from '@/portal/store'
+import { TeamAccountPanel } from './TeamAccountPanel'
 
 /** 05xxxxxxxx / +9665… → wa.me link (Saudi numbers by default). */
 function whatsappHref(phone: unknown): string | null {
@@ -25,7 +26,7 @@ function whatsappHref(phone: unknown): string | null {
   return `https://wa.me/${d}`
 }
 
-export function RecordDetail({ def, id, initial, canWrite, role }: { def: ModuleDef; id: string; initial: BaseRecord; canWrite: boolean; role: Role }) {
+export function RecordDetail({ def, id, initial, canWrite, role, viewerId, autoInvite }: { def: ModuleDef; id: string; initial: BaseRecord; canWrite: boolean; role: Role; viewerId?: string; autoInvite?: boolean }) {
   const router = useRouter()
   const toast = useToast()
   const { confirm, confirmNode } = useConfirm()
@@ -107,6 +108,7 @@ export function RecordDetail({ def, id, initial, canWrite, role }: { def: Module
         </div>
 
         <aside style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          {def.key === 'team' && viewerId && <TeamAccountPanel member={rec} viewerId={viewerId} viewerRole={role} autoInvite={autoInvite} />}
           {def.key === 'tasks' && <TaskRating rec={rec} isStaff={isStaff} />}
           <section className="pt-card">
             <div className="pt-card-head"><h3 className="pt-card-title"><Icon name="activity" size={16} /> سجل النشاط</h3></div>

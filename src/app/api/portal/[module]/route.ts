@@ -1,6 +1,6 @@
 import { getModule } from '@/portal/modules'
 import { store, logActivity } from '@/portal/store'
-import { canRead, canWrite, hashPassword } from '@/portal/auth'
+import { canRead, canWrite, hashPassword, passwordProblem } from '@/portal/auth'
 import { validateRecord } from '@/portal/schema'
 import { json, fail, requireUser, sanitize, recordTitle, readBody } from '@/portal/api'
 import { beforeSave, afterSave } from '@/portal/hooks'
@@ -53,8 +53,13 @@ export async function POST(req: Request, { params }: Ctx) {
   if (def.key === 'team') {
     const pw = String(data.password ?? '')
     delete data.password
-    if (pw.length < 8) return fail('تحقق من الحقول', 422, { errors: { password: 'كلمة المرور ٨ أحرف على الأقل' } })
-    data.passwordHash = await hashPassword(pw)
+    if (pw) {
+      const pwErr = passwordProblem(pw, String(data.email ?? ''))
+      if (pwErr) return fail('تحقق من الحقول', 422, { errors: { password: pwErr } })
+      data.passwordHash = await hashPassword(pw)
+    }
+    // no password → the admin is taken to the member page to send an invite link
+    data.sessionVersion = 0
     data.email = String(data.email).toLowerCase()
     const dup = (await store.list('team')).some(u => String(u.email).toLowerCase() === data.email)
     if (dup) return fail('تحقق من الحقول', 422, { errors: { email: 'هذا البريد مستخدم مسبقاً' } })

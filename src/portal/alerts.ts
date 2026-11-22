@@ -53,7 +53,8 @@ export async function dismissAlerts(userId: string, keys: string[]) {
 
 export async function computeAlerts(user: PortalUser, opts: { includeDismissed?: boolean } = {}): Promise<Alert[]> {
   const staff = user.role === 'admin' || user.role === 'manager'
-  const [tasks, deals, clients, invoices, content, dismissed] = await Promise.all([
+  const [team, tasks, deals, clients, invoices, content, dismissed] = await Promise.all([
+    user.role === 'admin' ? store.list('team') : Promise.resolve([] as BaseRecord[]),
     store.list('tasks'),
     staff ? store.list('deals') : Promise.resolve([] as BaseRecord[]),
     staff ? store.list('clients') : Promise.resolve([] as BaseRecord[]),
@@ -67,6 +68,12 @@ export async function computeAlerts(user: PortalUser, opts: { includeDismissed?:
   const out: Alert[] = []
   const push = (a: Alert) => out.push(a)
   const clientName = (id: unknown) => String(clients.find(c => c.id === id)?.name ?? '')
+
+  /* ── Join requests waiting on an admin ── */
+  for (const m of team) {
+    if (m.joinStatus !== 'pending') continue
+    push({ key: `join-request:${m.id}`, severity: 'warning', icon: 'team', title: `طلب انضمام جديد: ${String(m.name)}`, body: `${String(m.email)}${m.title ? ` — ${String(m.title)}` : ''}. افتح الطلب لقبوله أو رفضه.`, href: `/portal/team/${m.id}`, at: String(m.createdAt) })
+  }
 
   /* ── Tasks assigned to me ── */
   for (const t of tasks) {

@@ -39,8 +39,12 @@ export function ModuleView({ def, canWrite, role }: { def: ModuleDef; canWrite: 
 
   // ?new=1 from ⌘K
   useEffect(() => {
-    if (search.get('new') === '1' && canWrite) { setForm({ open: true }); router.replace(`/portal/${def.key}`) }
-  }, [search, canWrite, def.key, router])
+    if (search.get('new') !== '1' || !canWrite) return
+    setForm({ open: true })
+    // drop ?new=1 without a server round-trip — router.replace would re-render the
+    // page under the loading boundary and lose the form that was just opened
+    window.history.replaceState(null, '', `/portal/${def.key}`)
+  }, [search, canWrite, def.key])
 
   const status = fieldByKey(def, def.statusField ?? '')
   const searchKeys = def.fields.filter(f => f.search).map(f => f.key)
@@ -137,7 +141,13 @@ export function ModuleView({ def, canWrite, role }: { def: ModuleDef; canWrite: 
         <RecordTable def={def} rows={filtered} onNew={canWrite ? () => setForm({ open: true }) : undefined} />
       )}
 
-      {form.open && <RecordForm def={def} role={role} initial={form.prefill} onClose={() => setForm({ open: false })} />}
+      {form.open && (
+        <RecordForm
+          def={def} role={role} initial={form.prefill} onClose={() => setForm({ open: false })}
+          // a member added without a password goes straight to their page to send the invite link
+          onSaved={def.key === 'team' ? rec => { if (rec.hasPassword === false) router.push(`/portal/team/${rec.id}?invite=1`) } : undefined}
+        />
+      )}
     </div>
   )
 }
