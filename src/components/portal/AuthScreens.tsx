@@ -327,6 +327,7 @@ export function RecoverForm() {
   const router = useRouter()
   const [step, setStep] = useState<'start' | 'code' | 'choose'>('start')
   const [code, setCode] = useState('')
+  const [file, setFile] = useState('')
   const [accounts, setAccounts] = useState<Account[]>([])
   const [userId, setUserId] = useState('')
   const [password, setPassword] = useState('')
@@ -337,8 +338,8 @@ export function RecoverForm() {
 
   const issue = async () => {
     setBusy(true); setError(null)
-    const r = await post('recover', { step: 'issue' })
-    if (r.ok) setStep('code'); else setError(r.data.error ?? 'تعذّر إنشاء الرمز')
+    const r = await post<{ file?: string }>('recover', { step: 'issue' })
+    if (r.ok) { setFile(r.data.file ?? ''); setStep('code') } else setError(r.data.error ?? 'تعذّر إنشاء الرمز')
     setBusy(false)
   }
   const verify = async (e: React.FormEvent) => {
@@ -365,7 +366,7 @@ export function RecoverForm() {
   return (
     <AuthCard
       title="استعادة دخول المدير" icon="shield"
-      lead="لمالك النظام فقط: نثبت أنك المالك برمز نكتبه في ملف على السيرفر لا يفتحه إلا من يملك حساب Hostinger."
+      lead="لمالك النظام فقط: اكتب مفتاح المالك، أو أنشئ رمزاً مؤقتاً نكتبه في ملف على السيرفر لا يفتحه إلا من يملك حساب Hostinger."
       footer={<p><Link href="/portal/login">← رجوع لتسجيل الدخول</Link></p>}
     >
       <ol className="pt-auth-steps">
@@ -376,34 +377,36 @@ export function RecoverForm() {
 
       {step === 'start' && (
         <div className="pt-auth-form">
-          <p className="pt-auth-p">عند الضغط سننشئ ملفاً اسمه <code dir="ltr">RECOVERY-CODE.txt</code> داخل مجلد التطبيق على Hostinger فيه رمز من ٨ أحرف صالح لـ ٣٠ دقيقة.</p>
+          <p className="pt-auth-p">عندك <b>مفتاح المالك</b> (١٦ حرفاً)؟ استخدمه مباشرة. ما عندك؟ أنشئ رمزاً مؤقتاً نكتبه في ملف <code dir="ltr">RECOVERY-CODE.txt</code> على Hostinger، صالح لـ ٣٠ دقيقة.</p>
           {error && <Alert>{error}</Alert>}
-          <button type="button" className="pt-btn pt-btn-primary pt-auth-submit" onClick={issue} disabled={busy}>{busy ? <Spinner /> : 'أنشئ رمز الاستعادة'}</button>
+          <button type="button" className="pt-btn pt-btn-primary pt-auth-submit" onClick={() => { setFile(''); setError(null); setStep('code') }} disabled={busy}><Icon name="key" /> عندي مفتاح المالك</button>
+          <button type="button" className="pt-btn pt-btn-ghost pt-auth-submit" onClick={issue} disabled={busy}>{busy ? <Spinner /> : 'أنشئ رمزاً مؤقتاً في ملف'}</button>
         </div>
       )}
 
       {step === 'code' && (
         <form className="pt-auth-form" onSubmit={verify}>
-          <div className="pt-auth-howto">
-            <strong>افتح الرمز من Hostinger:</strong>
-            <ol>
-              <li>hPanel ← <b>Websites</b> ← himna.sa ← <b>File Manager</b></li>
-              <li>افتح مجلد التطبيق ثم <code dir="ltr">data</code> ← <code dir="ltr">portal</code></li>
-              <li>افتح ملف <code dir="ltr">RECOVERY-CODE.txt</code> وانسخ الرمز</li>
-            </ol>
-          </div>
-          <Field label="رمز الاستعادة">
-            <input className="pt-input pt-code-input" dir="ltr" value={code} onChange={e => setCode(e.target.value.toUpperCase())} required placeholder="XXXX-XXXX" autoComplete="one-time-code" autoFocus maxLength={12} />
+          {file ? (
+            <div className="pt-auth-howto">
+              <strong>افتح الرمز من Hostinger:</strong>
+              <ol>
+                <li>hPanel ← <b>Websites</b> ← himna.sa ← <b>File Manager</b></li>
+                <li>افتح الملف <code dir="ltr">{file}</code> وانسخ الرمز</li>
+              </ol>
+            </div>
+          ) : null}
+          <Field label={file ? 'رمز الاستعادة أو مفتاح المالك' : 'مفتاح المالك'}>
+            <input className="pt-input pt-code-input" dir="ltr" value={code} onChange={e => setCode(e.target.value.toUpperCase())} required placeholder={file ? 'XXXX-XXXX' : 'XXXX-XXXX-XXXX-XXXX'} autoComplete="one-time-code" autoFocus maxLength={24} />
           </Field>
           {error && <Alert>{error}</Alert>}
           <button type="submit" className="pt-btn pt-btn-primary pt-auth-submit" disabled={busy}>{busy ? <Spinner /> : 'تحقق من الرمز'}</button>
-          <button type="button" className="pt-btn pt-btn-ghost pt-auth-submit" onClick={issue} disabled={busy}>لم أجد الملف؟ أنشئ رمزاً جديداً</button>
+          <button type="button" className="pt-btn pt-btn-ghost pt-auth-submit" onClick={issue} disabled={busy}>{file ? 'لم أجد الملف؟ أنشئ رمزاً جديداً' : 'ما عندي المفتاح — أنشئ رمزاً مؤقتاً في ملف'}</button>
         </form>
       )}
 
       {step === 'choose' && (
         <form className="pt-auth-form" onSubmit={reset}>
-          <Alert kind="ok">الرمز صحيح. هذه حسابات المدير المسجّلة — اختر حسابك:</Alert>
+          <Alert kind="ok">تم التحقق. هذه حسابات المدير المسجّلة — اختر حسابك:</Alert>
           <div className="pt-auth-accounts" role="radiogroup">
             {accounts.map(a => (
               <label key={a.id} className="pt-auth-account" data-on={userId === a.id}>
@@ -428,7 +431,7 @@ export function RecoverForm() {
 
 /* ── First-run setup ───────────────────────────────────────────────── */
 
-export function SetupForm({ storageError }: { storageError?: string }) {
+export function SetupForm({ storageError, codeFile }: { storageError?: string; codeFile?: string }) {
   const router = useRouter()
   const [v, setV] = useState({ setupCode: '', name: '', email: '', password: '', confirm: '' })
   const [busy, setBusy] = useState(false)
@@ -454,10 +457,11 @@ export function SetupForm({ storageError }: { storageError?: string }) {
       {storageError && <Alert>لا يمكن حفظ البيانات على هذه الاستضافة.<br /><code dir="ltr" style={{ fontSize: '0.72rem' }}>{storageError}</code></Alert>}
       <form className="pt-auth-form" onSubmit={submit}>
         <div className="pt-auth-howto">
-          <strong>أولاً: رمز الإعداد</strong> — يثبت أنك صاحب الموقع. افتح من Hostinger: <b>File Manager</b> ← مجلد التطبيق ← <code dir="ltr">data/portal/SETUP-CODE.txt</code> وانسخ الرمز.
+          <strong>أولاً: مفتاح المالك</strong> — يثبت أنك صاحب الموقع. اكتب مفتاح المالك (١٦ حرفاً) الذي استلمته.
+          {codeFile ? <> ما عندك؟ استخدم بدلاً منه الرمز المكتوب في ملف <code dir="ltr">{codeFile}</code> عبر <b>File Manager</b> في Hostinger.</> : null}
         </div>
-        <Field label="رمز الإعداد">
-          <input className="pt-input pt-code-input" dir="ltr" value={v.setupCode} onChange={e => set('setupCode')(e.target.value.toUpperCase())} required placeholder="XXXX-XXXX" autoComplete="one-time-code" maxLength={12} />
+        <Field label="مفتاح المالك أو رمز الإعداد">
+          <input className="pt-input pt-code-input" dir="ltr" value={v.setupCode} onChange={e => set('setupCode')(e.target.value.toUpperCase())} required placeholder="XXXX-XXXX-XXXX-XXXX" autoComplete="one-time-code" maxLength={24} />
         </Field>
         <Field label="اسمك">
           <input className="pt-input" value={v.name} onChange={e => set('name')(e.target.value)} required autoComplete="name" placeholder="مثال: أدهم" />

@@ -6,7 +6,7 @@ import { limitWait, limitHit, waitMessage } from '@/portal/ratelimit'
 
 export const dynamic = 'force-dynamic'
 
-/** First-run: creates the first admin account. Needs the code from data/portal/SETUP-CODE.txt. */
+/** First-run: creates the first admin account. Needs the owner key or the code in SETUP-CODE.txt. */
 export async function POST(req: Request) {
   if (await hasAnyUser()) return fail('تم إعداد النظام مسبقاً — سجّل الدخول', 409)
   const health = await storageHealth()
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
   const { name, email, password, setupCode } = await readBody(req)
   if (!(await checkSetupCode(setupCode))) {
     limitHit(key, 15 * 60_000)
-    return fail('رمز الإعداد غير صحيح — انسخه من ملف data/portal/SETUP-CODE.txt', 403, { errors: { setupCode: 'رمز غير صحيح' } })
+    return fail('الرمز غير صحيح — اكتب مفتاح المالك أو رمز ملف SETUP-CODE.txt', 403, { errors: { setupCode: 'رمز غير صحيح' } })
   }
   if (typeof name !== 'string' || name.trim().length < 2) return fail('أدخل اسمك', 422, { errors: { name: 'أدخل اسمك' } })
   if (!isEmail(email)) return fail('بريد إلكتروني غير صالح', 422, { errors: { email: 'بريد إلكتروني غير صالح' } })

@@ -10,8 +10,9 @@
  * - setup code: same idea for the very first admin account, so nobody who just
  *   finds /portal/setup can claim a fresh install.
  */
-import { createHash, randomBytes, randomInt } from 'crypto'
+import { createHash, randomBytes, randomInt, timingSafeEqual } from 'crypto'
 import { promises as fs } from 'fs'
+import os from 'os'
 import path from 'path'
 import { store, DATA_DIR } from './store'
 
@@ -25,6 +26,14 @@ const TOKEN_RE = /^[A-Za-z0-9_-]{30,100}$/
 
 export const RECOVERY_FILE = path.join(DATA_DIR, 'RECOVERY-CODE.txt')
 export const SETUP_FILE = path.join(DATA_DIR, 'SETUP-CODE.txt')
+
+/** Where a file is, as the owner would find it in File Manager. */
+export function displayPath(file: string): string {
+  const home = os.homedir()
+  if (home && file.startsWith(home + path.sep)) return `~/${path.relative(home, file)}`
+  const rel = path.relative(process.cwd(), file)
+  return rel.startsWith('..') ? file : rel
+}
 
 export interface TokenInfo { userId: string | null; purpose: TokenPurpose; expiresAt: string }
 
@@ -90,7 +99,7 @@ export async function issueRecoveryCode(): Promise<{ expiresAt: string; file: st
     'هذا الملف يُحذف تلقائياً بعد الاستخدام. إذا لم تطلب هذا الرمز فتجاهله واحذفه.',
     '',
   ].join('\n'), { mode: 0o600 })
-  return { expiresAt, file: 'data/portal/RECOVERY-CODE.txt' }
+  return { expiresAt, file: displayPath(RECOVERY_FILE) }
 }
 
 export async function checkRecoveryCode(code: unknown): Promise<boolean> {
@@ -130,7 +139,30 @@ export async function ensureSetupCode(): Promise<void> {
   }
 }
 
+/* ── Owner key ─────────────────────────────────────────────────────── */
+
+/**
+ * A permanent 16-character key held by the owner (given to them privately).
+ * It works in place of the setup code and the recovery code, so the owner never
+ * needs Hostinger File Manager. Only its salted SHA-256 lives in the source —
+ * 80 bits of randomness, so the hash can't be reversed. Set PORTAL_OWNER_KEY in
+ * the host's environment to replace it with a key of your own.
+ */
+const OWNER_KEY_SHA256 = 'eb63bf221fe3016c13a7971451307f8433be791c53c22cc7d8b0718303a49081'
+
+export function isOwnerKey(code: unknown): boolean {
+  const n = normalizeCode(code)
+  const custom = normalizeCode(process.env.PORTAL_OWNER_KEY)
+  if (custom.length >= 12) {
+    const a = Buffer.from(sha(n)), b = Buffer.from(sha(custom))
+    return timingSafeEqual(a, b)
+  }
+  if (n.length !== 16) return false
+  return timingSafeEqual(Buffer.from(sha(`haymanah-owner:${n}`)), Buffer.from(OWNER_KEY_SHA256))
+}
+
 export async function checkSetupCode(code: unknown): Promise<boolean> {
+  if (isOwnerKey(code)) return true
   try {
     const raw = await fs.readFile(SETUP_FILE, 'utf8')
     const m = raw.match(/([A-Z2-9]{4}-[A-Z2-9]{4})/)

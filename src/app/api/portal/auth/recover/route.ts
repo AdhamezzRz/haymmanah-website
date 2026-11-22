@@ -1,6 +1,6 @@
 import { store, logActivity } from '@/portal/store'
 import { hashPassword, passwordProblem, startSession, publicUser } from '@/portal/auth'
-import { issueRecoveryCode, checkRecoveryCode, consumeRecoveryCode } from '@/portal/tokens'
+import { issueRecoveryCode, checkRecoveryCode, consumeRecoveryCode, isOwnerKey } from '@/portal/tokens'
 import { json, fail, readBody, clientIp } from '@/portal/api'
 import { limitWait, limitHit, waitMessage } from '@/portal/ratelimit'
 
@@ -10,8 +10,9 @@ const W = 15 * 60_000
 
 /**
  * Owner recovery (no email needed). Proves ownership by reading a code from a
- * file only someone with Hostinger file access can open.
- *   { step: 'issue' }                          → writes data/portal/RECOVERY-CODE.txt
+ * file only someone with Hostinger file access can open — or with the owner key,
+ * which works in place of the code and is never used up.
+ *   { step: 'issue' }                          → writes RECOVERY-CODE.txt in the data folder
  *   { step: 'verify', code }                   → lists admin accounts to choose from
  *   { step: 'reset', code, userId, password }  → new password, signs in
  */
@@ -31,7 +32,8 @@ export async function POST(req: Request) {
   const key = `recover-try:${ip}`
   const wait = limitWait(key, 10, W)
   if (wait) return fail(waitMessage(wait), 429)
-  if (!(await checkRecoveryCode(body.code))) {
+  const owner = isOwnerKey(body.code)
+  if (!owner && !(await checkRecoveryCode(body.code))) {
     limitHit(key, W)
     return fail('الرمز غير صحيح أو منتهي — أنشئ رمزاً جديداً', 403, { errors: { code: 'رمز غير صحيح' } })
   }
@@ -47,7 +49,7 @@ export async function POST(req: Request) {
     if (!target) return fail('اختر حساباً من القائمة', 422)
     const pwErr = passwordProblem(body.password, target.email)
     if (pwErr) return fail(pwErr, 422, { errors: { password: pwErr } })
-    if (!(await consumeRecoveryCode(body.code))) return fail('الرمز استُخدم للتو — أنشئ رمزاً جديداً', 410)
+    if (!owner && !(await consumeRecoveryCode(body.code))) return fail('الرمز استُخدم للتو — أنشئ رمزاً جديداً', 410)
     const existing = await store.get('team', target.id)
     const updated = await store.update('team', target.id, {
       passwordHash: await hashPassword(String(body.password)),
@@ -55,7 +57,7 @@ export async function POST(req: Request) {
       role: 'admin', active: true, joinStatus: '',
     })
     if (!updated) return fail('الحساب غير موجود', 404)
-    await logActivity({ userId: updated.id, userName: String(updated.name), module: 'team', recordId: updated.id, recordTitle: String(updated.name), action: 'update', summary: 'استعاد الدخول برمز المالك' })
+    await logActivity({ userId: updated.id, userName: String(updated.name), module: 'team', recordId: updated.id, recordTitle: String(updated.name), action: 'update', summary: owner ? 'استعاد الدخول بمفتاح المالك' : 'استعاد الدخول برمز الاستعادة' })
     const res = json({ ok: true, user: publicUser(updated) })
     await startSession(res, updated)
     return res

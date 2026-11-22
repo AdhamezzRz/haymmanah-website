@@ -3,7 +3,7 @@
  *
  * Passwords: scrypt (Node crypto) with a per-user salt.
  * Sessions: HMAC-signed, HttpOnly cookie carrying { uid, role, exp }.
- * Secret: PORTAL_SECRET env var, or an auto-generated `data/portal/.secret`
+ * Secret: PORTAL_SECRET env var, or an auto-generated `.secret` in the data folder
  * so the portal works out of the box on a single host (Hostinger) with no setup.
  */
 import { scrypt as scryptCb, randomBytes, timingSafeEqual, createHmac } from 'crypto'

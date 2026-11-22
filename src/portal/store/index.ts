@@ -1,7 +1,7 @@
 /**
  * Embedded document store — server only.
  *
- * Collections are JSON files under `data/portal/` (override with PORTAL_DATA_DIR).
+ * Collections are JSON files under DATA_DIR (see resolveDataDir below).
  * Reads are served from an in-memory cache; writes are serialised through a
  * promise queue and persisted atomically (write temp → rename), so a crash
  * mid-write never corrupts a collection.
@@ -10,7 +10,8 @@
  * tens — the `Store` interface below is the only thing the rest of the portal
  * knows about, so swapping in Postgres/Supabase later is a one-file change.
  */
-import { promises as fs } from 'fs'
+import { promises as fs, accessSync, constants, cpSync, existsSync, mkdirSync } from 'fs'
+import os from 'os'
 import path from 'path'
 import { randomUUID } from 'crypto'
 import type { BaseRecord } from '../schema'
@@ -27,7 +28,35 @@ export interface Store {
   nextNumber(prefix: string): Promise<string>
 }
 
-export const DATA_DIR = process.env.PORTAL_DATA_DIR || path.join(process.cwd(), 'data', 'portal')
+/**
+ * Where the data lives. Deploying to Hostinger replaces the app folder, which
+ * used to wipe `data/portal` (accounts, clients, tasks…) on every release. So in
+ * production the default is a folder in the hosting account's home directory,
+ * outside the app — `~/haymanah-portal-data` — which deploys never touch. An
+ * existing `data/portal` is copied there once. PORTAL_DATA_DIR still wins.
+ */
+function resolveDataDir(): string {
+  if (process.env.PORTAL_DATA_DIR) return process.env.PORTAL_DATA_DIR
+  const legacy = path.join(process.cwd(), 'data', 'portal')
+  if (process.env.NODE_ENV !== 'production' || process.env.VERCEL) return legacy
+  try {
+    const home = os.homedir()
+    const target = path.join(home, 'haymanah-portal-data')
+    if (!home || target.startsWith(process.cwd() + path.sep)) return legacy
+    accessSync(home, constants.W_OK)
+    if (process.env.NEXT_PHASE !== 'phase-production-build') {
+      mkdirSync(target, { recursive: true })
+      if (existsSync(path.join(legacy, 'team.json')) && !existsSync(path.join(target, 'team.json'))) {
+        cpSync(legacy, target, { recursive: true, force: false, errorOnExist: false })
+      }
+    }
+    return target
+  } catch {
+    return legacy
+  }
+}
+
+export const DATA_DIR = resolveDataDir()
 
 type Cache = Map<string, BaseRecord[]>
 const g = globalThis as unknown as { __hmCache?: Cache; __hmQueue?: Promise<void> }

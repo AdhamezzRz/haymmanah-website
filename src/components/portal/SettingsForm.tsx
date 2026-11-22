@@ -68,7 +68,7 @@ export function SettingsForm({ fields, initial, storage }: { fields: FieldDef[];
             <code dir="ltr" style={{ fontSize: '0.7rem', color: 'var(--pt-dim)', wordBreak: 'break-all' }}>{storage.dir}</code>
             {storage.error && <p className="pt-error" style={{ marginTop: '0.5rem' }}>{storage.error}</p>}
             <p className="pt-dim" style={{ fontSize: '0.74rem', marginTop: '0.75rem', lineHeight: 1.7 }}>
-              النسخ الاحتياطي: انسخ مجلد <code dir="ltr">data/portal</code> من الخادم. كل وحدة ملف JSON مستقل يمكن فتحه وقراءته.
+              النسخ الاحتياطي: انسخ مجلد <code dir="ltr">haymanah-portal-data</code> من المجلد الرئيسي لحساب Hostinger (خارج مجلد التطبيق، فلا يُمسح عند النشر). كل وحدة ملف JSON مستقل يمكن فتحه وقراءته.
             </p>
           </section>
           <section className="pt-card pt-card-pad">
